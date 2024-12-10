@@ -3,7 +3,7 @@ import { TaskCardProps } from './TaskCard.types';
 import { getDefaultDate } from '../../libs/dates';
 
 const StyledCard = styled(Box)`
-  background-color: lightGreen;
+  background-color: ${({ theme }) => theme.color.blue400};
   padding: 16px;
 `;
 
