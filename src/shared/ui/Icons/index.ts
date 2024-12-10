@@ -1,0 +1,15 @@
+export { default as AcademicCapIcon } from './AcademicCapIcon';
+export { default as CalendarIcon } from './CalendarIcon';
+export { default as CharacterIcon } from './CharacterIcon';
+export { default as ChiefHatIcon } from './ChiefHatIcon';
+export { default as CodeIcon } from './CodeIcon';
+export { default as GlobusIcon } from './GlobusIcon';
+export { default as HammerIcon } from './HammerIcon';
+export { default as HomeIcon } from './HomeIcon';
+export { default as MeditationIcon } from './MeditationIcon';
+export { default as NotebookIcon } from './NotebookIcon';
+export { default as NotesIcon } from './NotesIcon';
+export { default as PaletteIcon } from './PaletteIcon';
+export { default as SettingsIcon } from './SettingsIcon';
+export { default as TaskIcon } from './TaskIcon';
+export { default as TrashIcon } from './TrashIcon';

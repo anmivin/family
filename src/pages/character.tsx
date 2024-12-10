@@ -1,5 +1,6 @@
-import { ProfiIcons } from "../shared/PropfileIIcon.constants";
-import { calcLavel } from "../shared/libs/calcLavel";
+import { ProfiIcons } from '../shared/PropfileIIcon.constants';
+import { calcLavel } from '../shared/libs/calcLavel';
+import CharacterCard from '../shared/ui/CharacterCard';
 const Character = () => {
   const user = { level: 1, xp: 100, gold: 400 };
   const icon = ProfiIcons[1];
