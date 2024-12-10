@@ -18,4 +18,4 @@ export enum TASK_XP {
   exepti = 500,
 }
 
-export const calcLavel = (level: number) => 100 * (level ^ 2);
+export const calcLavel = (level: number) => 100 * Math.pow(level, 2);

@@ -7,7 +7,6 @@ import Settings from '../../pages/settings';
 import Achievements from '../../pages/achievements';
 import Family from '../../pages/family';
 import Household from '../../pages/household';
-import Market from '../../pages/market';
 import Notes from '../../pages/notes';
 import Shopping from '../../pages/shopping';
 import Budget from '../../pages/budget';
@@ -37,7 +36,6 @@ export const Paths = {
   character: '/character',
   family: '/family',
   household: '/household',
-  market: '/market',
   menu: '/menu',
   notes: '/notes',
   settings: '/settings',
@@ -50,6 +48,7 @@ interface RoutesProps {
   link: string;
   Component: () => ReactElement;
   icon: ReactNode;
+  name: string;
 }
 
 export const menuRoutes: RoutesProps[] = [
@@ -58,72 +57,77 @@ export const menuRoutes: RoutesProps[] = [
     link: Paths.achievemnts,
     Component: Achievements,
     icon: <CalendarIcon />,
+    name: 'Достижения',
   },
   {
     key: '',
     link: Paths.budget,
     Component: Budget,
     icon: <CalendarIcon />,
+    name: 'Бюджет',
   },
   {
     key: '',
     link: Paths.calendar,
     Component: Calendar,
     icon: <CalendarIcon />,
+    name: 'Календарь',
   },
   {
     key: '',
     link: Paths.character,
     Component: Character,
     icon: <CharacterIcon />,
+    name: 'Персонаж',
   },
   {
     key: '',
     link: Paths.family,
     Component: Family,
     icon: <CalendarIcon />,
+    name: 'Семья',
   },
   {
     key: '',
     link: Paths.household,
     Component: Household,
     icon: <HomeIcon />,
-  },
-  {
-    key: '',
-    link: Paths.market,
-    Component: Market,
-    icon: <CalendarIcon />,
+    name: 'Дом',
   },
   {
     key: '',
     link: Paths.menu,
     Component: Menu,
     icon: <CalendarIcon />,
+    name: 'Меню',
   },
   {
     key: '',
     link: Paths.notes,
     Component: Notes,
     icon: <NotesIcon />,
+    name: 'Заметки',
   },
   {
     key: '',
     link: Paths.settings,
     Component: Settings,
     icon: <SettingsIcon />,
+    name: 'Настройки',
   },
   {
     key: '',
     link: Paths.shopping,
     Component: Shopping,
     icon: <SettingsIcon />,
+    name: 'Покупки',
   },
   {
     key: '',
     link: Paths.tasks,
     Component: Tasks,
     icon: <TaskIcon />,
+    name: 'Задачи',
   },
 ];
 

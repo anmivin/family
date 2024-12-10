@@ -1,9 +1,9 @@
-import { Typography, Box, styled } from '@mui/material';
+import { Typography, Box, styled, Checkbox } from '@mui/material';
 import { TaskCardProps } from './TaskCard.types';
 import { getDefaultDate } from '../../libs/dates';
 
 const StyledCard = styled(Box)`
-  background-color: lightGreen;
+  background-color: ${({ theme }) => theme.color.pink300};
   padding: 16px;
 `;
 
@@ -19,9 +19,9 @@ export const StyledDescription = styled(Typography)`
 const TaskCard = ({ id, name, description, date, creator, repeat }: TaskCardProps) => {
   return (
     <StyledCard>
-      <Typography variant="body1">{name}</Typography>
-      <StyledDescription variant="body2">{description}</StyledDescription>
-      <Typography variant="body2" sx={{ textAlign: 'end' }}>
+      <Typography variant="body2">{name}</Typography>
+      <StyledDescription variant="body1">{description}</StyledDescription>
+      <Typography variant="body1" sx={{ textAlign: 'end' }}>
         {!!repeat && <>{repeat}</>}
         {getDefaultDate(date)}
       </Typography>

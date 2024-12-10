@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'Stetica';
+  src: local('SteticaRegular'), url('./SteticaRegular.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
