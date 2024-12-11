@@ -14,7 +14,7 @@ export const globalStyles = (theme: Theme) => css`
 
     font-feature-settings: 'tnum' on, 'lnum' on;
     color: #000;
-    /*     background-color: ${theme.color.primaryMain}; */
+    background-color: ${theme.color.primaryMain};
     /*     overflow: hidden; */
   }
 

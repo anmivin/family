@@ -1,4 +1,6 @@
 /* import SimsFont from '@assets/fonts/Loucos Lyne - thesimssansbold.otf'; */
+
+import SteticaRegular from '../fonts/SteticaRegular.otf';
 import { Components } from '@mui/material/styles';
 
 import { ColorOptions } from '../theme.types';
@@ -9,10 +11,10 @@ export const customFont = {
   fontStyle: 'semi-bold',
   fontDisplay: 'swap',
   fontWeight: '600',
-  /*   src: `
-   local('SimsFont'),
-   url(${SimsFont}) format('otf')
- `, */
+  src: `
+   local('SteticaRegular'),
+   url(${SteticaRegular}) format('otf')
+ `,
 };
 
 export const commonComponents = (color: ColorOptions): Components => ({

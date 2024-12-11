@@ -26,7 +26,7 @@ export enum TypoVariant {
 }
 
 export const typography: Typography = {
-  fontFamily: 'The Sims Sans',
+  fontFamily: 'Stetica',
 
   [TypoVariant.h1]: {
     fontSize: 40,
@@ -80,13 +80,13 @@ export const typography: Typography = {
     fontSize: 14,
     lineHeight: '20px',
     fontWeight: 400,
-    letterSpacing: 0.25,
+    letterSpacing: 0.5,
   },
   [TypoVariant.body2]: {
     fontSize: 16,
     lineHeight: '24px',
     fontWeight: 400,
-    letterSpacing: 0.5,
+    letterSpacing: 0.75,
   },
   [TypoVariant.button]: {
     fontSize: 16,

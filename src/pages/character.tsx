@@ -1,26 +1,16 @@
-import { ProfiIcons } from '../shared/PropfileIIcon.constants';
-import { calcLavel } from '../shared/libs/calcLavel';
-import CharacterCard from '../shared/ui/CharacterCard';
+import CharacterCard from '../entities/CharacterCard';
+import AddTaskButton from '../shared/ui/AddTaskButton';
+import { Tabs, Tab } from '@mui/material';
 const Character = () => {
-  const user = { level: 1, xp: 100, gold: 400 };
-  const icon = ProfiIcons[1];
-  const nextLavelXp = calcLavel(user.level + 1);
   return (
     <>
-      <>
-        <>{icon}</>
-        <>
-          {user.xp}
-          {nextLavelXp}
-        </>
-        <>{user.gold}</>
-      </>
-      <>
-        карта характеристик <>поиск</>
-        <>табы переключения видов карта\список</>
-      </>
-      <>карта навыков</>
-      <>Кнопа для создания таски</>
+      <Tabs sx={{ with: '100%' }}>
+        <Tab label="1" value={1} />
+        <Tab label="2" value={2} />
+        <Tab label="3" value={3} />
+      </Tabs>
+      <CharacterCard />
+      <AddTaskButton />
 
       <>
         раздел семьи
