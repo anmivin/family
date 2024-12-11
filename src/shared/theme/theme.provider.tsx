@@ -1,11 +1,11 @@
 import { ReactNode, createContext, useMemo } from 'react';
-
+import { getTheme } from './themeVariants';
 import { GlobalStyles } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { ThemeName } from './theme.constants';
 import { globalStyles } from './globalStyles';
-import { theme } from './theme';
-import useStorage from '../libs/usestorage';
+
+import useStorage from '../helpers/usestorage';
 import { Theme } from './theme.types';
 interface ThemeColorModeProviderProps {
   children: ReactNode;
@@ -16,7 +16,7 @@ export const ColorModeContext = createContext({
 });
 
 const ThemeColorModeProvider = ({ children, currentThemeName }: ThemeColorModeProviderProps) => {
-  const { storedValue: mode, setValue: setMode } = useStorage<ThemeName>('themeMode', currentThemeName || ThemeName._1);
+  const { storedValue: mode, setValue: setMode } = useStorage<ThemeName>('themeMode', currentThemeName || ThemeName._3);
 
   const colorMode = useMemo(
     () => ({
@@ -27,7 +27,7 @@ const ThemeColorModeProvider = ({ children, currentThemeName }: ThemeColorModePr
     [mode, setMode]
   );
 
-  const currentTheme: Theme = useMemo(() => theme[mode], [mode]);
+  const currentTheme: Theme = useMemo(() => getTheme(mode), [mode]);
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={currentTheme}>{children}</ThemeProvider>

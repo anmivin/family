@@ -1,30 +1,23 @@
-import { ProfiIcons } from '../../shared/PropfileIIcon.constants';
-import { calcLavel } from '../../shared/libs/calcLavel';
-import { styled, Box, Typography } from '@mui/material';
-import CharacterProgress from '../../shared/ui/CharacterProgress';
-
-const StyledCard = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(2)};
-  padding: 20px 20px 40px;
-  background-color: ${({ theme }) => theme.color.blue200};
-`;
-
-const CharacterCard = () => {
-  const user = { name: 'sfsdf', level: 2, xp: 300, gold: 400 };
-  const icon = ProfiIcons[1];
-  const nextLevelXp = calcLavel(user.level + 1);
+import { calcLavel } from '@helpers/calcLavel';
+import { Box, Typography } from '@mui/material';
+import CharacterProgress from '@ui/CharacterProgress';
+import { StyledCard } from './CharacterCard.styled';
+import { CharacterCardProps } from './CharacterCard.types';
+const CharacterCard = ({ name, level, xp, gold, levelName }: CharacterCardProps) => {
+  const nextLevelXp = calcLavel(level + 1);
 
   return (
     <StyledCard>
       <Box display="flex" flexDirection="row" gap={8} alignItems="center">
-        <CharacterProgress userXp={user.xp} nextLevelXp={nextLevelXp} />
+        <CharacterProgress userXp={xp} nextLevelXp={nextLevelXp} />
         <Box p={3}>
-          <Typography variant="body2">{user.name}</Typography>
-          <Typography>голды: {user.gold}</Typography>
+          <Typography variant="body2">{name}</Typography>
+          <Typography variant="caption">{levelName}</Typography>
+          <Typography>голды: {gold}</Typography>
+          <Typography variant="caption">
+            {xp}/{nextLevelXp}
+          </Typography>
         </Box>
-        <></>
       </Box>
       {/*       <>
         карта характеристик <>поиск</>

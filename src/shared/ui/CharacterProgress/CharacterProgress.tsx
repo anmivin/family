@@ -1,5 +1,6 @@
-import { styled, Box } from '@mui/material';
-import Spinner from '../ProgressCircle';
+import { styled, Box, Typography } from '@mui/material';
+import ProgressCircle from '@ui/ProgressCircle';
+import { useMemo } from 'react';
 const Progress = styled(Box)`
   display: grid;
   place-items: center;
@@ -22,10 +23,10 @@ const CharacterProgress = ({ userXp, nextLevelXp }: CharacterPrrogressProps) => 
   return (
     <Progress>
       <Member>
-        <Spinner size={120} progress={progress} />
+        <ProgressCircle size={100} progress={progress} />
       </Member>
       <Member>
-        {userXp}/{nextLevelXp}
+        <Typography variant="caption">{Math.round(progress)}%</Typography>
       </Member>
     </Progress>
   );

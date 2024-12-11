@@ -1,10 +1,14 @@
 import { Typography, Box, Button, styled, Checkbox } from '@mui/material';
 import { TaskCardProps } from './TaskCard.types';
-import { getDefaultDate, getDateTime } from '../../libs/dates';
+import { getDefaultDate, getDateTime } from '../../helpers/dates';
 import { RepeatIcon, ClockIcon } from '../Icons';
 const StyledCard = styled(Box)`
-  background-color: ${({ theme }) => theme.color.blue400};
+  background-color: ${({ theme }) => theme.color.secondaryLight};
   padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(3)};
+  border-radius: 8px;
 `;
 
 export const StyledDescription = styled(Typography)`
@@ -28,19 +32,21 @@ const TaskCard = ({ id, name, description, date, timed, creator, repeat }: TaskC
       <Box display="flex" flexDirection="column" alignItems="end">
         {!!repeat && (
           <Box display="flex" alignItems="center" gap={1}>
-            <RepeatIcon size={20} />
+            <RepeatIcon size={20} color="textMain" />
             <Typography>{repeat}</Typography>
           </Box>
         )}
         {!!date && (
           <Box display="flex" alignItems="center" gap={1}>
-            <ClockIcon size={20} />
+            <ClockIcon size={20} color="textMain" />
             <Typography>{timed ? getDateTime(date) : getDefaultDate(date)}</Typography>
           </Box>
         )}
       </Box>
-      <Button>готово</Button>
-      <Button>отложить</Button>
+      <Box>
+        <Button>готово</Button>
+        <Button>отложить</Button>
+      </Box>
     </StyledCard>
   );
 };

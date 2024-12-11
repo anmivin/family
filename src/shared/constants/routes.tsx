@@ -1,17 +1,25 @@
 import { ReactElement, ReactNode } from 'react';
-import Tasks from '../../pages/tasks';
-import Menu from '../../pages/menu';
-import Calendar from '../../pages/calendar';
-import Character from '../../pages/character';
-import Settings from '../../pages/settings';
-import Achievements from '../../pages/achievements';
-import Family from '../../pages/family';
-import Household from '../../pages/household';
-import Notes from '../../pages/notes';
-import Shopping from '../../pages/shopping';
-import Budget from '../../pages/budget';
+import Tasks from '@pages/tasks';
+import Menu from '@pages/menu';
+import Calendar from '@pages/calendar';
+import Character from '@pages/character';
+import Settings from '@pages/settings';
+import Achievements from '@pages/achievements';
+import Family from '@pages/family';
+import Household from '@pages/household';
+import Notes from '@pages/notes';
+import Shopping from '@pages/shopping';
+import Budget from '@pages/budget';
 
-import { NotesIcon, HomeIcon, CharacterIcon, SettingsIcon, TaskIcon, CalendarIcon } from '../ui/Icons';
+import {
+  NotesIcon,
+  HomeIcon,
+  CharacterIcon,
+  SettingsIcon,
+  TaskIcon,
+  CalendarIcon,
+  ShoppingBasketIcon,
+} from '../ui/Icons';
 /* Task Assignments: 
 Allow users to assign tasks to other family members, making it easier to delegate responsibilities.
 Task Categories: 
@@ -119,7 +127,7 @@ export const menuRoutes: RoutesProps[] = [
     key: '',
     link: Paths.shopping,
     Component: Shopping,
-    icon: <SettingsIcon />,
+    icon: <ShoppingBasketIcon />,
     name: 'Покупки',
   },
   {
@@ -133,20 +141,48 @@ export const menuRoutes: RoutesProps[] = [
 
 const defaultRouting = [
   {
-    key: '/menu',
+    key: Paths.achievemnts,
+    order: 7,
+  },
+  {
+    key: Paths.budget,
+    order: 8,
+  },
+  {
+    key: Paths.calendar,
+    order: 9,
+  },
+  {
+    key: Paths.character,
     order: 1,
   },
   {
-    key: '/character',
-    order: 2,
+    key: Paths.family,
+    order: 10,
   },
   {
-    key: '/tasks',
+    key: Paths.household,
+    order: 5,
+  },
+  {
+    key: Paths.menu,
+    order: 6,
+  },
+  {
+    key: Paths.notes,
     order: 3,
   },
   {
-    key: '/settings',
+    key: Paths.settings,
+    order: 11,
+  },
+  {
+    key: Paths.shopping,
     order: 4,
+  },
+  {
+    key: Paths.tasks,
+    order: 2,
   },
 ];
 export const getRoutes = () => {

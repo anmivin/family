@@ -2,10 +2,10 @@ import { Tab, Tabs } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const StyledTabsContainer = styled(Tabs)`
-  background-color: ${({ theme }) => theme.color.secondaryMain};
+  background-color: ${({ theme }) => theme.color.primaryMain};
 
   & .MuiTabs-indicator {
-    background: ${({ theme }) => theme.color.blue800};
+    background: ${({ theme }) => theme.color.accentDark};
   }
   & .MuiTabs-flexContainer {
     width: 100%;

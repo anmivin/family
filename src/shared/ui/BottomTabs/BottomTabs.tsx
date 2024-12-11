@@ -3,7 +3,8 @@ import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 const StyledMenu = styled(Box)`
-  background-color: ${({ theme }) => theme.color.secondaryMain};
+  background-color: ${({ theme }) => theme.color.primaryMain};
+
   position: fixed;
   bottom: 0;
   display: flex;
@@ -15,6 +16,7 @@ const StyledButton = styled(Button)<{ $selected: boolean; $count: number }>`
     width: ${({ $count }) => `calc(100vw / ${$count})`};
     border-radius: 0;
     background-color: ${({ theme, $selected }) => $selected && theme.color.accentMain};
+    color: ${({ theme }) => theme.color.textMain};
   }
 `;
 export interface BottomTabsProps {
@@ -22,11 +24,10 @@ export interface BottomTabsProps {
 }
 const BottomTabs = ({ routes }: BottomTabsProps) => {
   const path = useLocation();
-
   return (
     <StyledMenu>
       {routes.map((route) => (
-        <Link to={route.link}>
+        <Link to={route.link} key={route.link}>
           <StyledButton $count={routes.length} $selected={path.pathname === route.link}>
             {route.icon}
           </StyledButton>

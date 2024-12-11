@@ -14,5 +14,6 @@ export { default as PaletteIcon } from './PaletteIcon';
 export { default as PlusIcon } from './PlusIcon';
 export { default as RepeatIcon } from './RepeatIcon';
 export { default as SettingsIcon } from './SettingsIcon';
+export { default as ShoppingBasketIcon } from './ShoppingBasketIcon';
 export { default as TaskIcon } from './TaskIcon';
 export { default as TrashIcon } from './TrashIcon';

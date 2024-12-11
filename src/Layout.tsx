@@ -2,7 +2,7 @@ import { ReactNode, useEffect } from 'react';
 import TaskForm from './features/TaskForm/TaskForm';
 import { getRoutes } from './shared/constants/routes';
 import Test from './shared/ui/Icons/Test';
-
+import Header from '@ui/Header';
 import BottomTabs from './shared/ui/BottomTabs';
 
 const Layout = ({ children }: { children: ReactNode }) => {
@@ -44,9 +44,9 @@ const Layout = ({ children }: { children: ReactNode }) => {
           </Box>
         ))}
       </Box> */}
-      <BottomTabs routes={getRoutes()} />
+      <Header />
       <TaskForm />
-      {children}
+      {children} <BottomTabs routes={getRoutes()} />
     </>
   );
 };

@@ -5,6 +5,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 import ruLocale from 'date-fns/locale/ru';
 import './shared/theme/fonts/font.css';
+
 function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>

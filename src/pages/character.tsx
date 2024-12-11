@@ -2,11 +2,13 @@ import CharacterCard from '../entities/CharacterCard';
 import AddTaskButton from '../shared/ui/AddTaskButton';
 import { Box, styled } from '@mui/material';
 import Tabs from '../shared/ui/Tabs';
-import { useCallback, useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState, useCallback } from 'react';
+
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
 import { Doughnut, Radar } from 'react-chartjs-2';
 import { characteristics } from '../shared/constants/characteristics';
-
+import { CharacterCardProps } from '@entities/CharacterCard/CharacterCard.types';
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
 const userCharacteristics = {
@@ -20,7 +22,15 @@ const userCharacteristics = {
 
 const Character = () => {
   const [selectedTab, setSelectedTab] = useState(1);
-  const getData = useCallback(() => {
+  const [user, setUser] = useState<CharacterCardProps | null>(null);
+
+  useEffect(() => {
+    axios
+      .get('/user')
+      .then((res) => res.data)
+      .then((data) => setUser(data));
+  }, []);
+  /*  const getData = useCallback(() => {
     const labels = [];
     const data = [];
     characteristics.map((c) => {
@@ -40,7 +50,7 @@ const Character = () => {
         },
       ],
     };
-  }, []);
+  }, []); */
   return (
     <>
       <Tabs
@@ -52,17 +62,18 @@ const Character = () => {
         value={selectedTab}
         onChange={setSelectedTab}
       />
+      <Box display="flex" flexDirection="column" gap={2} p={2}>
+        {selectedTab === 1 && user && <CharacterCard {...user} />}
+        {/*   {selectedTab === 2 && <Radar data={getData()} />} */}
 
-      {selectedTab === 1 && <CharacterCard />}
-      {selectedTab === 2 && <Radar data={getData()} />}
+        <AddTaskButton />
 
-      <AddTaskButton />
-
-      <>
-        раздел семьи
-        <>члены с контактами, др, другие даты</>
-        <></>
-      </>
+        <>
+          раздел семьи
+          <>члены с контактами, др, другие даты</>
+          <></>
+        </>
+      </Box>
     </>
   );
 };

@@ -35,7 +35,7 @@ const IconWrapper: IconComponent = ({
 
 const StyledSvg = styled('svg')<IconProps>`
   ${({ theme, isLineIcon, color, responsive }) => {
-    const cssColor = /* color ? theme.color[color] : */ 'currentColor';
+    const cssColor = color ? theme.color[color] : 'currentColor';
 
     return isLineIcon
       ? css`

@@ -10,15 +10,16 @@ export const globalStyles = (theme: Theme) => css`
     line-height: ${theme.typography.body1.lineHeight};
     letter-spacing: ${theme.typography.body1.letterSpacing}px;
     font-weight: ${theme.typography.body1.fontWeight};
-    color: #000;
+    color: ${theme.color.textMain};
 
     font-feature-settings: 'tnum' on, 'lnum' on;
     color: #000;
-    background-color: ${theme.color.primaryMain};
+    background-color: ${theme.color.secondaryMain};
     /*     overflow: hidden; */
   }
 
   p,
+  span,
   h1,
   h2,
   h3,
@@ -27,6 +28,7 @@ export const globalStyles = (theme: Theme) => css`
   h6 {
     margin: 0;
     margin-bottom: ${theme.spacing(4)};
+    color: ${theme.color.textMain};
   }
 
   p {

@@ -1,5 +1,5 @@
-import { styled, Box, Typography, Button } from '@mui/material';
-import { menuRoutes } from '../../shared/constants/routes';
+import { Box, Typography, Button } from '@mui/material';
+import { menuRoutes } from '@constants/routes';
 import Draggable from 'react-draggable';
 
 const ChangeRoutes = () => {

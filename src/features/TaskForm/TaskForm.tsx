@@ -1,4 +1,4 @@
-import DefaultDrawer from '../../shared/ui/Drawer';
+import DefaultDrawer from '@ui/Drawer';
 import {
   TextField,
   Autocomplete,
@@ -10,7 +10,7 @@ import {
   Checkbox,
   FormControlLabel,
 } from '@mui/material';
-import { DatePicker, TimePicker, DateTimePicker } from '@mui/x-date-pickers';
+import { DatePicker, DateTimePicker } from '@mui/x-date-pickers';
 import { useState } from 'react';
 const skills = [
   { id: '1', label: 'lalal' },
@@ -69,6 +69,7 @@ const TaskForm = () => {
       <></>
       <>сложность</>
       <Button>сохранить</Button>
+      <Button>отмена</Button>
     </DefaultDrawer>
   );
 };
