@@ -1,5 +1,5 @@
-import { CircularProgress, styled, Box } from '@mui/material';
-
+import { styled, Box } from '@mui/material';
+import Spinner from '../ProgressCircle';
 const Progress = styled(Box)`
   display: grid;
   place-items: center;
@@ -22,12 +22,8 @@ const CharacterProgress = ({ userXp, nextLevelXp }: CharacterPrrogressProps) => 
   return (
     <Progress>
       <Member>
-        <CircularProgress color="inherit" size={120} thickness={8} value={100} variant="determinate" />
+        <Spinner size={120} progress={progress} />
       </Member>
-      <Member>
-        <CircularProgress size={120} thickness={8} value={progress} variant="determinate" />
-      </Member>
-
       <Member>
         {userXp}/{nextLevelXp}
       </Member>

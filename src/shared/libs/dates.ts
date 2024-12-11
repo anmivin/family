@@ -47,14 +47,15 @@ export const formatDateShortMonth = 'd MMM';
 export const formatDateMonth = 'd MMMM';
 export const formatDateShortMonthWithTime = 'd MMM, HH:mm';
 
-export const getDefaultDate = (date: number | string | Date) =>
-  typeof date === 'string' ? format(new Date(date), formatDateRuDefault) : format(date, formatDateRuDefault);
+export const toDate = (date: string | number | Date) => (typeof date !== 'object' ? new Date(date) : date);
+
+export const getDefaultDate = (date: number | string | Date) => format(toDate(date), 'dd.MM.yyyy');
+export const getDateTime = (date: number | string | Date) => format(toDate(date), 'dd.MM.yyyy, HH:mm');
 
 export function parseDate(date: number | string | Date) {
   return typeof date === 'string' ? parse(date, formatDateWithTime, new Date()) : date;
 }
 
-export const toDate = (date: string | number | Date) => (typeof date !== 'object' ? new Date(date) : date);
 export const getFormatTime = (date: number | string | Date) => {
   return typeof date === 'string' ? format(new Date(date), 'HH:mm') : format(date, 'HH:mm');
 };
@@ -264,9 +265,6 @@ export const getDateShortMonthWithYear = (date: Date) => {
   })}`;
 };
 
-export const getDateTime = (date: Date) => format(date, formatHoursAndMinutes, { locale: ru });
-
-//12.04.24
 export const getDateShortYear = (date: number | string | Date) => {
   const dateObject = toDate(date);
   return format(dateObject, formatDateShortYear, { locale: ru });

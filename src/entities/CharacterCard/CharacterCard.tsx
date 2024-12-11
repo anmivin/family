@@ -2,6 +2,7 @@ import { ProfiIcons } from '../../shared/PropfileIIcon.constants';
 import { calcLavel } from '../../shared/libs/calcLavel';
 import { styled, Box, Typography } from '@mui/material';
 import CharacterProgress from '../../shared/ui/CharacterProgress';
+
 const StyledCard = styled(Box)`
   display: flex;
   flex-direction: column;
@@ -11,7 +12,7 @@ const StyledCard = styled(Box)`
 `;
 
 const CharacterCard = () => {
-  const user = { name: 'sfsdf', level: 1, xp: 300, gold: 400 };
+  const user = { name: 'sfsdf', level: 2, xp: 300, gold: 400 };
   const icon = ProfiIcons[1];
   const nextLevelXp = calcLavel(user.level + 1);
 
@@ -21,7 +22,7 @@ const CharacterCard = () => {
         <CharacterProgress userXp={user.xp} nextLevelXp={nextLevelXp} />
         <Box p={3}>
           <Typography variant="body2">{user.name}</Typography>
-          <Typography>{user.gold}</Typography>
+          <Typography>голды: {user.gold}</Typography>
         </Box>
         <></>
       </Box>

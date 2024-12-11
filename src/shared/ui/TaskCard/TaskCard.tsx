@@ -1,7 +1,7 @@
-import { Typography, Box, styled, Checkbox } from '@mui/material';
+import { Typography, Box, Button, styled, Checkbox } from '@mui/material';
 import { TaskCardProps } from './TaskCard.types';
-import { getDefaultDate } from '../../libs/dates';
-
+import { getDefaultDate, getDateTime } from '../../libs/dates';
+import { RepeatIcon, ClockIcon } from '../Icons';
 const StyledCard = styled(Box)`
   background-color: ${({ theme }) => theme.color.blue400};
   padding: 16px;
@@ -16,15 +16,31 @@ export const StyledDescription = styled(Typography)`
   text-overflow: ellipsis;
 `;
 
-const TaskCard = ({ id, name, description, date, creator, repeat }: TaskCardProps) => {
+const TaskCard = ({ id, name, description, date, timed, creator, repeat }: TaskCardProps) => {
   return (
     <StyledCard>
-      <Typography variant="body2">{name}</Typography>
+      <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Typography variant="body2">{name}</Typography>
+        {creator && <Typography variant="caption">от {creator}</Typography>}
+      </Box>
+
       <StyledDescription variant="body1">{description}</StyledDescription>
-      <Typography variant="body1" sx={{ textAlign: 'end' }}>
-        {!!repeat && <>{repeat}</>}
-        {getDefaultDate(date)}
-      </Typography>
+      <Box display="flex" flexDirection="column" alignItems="end">
+        {!!repeat && (
+          <Box display="flex" alignItems="center" gap={1}>
+            <RepeatIcon size={20} />
+            <Typography>{repeat}</Typography>
+          </Box>
+        )}
+        {!!date && (
+          <Box display="flex" alignItems="center" gap={1}>
+            <ClockIcon size={20} />
+            <Typography>{timed ? getDateTime(date) : getDefaultDate(date)}</Typography>
+          </Box>
+        )}
+      </Box>
+      <Button>готово</Button>
+      <Button>отложить</Button>
     </StyledCard>
   );
 };

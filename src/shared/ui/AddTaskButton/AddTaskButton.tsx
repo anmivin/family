@@ -1,15 +1,19 @@
 import { Fab, styled } from '@mui/material';
-
+import { PlusIcon } from '../Icons';
 const StyledFab = styled(Fab)`
   position: fixed;
   bottom: 110px;
   right: 30px;
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
 `;
 
 const AddTaskButton = () => {
-  return <StyledFab />;
+  return (
+    <StyledFab>
+      <PlusIcon size={30} />
+    </StyledFab>
+  );
 };
 
 export default AddTaskButton;
