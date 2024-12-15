@@ -10,8 +10,11 @@ import {
   Checkbox,
   FormControlLabel,
 } from '@mui/material';
-import { DatePicker, DateTimePicker } from '@mui/x-date-pickers';
+import { TaskFormProps, TaskFormValues, TaskFormSchema } from './TaskForm.types';
+import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, useFieldArray } from 'react-hook-form';
 const skills = [
   { id: '1', label: 'lalal' },
   { id: '2', label: 'ssss' },
@@ -19,10 +22,16 @@ const skills = [
   { id: '4', label: 'owwio' },
 ];
 const TaskForm = () => {
-  const [noDate, setNoDate] = useState(false);
-  const [noTime, setNoTime] = useState(false);
   const [repeat, setRepeat] = useState(false);
   //если не админ, то отправить на одобрение админу
+
+  const formMethods = useForm<TaskFormValues>({
+    resolver: yupResolver(TaskFormSchema),
+  });
+
+  const { control } = formMethods;
+
+  const { fields, append } = useFieldArray<TaskFormValues>({ control, name: 'subtasks' });
   return (
     <DefaultDrawer>
       <TextField variant="standard" label="Название" />
@@ -43,13 +52,13 @@ const TaskForm = () => {
           );
         }}
       />
-      <FormControlLabel control={<Checkbox />} label="Бессрочное" onChange={(e, checked) => setNoDate(checked)} />
-      {!noDate && (
-        <>
-          <FormControlLabel control={<Checkbox />} label="Без времени" onChange={(e, checked) => setNoTime(checked)} />
-          {noTime ? <DatePicker /> : <DateTimePicker />}
-        </>
-      )}
+      <FormControlLabel control={<Checkbox />} label="На весь год" onChange={(e, checked) => {}} />
+      <Button>добавить</Button>
+      {fields.map((field) => (
+        <Box key={field.id}></Box>
+      ))}
+      <DatePicker />
+      <TimePicker />
 
       <FormControlLabel control={<Checkbox />} label="Повторять" onChange={(e, checked) => setRepeat(checked)} />
       {repeat && (

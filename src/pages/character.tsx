@@ -9,11 +9,47 @@ import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler,
 import { Doughnut, Radar } from 'react-chartjs-2';
 import { characteristics } from '@constants/characteristics';
 import { CharacterCardProps } from '@entities/CharacterCard/CharacterCard.types';
-ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement,
+  Title,
+  Filler,
+} from 'chart.js';
+import { PolarArea, Line, Bar } from 'react-chartjs-2';
 
-interface UserType extends CharacterCardProps {
-  characteristics: { [key: string]: number };
-}
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+
+ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
+
+export const options = {
+  indexAxis: 'y' as const,
+  elements: {
+    bar: {
+      borderWidth: 2,
+    },
+  },
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'right' as const,
+    },
+    title: {
+      display: true,
+      text: 'Chart.js Horizontal Bar Chart',
+    },
+  },
+};
+
 const Character = () => {
   const [selectedTab, setSelectedTab] = useState(1);
   const [user, setUser] = useState<UserType | null>(null);
@@ -65,21 +101,13 @@ const Character = () => {
       />
       <Box display="flex" flexDirection="column" gap={2} p={2}>
         {selectedTab === 1 && user && <CharacterCard {...user} />}
-        {selectedTab === 2 && (
-          <Box width="90vw" height="80vh" sx={{ margin: 'auto' }}>
-            <Radar
-              data={getData()}
-              options={{
-                elements: {
-                  line: {
-                    borderWidth: 8,
-                  },
-                },
-              }}
-            />
-          </Box>
-        )}
-
+        {/* 
+        характеристики -- Polar area
+        экспа -- linechart
+        новыки -- barchart
+        */}
+        {selectedTab === 2 && <PolarArea data={getData()} />}
+        {selectedTab === 3 && <Bar data={} options={options} />}
         <AddTaskButton />
 
         <>
