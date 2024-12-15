@@ -7,22 +7,16 @@ import { useEffect, useState, useCallback } from 'react';
 
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
 import { Doughnut, Radar } from 'react-chartjs-2';
-import { characteristics } from '../shared/constants/characteristics';
+import { characteristics } from '@constants/characteristics';
 import { CharacterCardProps } from '@entities/CharacterCard/CharacterCard.types';
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
-const userCharacteristics = {
-  health: 2,
-  science: 9,
-  art: 6,
-  household: 2,
-  beauty: 1,
-  social: 7,
-};
-
+interface UserType extends CharacterCardProps {
+  characteristics: { [key: string]: number };
+}
 const Character = () => {
   const [selectedTab, setSelectedTab] = useState(1);
-  const [user, setUser] = useState<CharacterCardProps | null>(null);
+  const [user, setUser] = useState<UserType | null>(null);
 
   useEffect(() => {
     axios
@@ -30,19 +24,26 @@ const Character = () => {
       .then((res) => res.data)
       .then((data) => setUser(data));
   }, []);
-  /*  const getData = useCallback(() => {
+  const getData = useCallback(() => {
     const labels = [];
     const data = [];
     characteristics.map((c) => {
       labels.push(c.id);
-      const userLevel = userCharacteristics[c.id.toLowerCase()];
+      const userLevel = user?.characteristics[c.id.toLowerCase()];
       data.push(userLevel);
     });
     return {
       labels: labels,
+      options: {
+        elements: {
+          line: {
+            borderWidth: 3,
+          },
+        },
+      },
       datasets: [
         {
-          label: '# of Votes',
+          label: false,
           data: data,
           backgroundColor: 'rgba(255, 99, 132, 0.2)',
           borderColor: 'rgba(255, 99, 132, 1)',
@@ -50,7 +51,7 @@ const Character = () => {
         },
       ],
     };
-  }, []); */
+  }, [user]);
   return (
     <>
       <Tabs
@@ -64,7 +65,20 @@ const Character = () => {
       />
       <Box display="flex" flexDirection="column" gap={2} p={2}>
         {selectedTab === 1 && user && <CharacterCard {...user} />}
-        {/*   {selectedTab === 2 && <Radar data={getData()} />} */}
+        {selectedTab === 2 && (
+          <Box width="90vw" height="80vh" sx={{ margin: 'auto' }}>
+            <Radar
+              data={getData()}
+              options={{
+                elements: {
+                  line: {
+                    borderWidth: 8,
+                  },
+                },
+              }}
+            />
+          </Box>
+        )}
 
         <AddTaskButton />
 

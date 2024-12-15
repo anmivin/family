@@ -19,7 +19,11 @@ import {
   TaskIcon,
   CalendarIcon,
   ShoppingBasketIcon,
-} from '../ui/Icons';
+  FridgeIcon,
+  TrophyCapIcon,
+  WalletIcon,
+  UserGroupIcon,
+} from '@ui/Icons';
 /* Task Assignments: 
 Allow users to assign tasks to other family members, making it easier to delegate responsibilities.
 Task Categories: 
@@ -64,14 +68,14 @@ export const menuRoutes: RoutesProps[] = [
     key: '',
     link: Paths.achievemnts,
     Component: Achievements,
-    icon: <CalendarIcon />,
+    icon: <TrophyCapIcon />,
     name: 'Достижения',
   },
   {
     key: '',
     link: Paths.budget,
     Component: Budget,
-    icon: <CalendarIcon />,
+    icon: <WalletIcon />,
     name: 'Бюджет',
   },
   {
@@ -92,7 +96,7 @@ export const menuRoutes: RoutesProps[] = [
     key: '',
     link: Paths.family,
     Component: Family,
-    icon: <CalendarIcon />,
+    icon: <UserGroupIcon />,
     name: 'Семья',
   },
   {
@@ -106,7 +110,7 @@ export const menuRoutes: RoutesProps[] = [
     key: '',
     link: Paths.menu,
     Component: Menu,
-    icon: <CalendarIcon />,
+    icon: <FridgeIcon />,
     name: 'Меню',
   },
   {

@@ -33,9 +33,9 @@ export const themeColor: Record<
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue100,
 
-    textMain: commonColors.transparentDark900,
-    textDark: commonColors.transparentDark900,
-    textLight: commonColors.transparentDark600,
+    textMain: commonColors.dark900,
+    textDark: commonColors.dark900,
+    textLight: commonColors.dark900,
 
     accentMain: commonColors.pink400,
     accentDark: commonColors.pink500,
@@ -50,9 +50,9 @@ export const themeColor: Record<
     secondaryDark: commonColors.green300,
     secondaryLight: commonColors.green100,
 
-    textMain: commonColors.transparentDark900,
-    textDark: commonColors.transparentDark900,
-    textLight: commonColors.transparentDark600,
+    textMain: commonColors.dark900,
+    textDark: commonColors.dark900,
+    textLight: commonColors.dark600,
 
     accentMain: commonColors.violet400,
     accentDark: commonColors.violet500,
@@ -76,21 +76,21 @@ export const themeColor: Record<
     accentLight: commonColors.marine200,
   },
   [ThemeName._4]: {
-    primaryMain: commonColors.blue300,
-    primaryDark: commonColors.blue300,
-    primaryLight: commonColors.blue300,
+    primaryMain: commonColors.blue100,
+    primaryDark: commonColors.blue100,
+    primaryLight: commonColors.blue100,
 
     secondaryMain: commonColors.blue300,
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue300,
 
-    textMain: commonColors.blue300,
-    textDark: commonColors.blue300,
-    textLight: commonColors.blue300,
+    textMain: commonColors.dark900,
+    textDark: commonColors.dark900,
+    textLight: commonColors.dark900,
 
-    accentMain: commonColors.blue300,
-    accentDark: commonColors.blue300,
-    accentLight: commonColors.blue300,
+    accentMain: commonColors.blue700,
+    accentDark: commonColors.blue700,
+    accentLight: commonColors.blue700,
   },
   [ThemeName._5]: {
     primaryMain: commonColors.blue300,
@@ -101,13 +101,13 @@ export const themeColor: Record<
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue300,
 
-    textMain: commonColors.blue300,
-    textDark: commonColors.blue300,
-    textLight: commonColors.blue300,
+    textMain: commonColors.dark900,
+    textDark: commonColors.dark900,
+    textLight: commonColors.dark900,
 
-    accentMain: commonColors.blue300,
-    accentDark: commonColors.blue300,
-    accentLight: commonColors.blue300,
+    accentMain: commonColors.blue700,
+    accentDark: commonColors.blue700,
+    accentLight: commonColors.blue700,
   },
   [ThemeName._6]: {
     primaryMain: commonColors.blue300,
