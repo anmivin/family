@@ -28,7 +28,7 @@ const ProgressCircle = ({ progress, size = 40 }: ProgressCircleProps) => {
         fill="none"
         strokeWidth={svgSizes.thickness}
         strokeDasharray={svgSizes.strokeDasharray}
-        stroke-dashoffset={svgSizes.strokeDashoffset}
+        strokeDashoffset={svgSizes.strokeDashoffset}
       />
     </StyledSvg>
   );

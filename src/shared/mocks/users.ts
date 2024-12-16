@@ -24,6 +24,24 @@ const userHandler = [
       gold: 500,
       levelName: 'Мегагуд',
       characteristics: { health: 2, science: 9, art: 6, household: 2, beauty: 1, social: 7 },
+      skills: [
+        {
+          id: '1',
+          level: 7,
+        },
+        {
+          id: '3',
+          level: 3,
+        },
+        {
+          id: '4',
+          level: 6,
+        },
+        {
+          id: '6',
+          level: 2,
+        },
+      ],
     });
   }),
 ];

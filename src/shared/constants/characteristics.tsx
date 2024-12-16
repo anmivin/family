@@ -7,13 +7,14 @@ import {
   GlobusIcon,
   CodeIcon,
   ChiefHatIcon,
-} from '../ui/Icons';
+} from '@ui/Icons';
+
 export const characteristics = [
   {
     id: 'Health',
     name: 'Здоровье',
     dedcription: '',
-    color: 'красный',
+    color: 'red300',
     icon: '',
     branches: [
       { name: 'Физическое здоровье', id: '', icon: '', traits: ['Зож, медицина', ''] },
@@ -29,7 +30,7 @@ export const characteristics = [
     id: 'Science',
     name: 'Науки',
     dedcription: '',
-    color: 'синий',
+    color: 'blue300',
     icon: <AcademicCapIcon />,
     branches: [
       { name: 'Гуманитарные науки', icon: <GlobusIcon />, id: '', traits: ['', ''] },
@@ -46,7 +47,7 @@ export const characteristics = [
     id: 'Art',
     name: 'Искусство',
     dedcription: '',
-    color: 'зелёный',
+    color: 'green300',
     icon: <PaletteIcon />,
     branches: [
       { name: 'Творчество', id: '', icon: '', traits: ['Рисование', 'Писательство', 'Скрипка'] },
@@ -58,7 +59,7 @@ export const characteristics = [
     id: 'Household',
     name: 'Хозяйство',
     dedcription: '',
-    color: 'жёлтый',
+    color: 'yellow300',
     icon: '',
     branches: [
       { name: 'Собирательство', icon: '', id: '', traits: ['Грибничество', 'травничество'] },
@@ -77,7 +78,7 @@ export const characteristics = [
     id: 'Beauty',
     name: 'Красота',
     dedcription: '',
-    color: 'розовый',
+    color: 'pink300',
     icon: '',
     branches: [
       { name: 'Тело', icon: '', id: '', traits: ['Ловкость, Сила, Гибкость, Выносливость;', ''] },
@@ -88,7 +89,7 @@ export const characteristics = [
     id: 'Social',
     name: 'Социализация',
     dedcription: '',
-    color: 'оранжжевый',
+    color: 'orange300',
     icon: '',
     branches: [
       { name: '', icon: '', id: '', traits: ['', ''] },

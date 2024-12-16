@@ -4,33 +4,8 @@ import { Box, styled } from '@mui/material';
 import Tabs from '../shared/ui/Tabs';
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
-
-import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
-import { Doughnut, Radar } from 'react-chartjs-2';
-import { characteristics } from '@constants/characteristics';
-import { CharacterCardProps } from '@entities/CharacterCard/CharacterCard.types';
-import {
-  Chart as ChartJS,
-  RadialLinearScale,
-  ArcElement,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Tooltip,
-  Legend,
-  PointElement,
-  LineElement,
-  Title,
-  Filler,
-} from 'chart.js';
-import { PolarArea, Line, Bar } from 'react-chartjs-2';
-
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
-ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
-
+import CharacteristicChart from '@features/CharacteristicChart/CharacteristicChart';
+import SkillsChart from '@features/SkillsChart/SkillsChart';
 export const options = {
   indexAxis: 'y' as const,
   elements: {
@@ -50,9 +25,26 @@ export const options = {
   },
 };
 
+interface UserType {
+  name: string;
+  level: number;
+  xp: number;
+  gold: number;
+  levelName: string;
+  characteristics: { health: number; science: number; art: number; household: number; beauty: number; social: number };
+  skills: { id: string; level: number }[];
+}
+
 const Character = () => {
   const [selectedTab, setSelectedTab] = useState(1);
   const [user, setUser] = useState<UserType | null>(null);
+  const [skills, setSkills] = useState<
+    | {
+        id: string;
+        name: string;
+      }[]
+    | null
+  >(null);
 
   useEffect(() => {
     axios
@@ -60,34 +52,14 @@ const Character = () => {
       .then((res) => res.data)
       .then((data) => setUser(data));
   }, []);
-  const getData = useCallback(() => {
-    const labels = [];
-    const data = [];
-    characteristics.map((c) => {
-      labels.push(c.id);
-      const userLevel = user?.characteristics[c.id.toLowerCase()];
-      data.push(userLevel);
-    });
-    return {
-      labels: labels,
-      options: {
-        elements: {
-          line: {
-            borderWidth: 3,
-          },
-        },
-      },
-      datasets: [
-        {
-          label: false,
-          data: data,
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1,
-        },
-      ],
-    };
-  }, [user]);
+
+  useEffect(() => {
+    axios
+      .get('/skills')
+      .then((res) => res.data)
+      .then((data) => setSkills(data));
+  }, []);
+
   return (
     <>
       <Tabs
@@ -106,8 +78,9 @@ const Character = () => {
         экспа -- linechart
         новыки -- barchart
         */}
-        {selectedTab === 2 && <PolarArea data={getData()} />}
-        {selectedTab === 3 && <Bar data={} options={options} />}
+        {user && <> {selectedTab === 2 && <CharacteristicChart userCharacteristics={user?.characteristics} />}</>}
+
+        {user && skills && <>{selectedTab === 3 && <SkillsChart skills={skills} userSkills={user.skills} />}</>}
         <AddTaskButton />
 
         <>

@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { TaskFormProps, TaskFormValues, TaskFormSchema } from './TaskForm.types';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, useFieldArray } from 'react-hook-form';
 const skills = [
@@ -29,11 +29,21 @@ const TaskForm = () => {
     resolver: yupResolver(TaskFormSchema),
   });
 
-  const { control } = formMethods;
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = formMethods;
 
   const { fields, append } = useFieldArray<TaskFormValues>({ control, name: 'subtasks' });
+
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
+
+  useEffect(() => console.log(errors), [errors]);
   return (
-    <DefaultDrawer>
+    <DefaultDrawer open>
       <TextField variant="standard" label="Название" />
       <TextField variant="standard" label="Описание" />
       <Autocomplete
@@ -77,7 +87,7 @@ const TaskForm = () => {
       <></>
       <></>
       <>сложность</>
-      <Button>сохранить</Button>
+      <Button onClick={onSubmit}>сохранить</Button>
       <Button>отмена</Button>
     </DefaultDrawer>
   );
