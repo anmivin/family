@@ -1,5 +1,8 @@
 import { Fab, styled } from '@mui/material';
 import { PlusIcon } from '../Icons';
+
+import { useAppDispatch } from '../../store/global.store';
+import { setIsTaskFormOpen } from '../../store/modals.store';
 const StyledFab = styled(Fab)`
   position: fixed;
   bottom: 70px;
@@ -10,8 +13,10 @@ const StyledFab = styled(Fab)`
 `;
 
 const AddTaskButton = () => {
+  const dispatch = useAppDispatch();
+  const onOpen = () => dispatch(setIsTaskFormOpen(true));
   return (
-    <StyledFab>
+    <StyledFab onClick={onOpen}>
       <PlusIcon size={30} />
     </StyledFab>
   );

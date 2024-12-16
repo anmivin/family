@@ -1,4 +1,6 @@
 import DefaultDrawer from '@ui/Drawer';
+import { useAppSelector, useAppDispatch } from '../../shared/store/global.store';
+import { setIsTaskFormOpen } from '../../shared/store/modals.store';
 import {
   TextField,
   Autocomplete,
@@ -9,20 +11,39 @@ import {
   Typography,
   Checkbox,
   FormControlLabel,
+  ToggleButton,
+  ToggleButtonGroup,
+  IconButton,
+  Dialog,
 } from '@mui/material';
-import { TaskFormProps, TaskFormValues, TaskFormSchema } from './TaskForm.types';
+import axios from 'axios';
+import { TaskFormProps, TaskFormValues, TaskFormSchema, TaskDifficulty, XPTarget, Period } from './TaskForm.types';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, useFieldArray } from 'react-hook-form';
-const skills = [
-  { id: '1', label: 'lalal' },
-  { id: '2', label: 'ssss' },
-  { id: '3', label: 'ndnd' },
-  { id: '4', label: 'owwio' },
-];
+import { useForm, useFieldArray, Controller } from 'react-hook-form';
+import { characteristics } from '@constants/characteristics';
 const TaskForm = () => {
-  const [repeat, setRepeat] = useState(false);
+  const dispatch = useAppDispatch();
+  const onClose = () => dispatch(setIsTaskFormOpen(false));
+  const { isTaskFormOpen } = useAppSelector((state) => state.modalsSlice);
+
+  const [dialogOpene, setDialogOpen] = useState(false);
+  const [skills, setSkills] = useState<
+    | {
+        id: string;
+        name: string;
+      }[]
+    | null
+  >(null);
+
+  useEffect(() => {
+    axios
+      .get('/skills')
+      .then((res) => res.data)
+      .then((data) => setSkills(data));
+  }, []);
+
   //если не админ, то отправить на одобрение админу
 
   const formMethods = useForm<TaskFormValues>({
@@ -33,9 +54,35 @@ const TaskForm = () => {
     control,
     handleSubmit,
     formState: { errors },
+    watch,
+    setValue,
   } = formMethods;
 
-  const { fields, append } = useFieldArray<TaskFormValues>({ control, name: 'subtasks' });
+  const formValues = watch();
+  const {
+    fields: subtaskFields,
+    append: appendSubtask,
+    remove: removeSubtask,
+  } = useFieldArray<TaskFormValues, 'subtasks'>({
+    control,
+    name: 'subtasks',
+  });
+  const {
+    fields: skillFields,
+    append: appendSkill,
+    remove: removeSkill,
+  } = useFieldArray<TaskFormValues, 'skills'>({
+    control,
+    name: 'skills',
+  });
+  const {
+    fields: characteristicFields,
+    append: appendCharacteristic,
+    remove: removeCharacteristic,
+  } = useFieldArray<TaskFormValues, 'characteristics'>({
+    control,
+    name: 'characteristics',
+  });
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
@@ -43,52 +90,188 @@ const TaskForm = () => {
 
   useEffect(() => console.log(errors), [errors]);
   return (
-    <DefaultDrawer open>
-      <TextField variant="standard" label="Название" />
-      <TextField variant="standard" label="Описание" />
-      <Autocomplete
-        options={[...skills, { id: 'create', label: '' }]}
-        getOptionLabel={(option) => option.label}
-        renderInput={(params) => <TextField variant="standard" label="Навык" {...params} />}
-        renderOption={(props, option, { selected }) => {
-          return option.id === 'create' ? (
-            <Button fullWidth onClick={() => {}}>
-              + Создать навык
-            </Button>
-          ) : (
-            <li {...props} aria-selected={selected}>
-              {option.label}
-            </li>
-          );
-        }}
+    <DefaultDrawer open={isTaskFormOpen} onClose={onClose}>
+      <Controller
+        control={control}
+        name="name"
+        render={({ field }) => <TextField {...field} variant="standard" label="Название" />}
       />
-      <FormControlLabel control={<Checkbox />} label="На весь год" onChange={(e, checked) => {}} />
-      <Button>добавить</Button>
-      {fields.map((field) => (
-        <Box key={field.id}></Box>
-      ))}
-      <DatePicker />
-      <TimePicker />
+      <Controller
+        control={control}
+        name="description"
+        render={({ field }) => <TextField {...field} variant="standard" label="Описание" />}
+      />
 
-      <FormControlLabel control={<Checkbox />} label="Повторять" onChange={(e, checked) => setRepeat(checked)} />
-      {repeat && (
-        <Select variant="standard">
-          <MenuItem value={10}>просто повторять</MenuItem>
-          <MenuItem value={10}>каждый день</MenuItem>
-          <MenuItem value={20}>через день</MenuItem>
-          <MenuItem value={30}>каждую неделю</MenuItem>
-          <MenuItem value={30}>каждый месяц</MenuItem>
-        </Select>
+      <ToggleButtonGroup
+        fullWidth
+        value={formValues.target}
+        exclusive
+        onChange={(_e, value) => setValue('target', value)}
+      >
+        {Object.values(XPTarget).map((item, index) => (
+          <ToggleButton key={index} value={item}>
+            {item}
+          </ToggleButton>
+        ))}
+      </ToggleButtonGroup>
+      {formValues.target === XPTarget.Skill ? (
+        <>
+          <Button
+            fullWidth
+            onClick={() =>
+              appendSkill({
+                skillId: undefined,
+                percent: 100,
+              })
+            }
+          >
+            связанный навык
+          </Button>
+          {skillFields.map((field, index) => (
+            <Box key={field.id} display="flex" flexDirection="row" gap={1} width="100%">
+              <Autocomplete
+                options={[...(skills ?? []), { id: 'create', name: '' }]}
+                getOptionLabel={(option) => option.name}
+                renderInput={(params) => <TextField variant="standard" label="Навык" {...params} />}
+                renderOption={(props, option, { selected }) => {
+                  return option.id === 'create' ? (
+                    <Button fullWidth onClick={() => {}}>
+                      + Создать навык
+                    </Button>
+                  ) : (
+                    <li {...props} aria-selected={selected}>
+                      {option.name}
+                    </li>
+                  );
+                }}
+              />
+              <TextField variant="standard" label="Доля" type="number" />
+              <IconButton onClick={() => removeSkill(index)}>x</IconButton>
+            </Box>
+          ))}
+        </>
+      ) : (
+        <>
+          <Button
+            fullWidth
+            onClick={() =>
+              appendCharacteristic({
+                characteristicId: undefined,
+                percent: 100,
+              })
+            }
+          >
+            связанная характеристика
+          </Button>
+          {characteristicFields.map((field, index) => (
+            <Box key={field.id} display="flex" flexDirection="row" gap={1} width="100%">
+              <Autocomplete
+                options={characteristics}
+                getOptionLabel={(option) => option.name}
+                renderInput={(params) => <TextField variant="standard" label="Характеристика" {...params} />}
+              />
+              <TextField variant="standard" label="Доля" type="number" />
+              <IconButton onClick={() => removeCharacteristic(index)}>x</IconButton>
+            </Box>
+          ))}
+        </>
       )}
 
-      <>повторять</>
-      <>модалка каждое сколько</>
-      <></>
-      <></>
-      <></>
-      <>сложность</>
-      <Button onClick={onSubmit}>сохранить</Button>
-      <Button>отмена</Button>
+      <FormControlLabel
+        control={<Checkbox />}
+        label="На весь год"
+        onChange={(e, checked) => setValue('year', checked)}
+      />
+      {formValues.year && (
+        <>
+          <Button
+            onClick={() =>
+              appendSubtask({
+                name: '',
+                difficulty: TaskDifficulty.Easy,
+              })
+            }
+          >
+            добавить подзадачу
+          </Button>
+          {subtaskFields.map((subtaskField, index) => (
+            <Box key={subtaskField.id}>
+              <Controller
+                control={control}
+                name={`subtasks.${index}.name`}
+                render={({ field }) => <TextField {...field} label="Название" />}
+              />
+              <ToggleButtonGroup
+                value={formValues.subtasks[index].difficulty}
+                exclusive
+                onChange={(_e, value) => setValue(`subtasks.${index}.difficulty`, value)}
+              >
+                {Object.values(TaskDifficulty).map((item, index) => (
+                  <ToggleButton key={index} value={item}>
+                    {item}
+                  </ToggleButton>
+                ))}
+              </ToggleButtonGroup>
+              <IconButton onClick={() => removeSubtask(index)}>x</IconButton>
+            </Box>
+          ))}
+        </>
+      )}
+
+      {!formValues.year && (
+        <Box display="flex" flexDirection="row" gap={2}>
+          <DatePicker />
+          <TimePicker />
+        </Box>
+      )}
+
+      <FormControlLabel
+        control={<Checkbox />}
+        label="Повторять"
+        onChange={(e, checked) => {
+          setDialogOpen(checked);
+        }}
+      />
+
+      <ToggleButtonGroup
+        fullWidth
+        value={formValues.difficulty}
+        exclusive
+        onChange={(_e, value) => setValue('difficulty', value)}
+      >
+        {Object.values(TaskDifficulty).map((item, index) => (
+          <ToggleButton key={index} value={item}>
+            {item}
+          </ToggleButton>
+        ))}
+      </ToggleButtonGroup>
+      <Box>
+        <Button onClick={onSubmit}>сохранить</Button>
+        <Button onClick={onClose}>отмена</Button>
+      </Box>
+      <Dialog open={dialogOpene} onClose={() => setDialogOpen(false)}>
+        {Object.values(Period).map((item, index) => (
+          <Button key={index} onClick={() => setValue('repeat', item)}>
+            {item}
+          </Button>
+        ))}
+        <Box>
+          <Controller
+            control={control}
+            name="repeat.count"
+            render={({ field }) => <TextField {...field} type="number" />}
+          />
+
+          <Select>
+            {Object.values(Period).map((item, index) => (
+              <MenuItem key={index} onClick={() => setValue('repeat.period', item)}>
+                {item}
+              </MenuItem>
+            ))}
+          </Select>
+        </Box>
+        <Button onClick={() => setDialogOpen(false)}>ok</Button>
+      </Dialog>
     </DefaultDrawer>
   );
 };

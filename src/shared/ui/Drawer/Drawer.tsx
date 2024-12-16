@@ -7,6 +7,9 @@ const StyledDrawer = styled(Drawer)`
     padding: 20px;
     width: 100vw;
     background-color: ${({ theme }) => theme.color.primaryLight};
+    display: flex;
+    flex-derection: column;
+    gap: 16px;
   }
 `;
 const DefaultDrawer = ({ ...props }: DefaultDrawerProps) => {

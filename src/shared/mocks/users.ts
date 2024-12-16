@@ -14,7 +14,7 @@ const userHandler = [
       return new HttpResponse('null', { status: 404 });
     }
   }),
-
+  //продуктивность -- тасок в день, дисциплина -- стрик
   http.get('/user', ({ cookies }) => {
     console.log(cookies);
     return HttpResponse.json({

@@ -11,16 +11,16 @@ import {
 
 export const characteristics = [
   {
-    id: 'Health',
+    id: 'health',
     name: 'Здоровье',
     dedcription: '',
     color: 'red300',
     icon: '',
     branches: [
-      { name: 'Физическое здоровье', id: '', icon: '', traits: ['Зож, медицина', ''] },
+      { name: 'Физическое здоровье', id: 'physical_health', icon: '', traits: ['Зож, медицина', ''] },
       {
         name: 'Ментальное здоровье',
-        id: '',
+        id: 'mental_health',
         icon: <MeditationIcon />,
         traits: ['Медитация, Духовность', ''],
       },
@@ -33,14 +33,14 @@ export const characteristics = [
     color: 'blue300',
     icon: <AcademicCapIcon />,
     branches: [
-      { name: 'Гуманитарные науки', icon: <GlobusIcon />, id: '', traits: ['', ''] },
+      { name: 'Гуманитарные науки', icon: <GlobusIcon />, id: 'human_science', traits: ['', ''] },
       {
         name: 'Технические науки',
         icon: <CodeIcon />,
-        id: '',
+        id: 'technical_science',
         traits: ['Программирование'],
       },
-      { name: 'Ин яз', icon: '', id: '', traits: 'Иврит' },
+      { name: 'Ин яз', icon: '', id: 'languages', traits: 'Иврит' },
     ],
   },
   {
@@ -62,7 +62,7 @@ export const characteristics = [
     color: 'yellow300',
     icon: '',
     branches: [
-      { name: 'Собирательство', icon: '', id: '', traits: ['Грибничество', 'травничество'] },
+      { name: 'Собирательство', icon: '', id: 'foraging', traits: ['Грибничество', 'травничество'] },
       { name: 'Кулинария', icon: <ChiefHatIcon />, id: '', traits: ['', '', ''] },
       { name: 'Садоводство', icon: '', traits: '' },
       {
@@ -71,7 +71,7 @@ export const characteristics = [
         id: '',
         traits: 'Вязание, Плотник, Сантехника, электроника, шитьё;',
       },
-      { name: 'Выживание', icon: '', id: '', traits: 'уборка' },
+      { name: 'Выживание', icon: '', id: 'homekeeping', traits: 'уборка' },
     ],
   },
   {
