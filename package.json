@@ -19,6 +19,7 @@
     "@mui/material": "^6.1.10",
     "@mui/x-date-pickers": "^7.23.1",
     "@reduxjs/toolkit": "^2.5.0",
+    "@xyflow/react": "^12.3.6",
     "axios": "^1.7.9",
     "chart.js": "^4.4.7",
     "date-fns": "^2.30.0",

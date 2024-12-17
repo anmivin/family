@@ -41,7 +41,7 @@ const StyledSvg = styled('svg')<IconProps>`
       ? css`
           fill: none;
           stroke: ${cssColor};
-          stroke-width: 1;
+          stroke-width: 1.5;
           max-height: ${responsive ? '100%' : ''};
         `
       : css`

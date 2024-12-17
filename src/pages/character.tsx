@@ -7,7 +7,7 @@ import { useEffect, useState, useCallback } from 'react';
 import CharacteristicChart from '@features/CharacteristicChart/CharacteristicChart';
 import SkillsChart from '@features/SkillsChart/SkillsChart';
 
-
+import CharacteristicFlow from '@features/CharacteristicFlow/CharacteristicFlow';
 interface UserType {
   name: string;
   level: number;
@@ -61,7 +61,7 @@ const Character = () => {
         экспа -- linechart
         новыки -- barchart
         */}
-        {user && <> {selectedTab === 2 && <CharacteristicChart userCharacteristics={user?.characteristics} />}</>}
+        {user && <> {selectedTab === 2 && <CharacteristicFlow />}</>}
 
         {user && skills && <>{selectedTab === 3 && <SkillsChart skills={skills} userSkills={user.skills} />}</>}
         <AddTaskButton />

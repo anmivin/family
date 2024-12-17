@@ -22,7 +22,7 @@ import {
   FridgeIcon,
   TrophyCapIcon,
   WalletIcon,
-  UserGroupIcon,
+  TwoHeartsIcon,
 } from '@ui/Icons';
 /* Task Assignments: 
 Allow users to assign tasks to other family members, making it easier to delegate responsibilities.
@@ -96,7 +96,7 @@ export const menuRoutes: RoutesProps[] = [
     key: '',
     link: Paths.family,
     Component: Family,
-    icon: <UserGroupIcon />,
+    icon: <TwoHeartsIcon />,
     name: 'Семья',
   },
   {
