@@ -51,7 +51,6 @@ export const characteristics = [
         name: 'Ментальное здоровье',
         id: 'mental_health',
         icon: <MeditationIcon color="red900" />,
-        traits: ['Медитация, Духовность', ''],
       },
     ],
   },
@@ -72,7 +71,6 @@ export const characteristics = [
         name: 'Изобразительное искусство',
         id: 'fine_arts',
         icon: <PaletteIcon color="green900" />,
-        traits: ['Painting  Sculpting  Drawing  Printmaking  Photography'],
       },
       {
         sorceHandle: 'bottom',
@@ -81,7 +79,6 @@ export const characteristics = [
         name: 'Прикладное искусство',
         id: 'applied_arts',
         icon: <PaletteCardsIcon color="green900" />,
-        traits: ['  Graphic design  Digital painting  Animation  Video production  Craft arts'],
       },
       {
         sorceHandle: 'right',
@@ -90,9 +87,6 @@ export const characteristics = [
         name: 'Исполнительское искусство',
         id: 'performing_arts',
         icon: <MusicNoteIcon color="green900" />,
-        traits: [
-          'Writing (fiction, non-fiction, poetry, etc.)  Storytelling  Screenwriting  Playwritingино Music   Dance   Theater   Cinema',
-        ],
       },
       {
         sorceHandle: 'right',
@@ -101,7 +95,6 @@ export const characteristics = [
         name: 'Культура',
         id: 'culture',
         icon: <NotebookIcon color="green900" />,
-        traits: [''],
       },
     ],
   },
@@ -122,7 +115,6 @@ export const characteristics = [
         name: 'Развлечения',
         icon: <ConfettiIcon color="orange900" />,
         id: 'fun',
-        traits: [],
       },
       {
         sorceHandle: 'top',
@@ -131,7 +123,6 @@ export const characteristics = [
         name: 'Связи',
         icon: <ShareCircleIcon color="orange900" />,
         id: 'networking',
-        traits: [],
       },
       {
         sorceHandle: 'top',
@@ -140,7 +131,6 @@ export const characteristics = [
         name: 'Общение',
         icon: <DialogBulbIcon color="orange900" />,
         id: 'communication',
-        traits: [],
       },
     ],
   },
@@ -161,7 +151,6 @@ export const characteristics = [
         name: 'Тело',
         icon: <DumbbellIcon color="violet900" />,
         id: 'body',
-        traits: ['Ловкость, Сила, Гибкость, Выносливость;', ''],
       },
       {
         sorceHandle: 'top',
@@ -170,7 +159,6 @@ export const characteristics = [
         name: 'Эстетика',
         icon: <PerfumeIcon color="violet900" />,
         id: 'aethetic',
-        traits: [],
       },
     ],
   },
@@ -192,7 +180,6 @@ export const characteristics = [
         name: 'Гуманитарные науки',
         icon: <MasksIcon color="blue900" />,
         id: 'human_science',
-        traits: ['', ''],
       },
       {
         sorceHandle: 'left',
@@ -201,7 +188,6 @@ export const characteristics = [
         name: 'Технические науки',
         icon: <CodeIcon color="blue900" />,
         id: 'technical_science',
-        traits: ['Программирование'],
       },
       {
         sorceHandle: 'bottom',
@@ -210,7 +196,6 @@ export const characteristics = [
         name: 'Иностранные языки',
         icon: <GlobusIcon color="blue900" />,
         id: 'languages',
-        traits: 'Иврит',
       },
       {
         sorceHandle: 'bottom',
@@ -219,7 +204,6 @@ export const characteristics = [
         name: 'Эрудиция',
         icon: <RulePencilIcon color="blue900" />,
         id: 'erudition',
-        traits: 'уборка',
       },
     ],
   },
@@ -240,7 +224,6 @@ export const characteristics = [
         name: 'Собирательство',
         icon: <LeafIcon color="yellow900" />,
         id: 'foraging',
-        traits: ['Грибничество', 'травничество', 'Садоводство'],
       },
       {
         sorceHandle: 'left',
@@ -249,16 +232,14 @@ export const characteristics = [
         name: 'Кулинария',
         icon: <ChiefHatIcon color="yellow900" />,
         id: 'culinary',
-        traits: ['', '', ''],
       },
       {
         sorceHandle: 'bottom',
         targetHandle: 'top',
         position: { x: 400, y: 150 },
-        name: 'Ремесло',
+        name: 'Домашнее хозяйство',
         icon: <HammerIcon color="yellow900" />,
         id: 'homekeeping',
-        traits: 'Плотник, Сантехника, электроника, шитьё уборка',
       },
     ],
   },

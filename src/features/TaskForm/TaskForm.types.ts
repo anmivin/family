@@ -1,11 +1,5 @@
 import { object, string, mixed, number, date, boolean, array } from 'yup';
-
-export enum TaskDifficulty {
-  Easy = 'Easy',
-  Medium = 'Medium',
-  Challenging = 'Challenging',
-  Exceptional = 'Exceptional',
-}
+import { TaskDifficulty } from '@helpers/calcLavel';
 
 export enum XPTarget {
   Skill = 'Skill',

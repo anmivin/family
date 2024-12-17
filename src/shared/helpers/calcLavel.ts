@@ -1,21 +1,179 @@
-/* Level = floor(sqrt(XP / XP_PER_LEVEL))
+import { differenceInDays } from 'date-fns';
 
-Where:
-
-XP is the total experience points earned by the character (i.e., the user)
-XP_PER_LEVEL is a constant that determines how much XP is required to reach the next level
-floor rounds the result down to the nearest whole number
-
-Easy tasks: 10-50 XP (e.g., "Read 15 pages of a new book", "Take a 10-minute walk")
-Medium tasks: 50-200 XP (e.g., "Complete a short online course", "Write a 500-word article")
-Challenging tasks: 200-500 XP (e.g., "Complete an HTML online course", "Run a 5K")
-Exceptional t asks: 500-1000 XP (e.g., "Write a 10,000-word essay", "Complete a marathon")*/
-
-export enum TASK_XP {
-  easy = 10,
-  mid = 50,
-  challeng = 200,
-  exepti = 500,
+export enum TaskDifficulty {
+  Easy = 'Easy',
+  Simple = 'Simple',
+  Medium = 'Medium',
+  Challenging = 'Challenging',
+  Hard = 'Hard',
+  Exceptional = 'Exceptional',
+  Epic = 'Epic',
+  Legendary = 'Legendary',
 }
 
-export const calcLavel = (level: number) => 100 * Math.pow(level, 2);
+/* Easy (10 XP)
+
+Make a to-do list for the day
+Start a conversation with a stranger in a coffee shop
+Share a funny meme or joke with a friend
+Create a short video or GIF for social media
+Write a short poem or song lyrics
+Attend a local art exhibit or gallery opening
+
+
+Simple (20 XP)
+
+Cook a simple meal (e.g. scrambled eggs, grilled cheese)
+Take a shower
+Brush and floss your teeth
+Take a short power nap (15-30 minutes)
+Read a chapter in a book
+Do a load of laundry
+Plan a game night with friends
+Learn a new board game or card game
+Start a book club or discussion group
+Attend a local concert or music event
+Share a personal story or experience with a friend
+
+Medium (50 XP)
+
+Clean the bathroom sink and toilet
+Wipe down the kitchen table and chairs
+Mop the floors
+Vacuum the living room
+Take a walk around the neighborhood (30 minutes)
+Practice yoga or meditation (30 minutes)
+Plan a weekend getaway with friends
+Learn a new dance style or routine
+Start a photography project or album
+Attend a writing workshop or conference
+Create a new recipe or cooking challenge
+
+Challenging (200 XP)
+
+n and execute a large-scale event or festival (e.g. a music festival, a cultural celebration)
+Learn a new language or dialect (e.g. a regional accent, a sign language)
+Start a podcast or YouTube channel
+Create a comprehensive art portfolio or exhibition
+Plan and execute a charity event or fundraiser
+
+Hard (400 XP)
+
+Plan and prep a healthy meal for the week
+Organize a cluttered closet or room
+Take a relaxing walk in nature (60 minutes)
+Practice a new language or skill (e.g. 1 hour of language learning)
+Write in a journal or reflect on your day (30 minutes)
+Plan and execute a major art project or installation
+Learn a new musical instrument or compose original music
+Start a non-profit organization or community project
+Create a comprehensive book or e-book
+Plan and execute a large-scale public art event
+
+Exceptional (500 XP)
+
+Complete a challenging artistic or creative project (e.g. a sculpture, a painting)
+Learn a new skill or trade (e.g. woodworking, metalworking)
+Start a successful business or startup
+Create a comprehensive documentary or film
+Plan and execute a large-scale cultural event or festival
+
+Epic (800 XP)
+
+Complete a legendary artistic or creative project (e.g. a masterpiece, a world-renowned installation)
+Learn a new language or skill that takes years to master (e.g. becoming a fluent speaker, a master craftsman)
+Start a successful non-profit organization or community project
+Create a comprehensive and widely acclaimed book or e-book
+Plan and execute a large-scale and historic event or festival
+
+Legendary (1000 XP)
+Start a successful and influential business or startup
+Create a comprehensive and widely acclaimed documentary or film
+
+*/
+
+const TaskDifficultyXP: Record<TaskDifficulty, { xp: number; label: string; time: number; examples: string[] }> = {
+  [TaskDifficulty.Easy]: {
+    xp: 15,
+    label: 'Лёгкая',
+    time: 5,
+    examples: [
+      'Передохнуть',
+      'Пройтись вокруг дома',
+      'Размяться',
+      'Проверить почту',
+      'Протереть столы',
+      'Развесить белье',
+    ],
+  },
+  [TaskDifficulty.Simple]: {
+    xp: 30,
+    label: 'Простая',
+    time: 10,
+    examples: ['Приготовить еду', 'Помыться', 'Подремать', 'Прочитать главу', 'Помыть посуду'],
+  },
+  [TaskDifficulty.Medium]: {
+    xp: 60,
+    label: 'Средняя',
+    time: 20,
+    examples: ['Помыть полы', 'Прогулка', 'Йога или медитация'],
+  },
+  [TaskDifficulty.Challenging]: {
+    xp: 120,
+    label: 'Трудная',
+    time: 40,
+    examples: [
+      'Генеральная уборка',
+      'Тренировка в спортзале',
+      'Прочитать книгу',
+      'Приготовить новое блюдо',
+      'Plan a romantic evening with a partner',
+      'Complete a complex task in a project (e.g. a multi-step task)',
+    ],
+  },
+  [TaskDifficulty.Hard]: {
+    xp: 240,
+    label: 'Сложная',
+    time: 80,
+    examples: ['Приготовить меню на неделю', 'Разобрать гардероб', 'Час практиковаться в языке'],
+  },
+  [TaskDifficulty.Exceptional]: {
+    xp: 480,
+    label: 'Исключительная',
+    time: 0,
+    examples: [
+      'Host a dinner party for friends or family',
+      'Complete a difficult workout routine (e.g. a marathon, a challenging hike)',
+      'Read a whole series of books in a short amount of time',
+      'Plan and execute a big project or event (e.g. a wedding, a move)',
+      'Take a week-long trip or vacation',
+    ],
+  },
+  [TaskDifficulty.Epic]: {
+    xp: 960,
+    label: 'Эпичная',
+    time: 0,
+    examples: ['Редекорировать дом', 'Learn a new skill or hobby (e.g. playing an instrument, painting)'],
+  },
+  [TaskDifficulty.Legendary]: {
+    xp: 1920,
+    label: 'Легендарная',
+    time: 0,
+    examples: [
+      'Спланировать и претворить в жизнь изменение в жизни',
+      'Создать произведение искусства',
+      'Путешествие в новую страну',
+    ],
+  },
+};
+
+const XP_BASE = 100;
+
+export const calcXpPerLevel = (level: number) => XP_BASE * Math.pow(level, 2);
+export const calcLevel = (xp: number) => Math.floor(Math.sqrt(xp / 100));
+export const calcEarnedXp = (difficulty: TaskDifficulty, prevEarnedXP: Date) => {
+  const XP_RATE_BASE = TaskDifficultyXP[difficulty].xp;
+  const TIME_PASSED = differenceInDays(new Date(), prevEarnedXP) / 10;
+  const XP_MULTIPLIER = 1 - TIME_PASSED;
+  return XP_RATE_BASE * (XP_MULTIPLIER < 0.25 ? 0.25 : XP_MULTIPLIER);
+};

@@ -1,312 +1,579 @@
 export const skills = [
   {
-    id: '',
+    id: 'fishing',
     name: 'Рыбалка',
-    characteristic: '',
+    characteristic: [
+      { id: 'foraging', percent: '' },
+      { id: 'physical_health', percent: '' },
+      { id: 'mental_health', percent: '' },
+    ],
   },
   {
-    id: '',
-    name: 'Комедия',
-    characteristic: '',
+    id: 'comedy',
+    name: 'Чувство юмора',
+    characteristic: [
+      { id: 'communication', percent: '' },
+      { id: 'performing_arts', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Исследования и дз',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Видеоигры',
-    characteristic: '',
+    characteristic: [
+      { id: 'fun', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Боулинг',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Клавишные инструменты',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Струнные иснтрументы',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Ударные инструменты',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Пение',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Садоводство',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Боевые искусства',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Писательство',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Танцы',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Смешивание напитков',
-    characteristic: '',
-  },
-  {
-    id: '',
-    name: 'Рисование',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Фотография',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Уборка',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Обаяние',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Катание на коньках',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Вождение',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Выпечка',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Программирование',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Изысканная кулинария',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Просто кулинария',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
+  },
+  {
+    id: '',
+    name: 'Духовность',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Вязание',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Вышивка',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Медитация',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Йога',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Бильярд',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Воспитание',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Здоровый образ жизни',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Кинематограф',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Математика',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Флористика',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'История',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Литература',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Шитьё',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Саннтехника',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Астрология',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Нумерология',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Руника',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Гибкость',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Сила',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Выносливость',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Плавание',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Фитнес',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Религиоведение',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Коммуникация',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Социальные сети',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Сантехника',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Электроника',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Харизма',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Эрудиция',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Медицина',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Здоровье',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'грибник',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'плотник',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Самооценка',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Память',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Воспитание',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Этика',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
   {
     id: '',
     name: 'Манеры',
-    characteristic: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
+  },
+  {
+    id: '',
+    name: 'Ловкость',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
+  },
+  {
+    id: '',
+    name: 'Английский язык',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
+  },
+  {
+    id: '',
+    name: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
+  },
+  {
+    id: '',
+    name: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
+  },
+  {
+    id: '',
+    name: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
+  },
+  {
+    id: '',
+    name: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
+  },
+  {
+    id: '',
+    name: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
+  },
+  {
+    id: '',
+    name: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
+  },
+  {
+    id: '',
+    name: '',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
+  },
+  {
+    id: 'painting',
+    name: 'Рисование',
+    characteristic: [
+      { id: '', percent: '' },
+      { id: '', percent: '' },
+    ],
   },
 ];

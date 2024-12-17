@@ -1,9 +1,6 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { AxiosError } from 'axios';
-import { isEqual } from 'lodash';
-
-import { DataType, KeyType, SwrContext } from './SwrContext';
+import { DataType, SwrContext } from './SwrContext';
 
 export interface useSwrProps {
   key: string;
@@ -14,48 +11,38 @@ export const useSwr = ({ key, func, params }: useSwrProps) => {
   const context = useContext(SwrContext);
   const [data, setData] = useState<DataType>();
   const [loading, setLoading] = useState(false);
-  const reloadRef = useRef(0);
 
   const fetch = async () => {
-    try {
-      const newData = await func(params);
-      context.set(key, { data: newData });
-      setData(newData);
-    } catch (e) {
-      /* if (reloads < 4) {
-          continue;
+    let retries = 0;
+    const maxRetries = 4;
+
+    while (retries <= maxRetries) {
+      try {
+        const newData = await func(params);
+        context.set(key, { data: newData });
+        setData(newData);
+        break;
+      } catch (e) {
+        retries++;
+        if (retries === maxRetries) {
+          context.set(key, { error: 'error' });
         } else {
-          context.set(key, { error: (e as AxiosError).message });
+          await new Promise((resolve) => setTimeout(resolve, 1000));
         }
-        if (reloadRef.current > 4) {
-          reloadRef.current += 1;
-          const newData = func(params);
-          context.set(key, { data: newData });
-          setData(newData);
-        } */
-    } finally {
-      setLoading(false);
+      }
     }
+    setLoading(false);
   };
+
   useEffect(() => {
     const currentState = context.get(key);
     if (currentState) {
       setData(currentState.data);
-      /*  try {
-        const newData = await func(params);
-        if (!isEqual(newData, currentState.data)) {
-          context.set(key, { data: newData });
-          setData(newData);
-        }
-      } catch (e) {
-      } finally {
-        setLoading(false);
-      } */
     } else {
       setLoading(true);
       fetch();
     }
   }, []);
 
-  return { data, loading };
+  return { data, loading, error: context.get(key)?.error, mutate: fetch };
 };
