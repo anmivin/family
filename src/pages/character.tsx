@@ -1,10 +1,10 @@
 import CharacterCard from '../entities/CharacterCard';
 import AddTaskButton from '../shared/ui/AddTaskButton';
-import { Box, styled } from '@mui/material';
+import { Box, Button, styled } from '@mui/material';
 import Tabs from '../shared/ui/Tabs';
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
-import CharacteristicChart from '@features/CharacteristicChart/CharacteristicChart';
+import useSwr from '../shared/swr/useSwr';
 import SkillsChart from '@features/SkillsChart/SkillsChart';
 
 import CharacteristicFlow from '@features/CharacteristicFlow/CharacteristicFlow';
@@ -20,28 +20,15 @@ interface UserType {
 
 const Character = () => {
   const [selectedTab, setSelectedTab] = useState(1);
-  const [user, setUser] = useState<UserType | null>(null);
-  const [skills, setSkills] = useState<
-    | {
-        id: string;
-        name: string;
-      }[]
-    | null
-  >(null);
+  const { data: user, loading: loadingUser } = useSwr({
+    key: 'user',
+    func: () => axios.get('/user').then((res) => res.data),
+  });
 
-  useEffect(() => {
-    axios
-      .get('/user')
-      .then((res) => res.data)
-      .then((data) => setUser(data));
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get('/skills')
-      .then((res) => res.data)
-      .then((data) => setSkills(data));
-  }, []);
+  const { data: skills, loading: loadingSkills } = useSwr({
+    key: 'skills',
+    func: () => axios.get('/skills').then((res) => res.data),
+  });
 
   return (
     <>

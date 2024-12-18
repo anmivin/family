@@ -17,7 +17,8 @@ import {
   Dialog,
 } from '@mui/material';
 import axios from 'axios';
-import { TaskFormProps, TaskFormValues, TaskFormSchema, TaskDifficulty, XPTarget, Period } from './TaskForm.types';
+import { TaskDifficulty } from '@helpers/calcLavel';
+import { TaskFormProps, TaskFormValues, TaskFormSchema, XPTarget, Period } from './TaskForm.types';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';

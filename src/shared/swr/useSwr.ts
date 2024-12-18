@@ -1,21 +1,22 @@
 import { useContext, useEffect, useState } from 'react';
-
-import { DataType, SwrContext } from './SwrContext';
+import { getErrorMessage } from '@helpers/utils';
+import { /* DataType ,*/ SwrContext } from './SwrContext';
 
 export interface useSwrProps {
   key: string;
-  func: (payload?: DataType) => DataType;
-  params?: DataType;
+  func: (payload?: any) => any;
+  params?: any;
 }
-export const useSwr = ({ key, func, params }: useSwrProps) => {
+const useSwr = ({ key, func, params }: useSwrProps) => {
   const context = useContext(SwrContext);
-  const [data, setData] = useState<DataType>();
+  const [data, setData] = useState<any>();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const fetch = async () => {
+    setLoading(true);
     let retries = 0;
     const maxRetries = 4;
-
     while (retries <= maxRetries) {
       try {
         const newData = await func(params);
@@ -25,7 +26,7 @@ export const useSwr = ({ key, func, params }: useSwrProps) => {
       } catch (e) {
         retries++;
         if (retries === maxRetries) {
-          context.set(key, { error: 'error' });
+          setError(getErrorMessage(e));
         } else {
           await new Promise((resolve) => setTimeout(resolve, 1000));
         }
@@ -36,13 +37,15 @@ export const useSwr = ({ key, func, params }: useSwrProps) => {
 
   useEffect(() => {
     const currentState = context.get(key);
+
     if (currentState) {
       setData(currentState.data);
     } else {
-      setLoading(true);
       fetch();
     }
   }, []);
 
-  return { data, loading, error: context.get(key)?.error, mutate: fetch };
+  return { data, loading, error, mutate: fetch };
 };
+
+export default useSwr;

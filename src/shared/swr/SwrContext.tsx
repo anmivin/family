@@ -1,12 +1,10 @@
 import { FC, ReactNode, createContext } from 'react';
 
-import { components, paths } from '@api/Api';
-
-export type DataType = components['schemas'][keyof components['schemas']];
+/* export type DataType = components['schemas'][keyof components['schemas']];
 export type KeyType = keyof paths;
-
+ */
 export interface SwrContextProps {
-  data?: DataType;
+  data?: any;
   error?: string;
 }
 
