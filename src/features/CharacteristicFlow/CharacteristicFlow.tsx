@@ -41,16 +41,21 @@ const Container = styled(Box)`
 `;
 const nodeTypes = { default: CustomNode };
 
-const nodesEdges = () => {
+const nodesEdges = (data: FlowTypes) => {
   const nodes = [
-    { id: 'center', position: { x: 300, y: 300 }, data: { name: '1', color: 'dark', icon: <></> }, type: 'default' },
+    {
+      id: 'center',
+      position: { x: 300, y: 300 },
+      data: { name: '1', color: 'dark', icon: <></>, points: 0 },
+      type: 'default',
+    },
   ];
   const edges: { id: string; source: string; target: string; sourceHandle?: string; targetHandle?: string }[] = [];
   characteristics.map((char) => {
     nodes.push({
       id: char.id,
       position: char.position,
-      data: { name: char.name, color: char.color, icon: char.icon },
+      data: { name: char.name, color: char.color, icon: char.icon, points: 0 },
       type: 'default',
     });
     edges.push({
@@ -64,7 +69,7 @@ const nodesEdges = () => {
       nodes.push({
         id: br.id,
         position: br.position,
-        data: { name: br.name, color: char.color, icon: br.icon },
+        data: { name: br.name, color: char.color, icon: br.icon, points: data[br.id as keyof FlowTypes] },
         type: 'default',
       });
       edges.push({
@@ -79,18 +84,41 @@ const nodesEdges = () => {
   return { nodes, edges };
 };
 
-const CharacteristicFlow = () => {
+interface FlowTypes {
+  physical_health: number;
+  mental_health: number;
+  fine_arts: number;
+  applied_arts: number;
+  performing_arts: number;
+  culture: number;
+  fun: number;
+  networking: number;
+  communication: number;
+  body: number;
+  beauty: number;
+  aethetic: number;
+  human_science: number;
+  technical_science: number;
+  languages: number;
+  erudition: number;
+  foraging: number;
+  culinary: number;
+  homekeeping: number;
+}
+
+const CharacteristicFlow = ({ data }: { data: FlowTypes }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
   useEffect(() => {
-    setNodes(nodesEdges().nodes);
-    setEdges(nodesEdges().edges);
-  }, []);
+    const flowData = nodesEdges(data);
+    setNodes(flowData.nodes);
+    setEdges(flowData.edges);
+  }, [data]);
 
   return (
     <Container style={{ width: '100vw', height: '100vh' }}>
-      <ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} />
+      <ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} onNodesChange={onNodesChange} />
     </Container>
   );
 };

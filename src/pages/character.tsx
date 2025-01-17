@@ -8,15 +8,6 @@ import useSwr from '../shared/swr/useSwr';
 import SkillsChart from '@features/SkillsChart/SkillsChart';
 
 import CharacteristicFlow from '@features/CharacteristicFlow/CharacteristicFlow';
-interface UserType {
-  name: string;
-  level: number;
-  xp: number;
-  gold: number;
-  levelName: string;
-  characteristics: { health: number; science: number; art: number; household: number; beauty: number; social: number };
-  skills: { id: string; level: number }[];
-}
 
 const Character = () => {
   const [selectedTab, setSelectedTab] = useState(1);
@@ -43,13 +34,7 @@ const Character = () => {
       />
       <Box display="flex" flexDirection="column" gap={2} p={2}>
         {selectedTab === 1 && user && <CharacterCard {...user} />}
-        {/* 
-        характеристики -- Polar area
-        экспа -- linechart
-        новыки -- barchart
-        */}
-        {user && <> {selectedTab === 2 && <CharacteristicFlow />}</>}
-
+        {user && <> {selectedTab === 2 && <CharacteristicFlow data={user.features} />}</>}
         {user && skills && <>{selectedTab === 3 && <SkillsChart skills={skills} userSkills={user.skills} />}</>}
         <AddTaskButton />
 

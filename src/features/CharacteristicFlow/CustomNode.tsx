@@ -1,9 +1,8 @@
-import { Box, styled } from '@mui/material';
+import { Box, styled, Tooltip, Popover } from '@mui/material';
 import { Color } from '@theme/themeVariants';
-import { Node, NodeProps, Position, Handle } from '@xyflow/react';
-import { cloneElement, createElement, ReactNode } from 'react';
-
-type NodeType = Node<{ icon: ReactNode; name: string; color: string }, 'custom'>;
+import { Node, NodeProps, Position, Handle, NodeToolbar } from '@xyflow/react';
+import { cloneElement, createElement, ReactNode, useState } from 'react';
+type NodeType = Node<{ icon: ReactNode; name: string; color: string; points: number }, 'custom'>;
 
 const StyledBox = styled(Box)<{ $color: string }>`
   display: flex;
@@ -16,6 +15,8 @@ const StyledBox = styled(Box)<{ $color: string }>`
   height: 60px;
 `;
 const CustomNode = ({ data }: NodeProps<NodeType>) => {
+  const [selectedInfo, setselectedInfo] = useState<number | null>(null);
+  const [anchorel, setAnchorEl] = useState<HTMLDivElement | null>(null);
   return (
     <>
       {Object.values(Position).map((pos) => (
@@ -25,9 +26,24 @@ const CustomNode = ({ data }: NodeProps<NodeType>) => {
         </>
       ))}
 
-      <StyledBox $color={data.color} onClick={() => console.log('dsf')}>
+      <StyledBox
+        $color={data.color}
+        onClick={(e) => {
+          console.log(e);
+          setselectedInfo(data.points);
+          setAnchorEl(e.currentTarget);
+        }}
+      >
         {data.icon}
       </StyledBox>
+
+      <NodeToolbar isVisible={!!anchorel} position={Position.Bottom}>
+        {selectedInfo}
+      </NodeToolbar>
+
+      {/* <Popover open={!!anchorel} onClose={() => setAnchorEl(null)}>
+        {selectedInfo}
+      </Popover> */}
     </>
   );
 };

@@ -11,7 +11,7 @@ const initialState: ModalsSliceProps = {
 };
 
 export const modalsSlice = createSlice({
-  name: 'modals',
+  name: 'users',
   initialState,
   reducers: {
     setIsTaskFormOpen: (state, action: PayloadAction<boolean>) => {

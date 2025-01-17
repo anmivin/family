@@ -1,9 +1,10 @@
 import { ReactNode, useEffect } from 'react';
 import TaskForm from './features/TaskForm/TaskForm';
-import { getRoutes } from './shared/constants/routes';
+import LoginForm from '@features/LoginForm/LoginForm';
 import Test from './shared/ui/Icons/Test';
 import Header from '@ui/Header';
 import BottomTabs from './shared/ui/BottomTabs';
+import { Box } from '@mui/material';
 
 const Layout = ({ children }: { children: ReactNode }) => {
   /*   useEffect(() => {
@@ -46,7 +47,8 @@ const Layout = ({ children }: { children: ReactNode }) => {
       </Box> */}
       <Header />
       <TaskForm />
-      {children} <BottomTabs routes={getRoutes()} />
+      <Box py={10}> {children}</Box>
+      <BottomTabs />
     </>
   );
 };

@@ -53,6 +53,7 @@ export const Paths = {
   settings: '/settings',
   shopping: '/shopping',
   tasks: '/tasks',
+  login: '/login/:id',
 } as const;
 
 interface RoutesProps {
@@ -122,13 +123,6 @@ export const menuRoutes: RoutesProps[] = [
   },
   {
     key: '',
-    link: Paths.settings,
-    Component: Settings,
-    icon: <SettingsIcon />,
-    name: 'Настройки',
-  },
-  {
-    key: '',
     link: Paths.shopping,
     Component: Shopping,
     icon: <ShoppingBasketIcon />,
@@ -175,10 +169,6 @@ const defaultRouting = [
   {
     key: Paths.notes,
     order: 3,
-  },
-  {
-    key: Paths.settings,
-    order: 11,
   },
   {
     key: Paths.shopping,

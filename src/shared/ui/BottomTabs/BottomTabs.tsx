@@ -1,7 +1,8 @@
 import { Box, IconButton, Button, styled } from '@mui/material';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { getRoutes } from '../../constants/routes';
 const StyledMenu = styled(Box)`
   background-color: ${({ theme }) => theme.color.primaryMain};
 
@@ -19,16 +20,15 @@ const StyledButton = styled(Button)<{ $selected: boolean; $count: number }>`
     color: ${({ theme }) => theme.color.textMain};
   }
 `;
-export interface BottomTabsProps {
-  routes: { link: string; icon: ReactNode }[];
-}
-const BottomTabs = ({ routes }: BottomTabsProps) => {
+export interface BottomTabsProps {}
+const BottomTabs = ({}: BottomTabsProps) => {
   const path = useLocation();
+  useEffect(() => console.log(path), [path]);
   return (
     <StyledMenu>
-      {routes.map((route) => (
+      {getRoutes().map((route) => (
         <Link to={route.link} key={route.link}>
-          <StyledButton $count={routes.length} $selected={path.pathname === route.link}>
+          <StyledButton $count={getRoutes().length} $selected={path.pathname === route.link}>
             {route.icon}
           </StyledButton>
         </Link>

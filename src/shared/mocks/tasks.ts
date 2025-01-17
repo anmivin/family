@@ -1,6 +1,46 @@
 import { http, HttpResponse } from 'msw';
 
 const taskHandler = [
+  http.get('/calendar', () => {
+    return HttpResponse.json([
+      {
+        id: '1',
+        name: '',
+        type: 'task',
+        date: '01-01-2025',
+      },
+      {
+        id: '2',
+        name: '',
+        type: 'task',
+        date: '01-02-2025',
+      },
+      {
+        id: '3',
+        name: '',
+        type: 'holiday',
+        date: '01-02-2025',
+      },
+      {
+        id: '4',
+        name: '',
+        type: 'task',
+        date: '01-06-2025',
+      },
+      {
+        id: '5',
+        name: '',
+        type: 'holiday',
+        date: '01-06-2025',
+      },
+      {
+        id: '6',
+        name: '',
+        type: 'holiday',
+        date: '01-03-2025',
+      },
+    ]);
+  }),
   http.get('/tasks', () => {
     return HttpResponse.json([
       {

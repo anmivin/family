@@ -51,6 +51,7 @@ export const toDate = (date: string | number | Date) => (typeof date !== 'object
 
 export const getDefaultDate = (date: number | string | Date) => format(toDate(date), 'dd.MM.yyyy');
 export const getDateTime = (date: number | string | Date) => format(toDate(date), 'dd.MM.yyyy, HH:mm');
+export const getDate = (date: number | string | Date) => format(toDate(date), 'd');
 
 export function parseDate(date: number | string | Date) {
   return typeof date === 'string' ? parse(date, formatDateWithTime, new Date()) : date;
