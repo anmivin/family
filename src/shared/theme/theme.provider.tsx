@@ -16,7 +16,7 @@ export const ColorModeContext = createContext({
 });
 
 const ThemeColorModeProvider = ({ children, currentThemeName }: ThemeColorModeProviderProps) => {
-  const { storedValue: mode, setValue: setMode } = useStorage<ThemeName>('themeMode', currentThemeName || ThemeName._1);
+  const { storedValue: mode, setValue: setMode } = useStorage<ThemeName>('themeMode', currentThemeName || ThemeName._2);
 
   const colorMode = useMemo(
     () => ({

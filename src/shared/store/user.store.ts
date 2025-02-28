@@ -10,7 +10,7 @@ const initialState: ModalsSliceProps = {
   isLoginFormOpen: false,
 };
 
-export const modalsSlice = createSlice({
+export const userSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
@@ -23,6 +23,6 @@ export const modalsSlice = createSlice({
   },
 });
 
-export const { setIsTaskFormOpen, setIsLoginFormOpen } = modalsSlice.actions;
+export const { setIsTaskFormOpen, setIsLoginFormOpen } = userSlice.actions;
 
-export default modalsSlice.reducer;
+export default userSlice.reducer;

@@ -15,7 +15,7 @@ const userHandler = [
     }
   }),
   //продуктивность -- тасок в день, дисциплина -- стрик
-  http.get('/user', ({ cookies }) => {
+  http.get('/users', ({ cookies }) => {
     console.log(cookies);
     return HttpResponse.json({
       name: 'Имечко',

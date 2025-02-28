@@ -20,7 +20,7 @@ export const StyledDescription = styled(Typography)`
   text-overflow: ellipsis;
 `;
 
-const TaskCard = ({ id, name, description, date, timed, creator, repeat }: TaskCardProps) => {
+const TaskCard = ({ id, name, description, date, creator, repeat }: TaskCardProps) => {
   return (
     <StyledCard>
       <Box display="flex" alignItems="center" justifyContent="space-between">
@@ -33,13 +33,13 @@ const TaskCard = ({ id, name, description, date, timed, creator, repeat }: TaskC
         {!!repeat && (
           <Box display="flex" alignItems="center" gap={1}>
             <RepeatIcon size={20} color="textMain" />
-            <Typography>{repeat}</Typography>
+            <Typography>{repeat.currency}</Typography>
           </Box>
         )}
         {!!date && (
           <Box display="flex" alignItems="center" gap={1}>
             <ClockIcon size={20} color="textMain" />
-            <Typography>{timed ? getDateTime(date) : getDefaultDate(date)}</Typography>
+            <Typography>{/* timed ? getDateTime(date) :  */ getDefaultDate(date)}</Typography>
           </Box>
         )}
       </Box>

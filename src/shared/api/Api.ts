@@ -75,7 +75,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["UsersController_findAll"];
+        get?: never;
         put?: never;
         post: operations["UsersController_create"];
         delete?: never;
@@ -100,6 +100,22 @@ export interface paths {
         patch: operations["UsersController_update"];
         trace?: never;
     };
+    "/users/wishes/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UsersController_getUserWishes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/auth/login": {
         parameters: {
             query?: never;
@@ -116,14 +132,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/lists/features": {
+    "/": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["ListsController_getFeatures"];
+        get: operations["EnumsController_getEnums"];
         put?: never;
         post?: never;
         delete?: never;
@@ -132,46 +148,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/lists/skills": {
+    "/logs": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["ListsController_getSkills"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/lists/skills/user": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["ListsController_getUserSkills"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/lists/features/user": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["ListsController_getUserFeatures"];
+        get: operations["LogsController_getLogs"];
         put?: never;
         post?: never;
         delete?: never;
@@ -184,12 +168,24 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        TaskTypeDto: {
+            isImportant: boolean;
+            isActive: boolean;
+            isCompleted: boolean;
+            isApproving: boolean;
+            isDeclined: boolean;
+            isHoliday: boolean;
+            isHabit: boolean;
+            isYear: boolean;
+        };
         SubtaskDto: {
             name: string;
-            difficulty: string;
+            /** @enum {string} */
+            difficulty: "Easy" | "Simple" | "Medium" | "Challenging" | "Hard" | "Exceptional" | "Epic" | "Legendary";
         };
         PeriodDto: {
-            period: string;
+            /** @enum {string} */
+            period: "Hour" | "Day" | "Week" | "Month" | "Year" | "Simple";
             currency: number;
         };
         PercentDto: {
@@ -198,9 +194,11 @@ export interface components {
         };
         CreateTaskDto: {
             name: string;
-            difficulty: string;
+            /** @enum {string} */
+            difficulty: "Easy" | "Simple" | "Medium" | "Challenging" | "Hard" | "Exceptional" | "Epic" | "Legendary";
             userId: string;
             description: string;
+            types: components["schemas"]["TaskTypeDto"];
             /** Format: date-time */
             date: string;
             time: boolean;
@@ -210,10 +208,16 @@ export interface components {
             skills: components["schemas"]["PercentDto"][];
             features: components["schemas"]["PercentDto"][];
         };
+        FindTasksDto: {
+            userId: string;
+            types: components["schemas"]["TaskTypeDto"];
+        };
         OutputTaskDto: {
             name: string;
-            difficulty: string;
+            /** @enum {string} */
+            difficulty: "Easy" | "Simple" | "Medium" | "Challenging" | "Hard" | "Exceptional" | "Epic" | "Legendary";
             description: string;
+            types: components["schemas"]["TaskTypeDto"];
             /** Format: date-time */
             date: string;
             time: boolean;
@@ -225,9 +229,15 @@ export interface components {
         };
         EditTaskDto: {
             taskId: string;
-            status: string;
+            types: components["schemas"]["TaskTypeDto"];
         };
-        CreateUserDto: Record<string, never>;
+        CreateUserDto: {
+            name: string;
+            email: string;
+            password: string;
+            familyid: string;
+            role: string;
+        };
         OutputUserDto: {
             id: string;
             name: string;
@@ -235,27 +245,19 @@ export interface components {
             xp: number;
             gold: number;
         };
-        EditUserDto: Record<string, never>;
+        EditUserDto: {
+            name?: string;
+            email?: string;
+            password?: string;
+            familyid?: string;
+            role?: string;
+        };
         LoginDto: {
             name: string;
             password: string;
         };
         LoginOutputDto: {
             accessToken: string;
-        };
-        FeatureDto: {
-            id: string;
-            name: string;
-            description: string;
-            color: string;
-            sorceHandle: string;
-            targetHandle: string;
-            positionX: number;
-            positionY: number;
-        };
-        SkillDto: {
-            id: string;
-            name: string;
         };
     };
     responses: never;
@@ -275,7 +277,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": string;
+                "application/json": components["schemas"]["FindTasksDto"];
             };
         };
         responses: {
@@ -413,23 +415,6 @@ export interface operations {
             };
         };
     };
-    UsersController_findAll: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
     UsersController_create: {
         parameters: {
             query?: never;
@@ -514,6 +499,25 @@ export interface operations {
             };
         };
     };
+    UsersController_getUserWishes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     AuthController_login: {
         parameters: {
             query?: never;
@@ -537,7 +541,7 @@ export interface operations {
             };
         };
     };
-    ListsController_getFeatures: {
+    EnumsController_getEnums: {
         parameters: {
             query?: never;
             header?: never;
@@ -550,13 +554,11 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": components["schemas"]["FeatureDto"][];
-                };
+                content?: never;
             };
         };
     };
-    ListsController_getSkills: {
+    LogsController_getLogs: {
         parameters: {
             query?: never;
             header?: never;
@@ -573,55 +575,7 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": components["schemas"]["SkillDto"][];
-                };
-            };
-        };
-    };
-    ListsController_getUserSkills: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": string;
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SkillDto"][];
-                };
-            };
-        };
-    };
-    ListsController_getUserFeatures: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": string;
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["FeatureDto"][];
-                };
+                content?: never;
             };
         };
     };
