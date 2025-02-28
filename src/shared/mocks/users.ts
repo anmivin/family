@@ -1,11 +1,10 @@
-// src/mocks/modules/user.ts
-
 import { http, HttpResponse } from 'msw';
 
 const userHandler = [
-  http.post('/login', ({ params }) => {
-    const { password, username } = params;
-    if (username === 'Amir' && password === '123') {
+  http.post('/login', async ({ request }) => {
+    const req = await request.json();
+    const { name, password } = req;
+    if (name === 'admin' && password === 'admin') {
       return HttpResponse.json({
         access: '1a2b3c4d',
         refresh: '0l7n5ff',
@@ -16,7 +15,6 @@ const userHandler = [
   }),
   //продуктивность -- тасок в день, дисциплина -- стрик
   http.get('/user', ({ cookies }) => {
-    console.log(cookies);
     return HttpResponse.json({
       name: 'Имечко',
       level: 3,

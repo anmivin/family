@@ -16,8 +16,9 @@ import {
   IconButton,
   Dialog,
 } from '@mui/material';
+import { PlusIcon } from '@ui/Icons';
 import axios from 'axios';
-import { TaskDifficulty } from '@helpers/calcLavel';
+import { TaskDifficulty, TaskDifficultyXP } from '@helpers/calcLavel';
 import { TaskFormProps, TaskFormValues, TaskFormSchema, XPTarget, Period } from './TaskForm.types';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { useEffect, useState } from 'react';
@@ -91,7 +92,17 @@ const TaskForm = () => {
 
   useEffect(() => console.log(errors), [errors]);
   return (
-    <DefaultDrawer open={isTaskFormOpen} onClose={onClose}>
+    <DefaultDrawer
+      open={isTaskFormOpen}
+      onClose={onClose}
+      title="Создание задачи"
+      footer={
+        <Box width="100%" display="flex" justifyContent="center" gap={8}>
+          <Button onClick={onSubmit}>сохранить</Button>
+          <Button onClick={onClose}>отмена</Button>
+        </Box>
+      }
+    >
       <Controller
         control={control}
         name="name"
@@ -118,6 +129,7 @@ const TaskForm = () => {
       {formValues.target === XPTarget.Skill ? (
         <>
           <Button
+            startIcon={<PlusIcon />}
             fullWidth
             onClick={() =>
               appendSkill({
@@ -131,6 +143,7 @@ const TaskForm = () => {
           {skillFields.map((field, index) => (
             <Box key={field.id} display="flex" flexDirection="row" gap={1} width="100%">
               <Autocomplete
+                fullWidth
                 options={[...(skills ?? []), { id: 'create', name: '' }]}
                 getOptionLabel={(option) => option.name}
                 renderInput={(params) => <TextField variant="standard" label="Навык" {...params} />}
@@ -177,12 +190,29 @@ const TaskForm = () => {
           ))}
         </>
       )}
+      <Box>
+        <FormControlLabel
+          control={<Checkbox />}
+          label="На весь год"
+          onChange={(e, checked) => setValue('year', checked)}
+        />
+        <FormControlLabel
+          control={<Checkbox />}
+          label="Привычка"
+          onChange={(e, checked) => {
+            setValue('habit', checked);
+            setValue('difficulty', TaskDifficulty.Easy);
+          }}
+        />
+        <FormControlLabel
+          control={<Checkbox />}
+          label="Важная задача"
+          onChange={(e, checked) => {
+            setValue('important', checked);
+          }}
+        />
+      </Box>
 
-      <FormControlLabel
-        control={<Checkbox />}
-        label="На весь год"
-        onChange={(e, checked) => setValue('year', checked)}
-      />
       {formValues.year && (
         <>
           <Button
@@ -238,18 +268,16 @@ const TaskForm = () => {
         fullWidth
         value={formValues.difficulty}
         exclusive
+        disabled={formValues.habit}
         onChange={(_e, value) => setValue('difficulty', value)}
       >
         {Object.values(TaskDifficulty).map((item, index) => (
           <ToggleButton key={index} value={item}>
-            {item}
+            {TaskDifficultyXP[item].label}
           </ToggleButton>
         ))}
       </ToggleButtonGroup>
-      <Box>
-        <Button onClick={onSubmit}>сохранить</Button>
-        <Button onClick={onClose}>отмена</Button>
-      </Box>
+
       <Dialog open={dialogOpene} onClose={() => setDialogOpen(false)}>
         {Object.values(Period).map((item, index) => (
           <Button key={index} onClick={() => setValue('repeat', item)}>

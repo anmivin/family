@@ -1,11 +1,9 @@
-import { Box, IconButton, Button, styled } from '@mui/material';
-import { ReactNode, useEffect } from 'react';
+import { Box, Button, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { getRoutes } from '../../constants/routes';
 const StyledMenu = styled(Box)`
   background-color: ${({ theme }) => theme.color.primaryMain};
-
   position: fixed;
   bottom: 0;
   display: flex;
@@ -23,7 +21,7 @@ const StyledButton = styled(Button)<{ $selected: boolean; $count: number }>`
 export interface BottomTabsProps {}
 const BottomTabs = ({}: BottomTabsProps) => {
   const path = useLocation();
-  useEffect(() => console.log(path), [path]);
+
   return (
     <StyledMenu>
       {getRoutes().map((route) => (

@@ -6,23 +6,32 @@ import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
 import useSwr from '../shared/swr/useSwr';
 import SkillsChart from '@features/SkillsChart/SkillsChart';
-
+import { api } from '../shared/api/axios';
 import CharacteristicFlow from '@features/CharacteristicFlow/CharacteristicFlow';
 
 const Character = () => {
   const [selectedTab, setSelectedTab] = useState(1);
   const { data: user, loading: loadingUser } = useSwr({
-    key: 'user',
-    func: () => axios.get('/user').then((res) => res.data),
+    func: () => axios.get('/users'),
   });
 
   const { data: skills, loading: loadingSkills } = useSwr({
-    key: 'skills',
     func: () => axios.get('/skills').then((res) => res.data),
+  });
+
+  const {
+    data: error,
+    loading: loadingError,
+    error: justError,
+  } = useSwr({
+    func: () => axios.get('/error').then((res) => res.data),
   });
 
   return (
     <>
+      {error && 'dataError'}
+      {loadingError && 'loadingError'}
+      {justError && 'errorError'}
       <Tabs
         tabs={[
           { label: 'Персонаж', value: 1 },

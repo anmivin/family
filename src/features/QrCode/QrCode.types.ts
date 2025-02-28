@@ -28,8 +28,6 @@ export interface TaskFormValues {
   date?: Date;
   time?: Date;
   year?: boolean;
-  habit?: boolean;
-  important?: boolean;
   subtasks: SubtaskProps[];
   repeat?: Period | { period: Period; count: number };
 }
@@ -52,8 +50,6 @@ export const TaskFormSchema = object({
   date: date(),
   time: date(),
   year: boolean(),
-  habit: boolean(),
-  important: boolean(),
   subtasks: array()
     .of(
       object({

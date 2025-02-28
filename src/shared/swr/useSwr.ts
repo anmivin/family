@@ -1,27 +1,48 @@
 import { useContext, useEffect, useState } from 'react';
 import { getErrorMessage } from '@helpers/utils';
-import { /* DataType ,*/ SwrContext } from './SwrContext';
+import { DataType, KeyType, SwrContext } from './SwrContext';
 
 export interface useSwrProps {
-  key: string;
-  func: (payload?: any) => any;
-  params?: any;
+  func: (url?: any) => Promise<any>;
 }
-const useSwr = ({ key, func, params }: useSwrProps) => {
+
+interface ReturnType<T extends KeyType> {
+  data: DataType<T> | null;
+  loading: boolean;
+  error: string | null;
+  mutate: () => Promise<void>;
+}
+
+const getKey = (fetchFunction: useSwrProps['func']): string | undefined => {
+  try {
+    const funcBody = fetchFunction.toString();
+    const match = funcBody.match(/axios\.get\(['"]([^'"]+)['"]/);
+    return match && match[1] ? match[1] : undefined;
+  } catch (error) {
+    console.error(error);
+  }
+  return undefined;
+};
+
+const useSwr = <T extends KeyType>({ func }: useSwrProps): ReturnType<T> => {
+  const key = getKey(func);
+  if (!key) throw new Error('no url');
   const context = useContext(SwrContext);
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<DataType<typeof key> | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const sdfs = '/tasks';
+  type sf = DataType<typeof sdfs>;
   const fetch = async () => {
     setLoading(true);
     let retries = 0;
     const maxRetries = 4;
     while (retries <= maxRetries) {
       try {
-        const newData = await func(params);
-        context.set(key, { data: newData });
-        setData(newData);
+        const newData = await func();
+        context.set(key, { data: newData.data });
+        setData(newData.data);
         break;
       } catch (e) {
         retries++;

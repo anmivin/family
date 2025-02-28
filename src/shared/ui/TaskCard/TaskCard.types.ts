@@ -1,9 +1,6 @@
-export interface TaskCardProps {
+import { components } from '@api/Api';
+export interface TaskCardProps
+  extends Pick<components['schemas']['OutputTaskDto'], 'name' | 'date' | 'description' | 'repeat'> {
   id: string;
-  name: string;
-  description: string;
-  date?: string;
-  timed?: boolean;
   creator?: string;
-  repeat: number;
 }

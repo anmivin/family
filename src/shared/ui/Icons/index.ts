@@ -1,6 +1,8 @@
 export { default as AcademicCapIcon } from './AcademicCapIcon';
 export { default as CalendarIcon } from './CalendarIcon';
 export { default as CharacterIcon } from './CharacterIcon';
+export { default as ChevronLeftIcon } from './ChevronLeftIcon';
+export { default as ChevronRightIcon } from './ChevronRightIcon';
 export { default as ChiefHatIcon } from './ChiefHatIcon';
 export { default as ClockIcon } from './ClockIcon';
 export { default as CodeIcon } from './CodeIcon';

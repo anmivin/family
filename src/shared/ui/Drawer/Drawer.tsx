@@ -1,6 +1,10 @@
-import { Drawer, DrawerProps, styled } from '@mui/material';
+import { Drawer, DrawerProps, Box, Typography, styled } from '@mui/material';
+import { ReactNode } from 'react';
 
-interface DefaultDrawerProps extends DrawerProps {}
+interface DefaultDrawerProps extends Omit<DrawerProps, 'title'> {
+  footer?: ReactNode;
+  title?: ReactNode;
+}
 
 const StyledDrawer = styled(Drawer)`
   & .MuiDrawer-paper {
@@ -9,11 +13,22 @@ const StyledDrawer = styled(Drawer)`
     background-color: ${({ theme }) => theme.color.primaryLight};
     display: flex;
     flex-derection: column;
-    gap: 16px;
+    justify-content: space-between;
+    overflow-y: auto;
+    gap: 20px;
   }
 `;
-const DefaultDrawer = ({ ...props }: DefaultDrawerProps) => {
-  return <StyledDrawer {...props} />;
+
+const DefaultDrawer = ({ footer, title, children, ...props }: DefaultDrawerProps) => {
+  return (
+    <StyledDrawer {...props}>
+      <Box display="flex" flexDirection="column" gap={4}>
+        {typeof title === 'string' ? <Typography variant="h3">{title}</Typography> : title}
+        {children}
+      </Box>
+      {footer}
+    </StyledDrawer>
+  );
 };
 
 export default DefaultDrawer;
