@@ -1,13 +1,8 @@
 import { FC, ReactNode, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { useUnit } from 'effector-react';
-
-import { getUser } from 'entities/auth/Auth.api';
-import { AuthService } from 'entities/auth/Auth.model';
-
+import { me } from '@api/axiosInstance';
 import { useAppSelector, useAppDispatch } from '@stores/global.store';
-import { setUserInfo } from '@stores/user.store';
+import { fetchUserById, setUserInfo } from '@stores/users/users.store';
 
 export const UserInit: FC<{ children: ReactNode }> = ({ children }) => {
   const { userInfo } = useAppSelector((state) => state.userSlice);
@@ -23,7 +18,7 @@ export const UserInit: FC<{ children: ReactNode }> = ({ children }) => {
       if (userInfo?.phone) {
         setInit(true);
       } else {
-        getUser()
+        me()
           .then((res) => {
             if (res) {
               const clientInfo = res;

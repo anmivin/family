@@ -3,7 +3,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 
 import modalsSlice from './modals.store';
-import userSlice from './user.store';
+import userSlice from './users/users.store';
 
 const rootReducer = combineReducers({ modalsSlice, userSlice });
 

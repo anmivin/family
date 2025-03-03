@@ -1,5 +1,5 @@
 import { OpenApiAxios } from '@web-bee-ru/openapi-axios';
-import type { paths, components } from './Api';
+import type { paths } from './Api';
 import Axios from 'axios';
 
 const axios = Axios.create({
@@ -22,6 +22,3 @@ axios.interceptors.response.use(
 );
 
 export const axiosInstance = new OpenApiAxios<paths, 'fetch'>(axios, { validStatus: 'fetch' });
-
-export const signUp = (data: components['schemas']['CreateUserDto']) => axiosInstance.post('/users', data);
-export const signIn = (data: components['schemas']['LoginInputDto']) => axiosInstance.post('/auth/login', data);
