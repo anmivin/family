@@ -129,6 +129,28 @@ const TaskForm = () => {
       ) : (
         <PercentageField name="skills" options={skills ?? []} label="Навык" enableCreateOption />
       )}
+      <Box>
+        <FormControlLabel
+          control={<Checkbox />}
+          label="На весь год"
+          onChange={(e, checked) => setValue('year', checked)}
+        />
+        <FormControlLabel
+          control={<Checkbox />}
+          label="Привычка"
+          onChange={(e, checked) => {
+            setValue('habit', checked);
+            setValue('difficulty', TaskDifficulty.Easy);
+          }}
+        />
+        <FormControlLabel
+          control={<Checkbox />}
+          label="Важная задача"
+          onChange={(e, checked) => {
+            setValue('important', checked);
+          }}
+        />
+      </Box>
 
       <FormControlLabel
         control={<Checkbox />}

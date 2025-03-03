@@ -2,7 +2,7 @@ import DefaultDrawer from '@ui/Drawer';
 import { useAppSelector, useAppDispatch } from '../../shared/store/global.store';
 import { setIsLoginFormOpen } from '../../shared/store/modals.store';
 import { TextField, Button, Box, Tooltip } from '@mui/material';
-
+import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { LoginFormSchema, LoginFormValues } from './LoginForm.types';
 
@@ -34,10 +34,12 @@ const LoginForm = () => {
   } = formMethods;
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    axios
+      .post('/login', data)
+      .then((res) => res.data)
+      .then((data) => console.log(data));
   });
 
-  useEffect(() => console.log(errors), [errors]);
   return (
     <Box display="flex" flexDirection="column" p={3}>
       <Controller
