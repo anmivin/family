@@ -25,19 +25,16 @@
     "paths": {
       "@app/*": ["./src/app/*"],
       "@pages/*": ["./src/pages/*"],
-      "@widgets/*": ["./src/widgets/*"],
       "@features/*": ["./src/features/*"],
       "@entities/*": ["./src/entities/*"],
+
       "@api/*": ["./src/shared/api/*"],
-      "@components/*": ["./src/shared/components/*"],
       "@constants/*": ["./src/shared/constants/*"],
-      "@type/*": ["./src/shared/types/*"],
       "@helpers/*": ["./src/shared/helpers/*"],
       "@stores/*": ["./src/shared/stores/*"],
       "@theme/*": ["./src/shared/theme/*"],
-      "@ui/*": ["./src/shared/ui/*"],
-      "@assets/*": ["./src/shared/assets/*"],
-      "@images/*": ["./public/*"]
+      "@types/*": ["./src/shared/types/*"],
+      "@ui/*": ["./src/shared/ui/*"]
     }
   },
   "include": ["src"]

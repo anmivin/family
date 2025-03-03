@@ -14,6 +14,34 @@ export enum Period {
   Year = 'Year',
 }
 
+export const PeriodLabels: Record<
+  Period,
+  {
+    labels: { zero?: string; one?: string; two?: string; few?: string; many?: string; other: string };
+    every: { zero?: string; one?: string; two?: string; few?: string; many?: string; other: string };
+  }
+> = {
+  [Period.Hour]: {
+    labels: { one: 'час', two: 'часа', few: 'часа', other: 'часов' },
+    every: { one: 'Каждый', other: 'Каждые' },
+  },
+  [Period.Day]: {
+    labels: { one: 'день', two: 'дня', few: 'дня', other: 'дней' },
+    every: { one: 'Каждый', other: 'Каждые' },
+  },
+  [Period.Week]: {
+    labels: { one: 'неделю', two: 'недели', few: 'недели', other: 'недель' },
+    every: { one: 'Каждую', other: 'Каждые' },
+  },
+  [Period.Month]: {
+    labels: { one: 'месяц', two: 'месяца', few: 'месяца', other: 'месяцев' },
+    every: { one: 'Каждый', other: 'Каждые' },
+  },
+  [Period.Year]: {
+    labels: { one: 'год', two: 'года', few: 'года', other: 'лет' },
+    every: { one: 'Каждый', other: 'Каждые' },
+  },
+};
 export interface SubtaskProps {
   name: string;
   difficulty: TaskDifficulty;
@@ -31,7 +59,7 @@ export interface TaskFormValues {
   habit?: boolean;
   important?: boolean;
   subtasks: SubtaskProps[];
-  repeat?: Period | { period: Period; count: number };
+  repeat?: { period: Period; count: number };
 }
 
 export interface TaskFormProps {
@@ -62,5 +90,8 @@ export const TaskFormSchema = object({
       })
     )
     .required(),
-  repeat: mixed(),
+  repeat: object({
+    period: mixed<Period>().oneOf(Object.values(Period)).required(),
+    count: number().required(),
+  }).optional(),
 });

@@ -3,9 +3,9 @@ import { PlusIcon, CrossIcon } from '@ui/Icons';
 
 import { useFieldArray, useFormContext, Controller } from 'react-hook-form';
 
-import { PercentageFieldProps, ItemProps } from './PercentageField.types';
+import { PercentageFieldProps, ItemProps, getLabelType } from './PercentageField.types';
 
-const PercentageField = ({ name, options, label, enableCreateOption }: PercentageFieldProps) => {
+const PercentageField = ({ name, options, label, labelType, enableCreateOption }: PercentageFieldProps) => {
   const {
     control,
     watch,
@@ -68,11 +68,11 @@ const PercentageField = ({ name, options, label, enableCreateOption }: Percentag
         onClick={() =>
           append({
             item: undefined,
-            percent: 100,
+            percent: undefined,
           })
         }
       >
-        связанный {label}
+        {getLabelType(labelType)} {label.toLowerCase()}
       </Button>
     </>
   );

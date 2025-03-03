@@ -1,8 +1,8 @@
 import { Fab, styled } from '@mui/material';
 import { PlusIcon } from '../Icons';
 
-import { useAppDispatch } from '../../store/global.store';
-import { setIsTaskFormOpen } from '../../store/modals.store';
+import { useAppDispatch } from '../../stores/global.store';
+import { setIsTaskFormOpen } from '../../stores/modals.store';
 const StyledFab = styled(Fab)`
   position: fixed;
   bottom: 70px;

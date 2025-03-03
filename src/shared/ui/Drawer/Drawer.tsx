@@ -32,7 +32,7 @@ const DefaultDrawer = <T extends FieldValues>({
   return (
     <FormProvider {...formMethods}>
       <StyledDrawer {...props}>
-        <Box display="flex" flexDirection="column" gap={4}>
+        <Box display="flex" flexDirection="column" gap={6}>
           {typeof title === 'string' ? <Typography variant="h3">{title}</Typography> : title}
           {children}
         </Box>

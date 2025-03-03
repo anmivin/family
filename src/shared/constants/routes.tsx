@@ -24,6 +24,7 @@ import {
   WalletIcon,
   TwoHeartsIcon,
 } from '@ui/Icons';
+
 /* Task Assignments: 
 Allow users to assign tasks to other family members, making it easier to delegate responsibilities.
 Task Categories: 
@@ -38,22 +39,22 @@ for completing tasks, which can be redeemed for privileges or treats.
 Social Sharing: 
 Allow users to share their progress and achievements on social media, 
 fostering a sense of community and accountability.
-
  */
 
 export const Paths = {
   achievemnts: '/achievemnts',
-  budget: '/budget',
+  /*   budget: '/budget', */
   calendar: '/calendar',
   character: '/character',
-  family: '/family',
-  household: '/household',
-  menu: '/menu',
-  notes: '/notes',
+  /*   family: '/family', */
+  /*   household: '/household', */
+  /*   menu: '/menu',
+  notes: '/notes', */
   settings: '/settings',
-  shopping: '/shopping',
+  /*   shopping: '/shopping', */
   tasks: '/tasks',
-  login: '/login/:id',
+  login: '/login',
+  loginID: '/login/:id',
 } as const;
 
 interface RoutesProps {
@@ -72,13 +73,13 @@ export const menuRoutes: RoutesProps[] = [
     icon: <TrophyCapIcon />,
     name: 'Достижения',
   },
-  {
+  /*   {
     key: '',
     link: Paths.budget,
     Component: Budget,
     icon: <WalletIcon />,
     name: 'Бюджет',
-  },
+  }, */
   {
     key: '',
     link: Paths.calendar,
@@ -93,41 +94,41 @@ export const menuRoutes: RoutesProps[] = [
     icon: <CharacterIcon />,
     name: 'Персонаж',
   },
-  {
+  /*   {
     key: '',
     link: Paths.family,
     Component: Family,
     icon: <TwoHeartsIcon />,
     name: 'Семья',
-  },
-  {
+  }, */
+  /*   {
     key: '',
     link: Paths.household,
     Component: Household,
     icon: <HomeIcon />,
     name: 'Дом',
-  },
-  {
+  }, */
+  /*   {
     key: '',
     link: Paths.menu,
     Component: Menu,
     icon: <FridgeIcon />,
     name: 'Меню',
-  },
-  {
+  }, */
+  /*   {
     key: '',
     link: Paths.notes,
     Component: Notes,
     icon: <NotesIcon />,
     name: 'Заметки',
-  },
-  {
+  }, */
+  /*   {
     key: '',
     link: Paths.shopping,
     Component: Shopping,
     icon: <ShoppingBasketIcon />,
     name: 'Покупки',
-  },
+  }, */
   {
     key: '',
     link: Paths.tasks,
@@ -139,53 +140,55 @@ export const menuRoutes: RoutesProps[] = [
 
 const defaultRouting = [
   {
-    key: Paths.achievemnts,
-    order: 7,
-  },
-  {
-    key: Paths.budget,
-    order: 8,
-  },
-  {
-    key: Paths.calendar,
-    order: 9,
-  },
-  {
     key: Paths.character,
     order: 1,
-  },
-  {
-    key: Paths.family,
-    order: 10,
-  },
-  {
-    key: Paths.household,
-    order: 5,
-  },
-  {
-    key: Paths.menu,
-    order: 6,
-  },
-  {
-    key: Paths.notes,
-    order: 3,
-  },
-  {
-    key: Paths.shopping,
-    order: 4,
   },
   {
     key: Paths.tasks,
     order: 2,
   },
+  /*   {
+    key: Paths.notes,
+    order: 3,
+  }, */
+  /*   {
+    key: Paths.shopping,
+    order: 4,
+  }, */
+  /*   {
+    key: Paths.household,
+    order: 5,
+  }, */
+  /*   {
+    key: Paths.menu,
+    order: 6,
+  }, */
+  {
+    key: Paths.achievemnts,
+    order: 7,
+  },
+  /*   {
+    key: Paths.budget,
+    order: 8,
+  }, */
+  {
+    key: Paths.calendar,
+    order: 9,
+  },
+
+  /*   {
+    key: Paths.family,
+    order: 10,
+  }, */
 ];
 export const getRoutes = () => {
   const storage = localStorage.getItem('routes');
-  const initialState: [] = storage ? JSON.parse(storage) : defaultRouting;
+  const initialState: { key: string; order: number }[] = storage ? JSON.parse(storage) : defaultRouting;
   return menuRoutes
     .filter((route) => initialState.some((state) => state.key === route.link))
     .sort((a, b) =>
-      initialState.find((item) => item.key === a.link)?.order > initialState.find((item) => item.key === b.link)?.order
+      (initialState.find((item) => item.key === a.link)?.order ?? 0) >
+      (initialState.find((item) => item.key === b.link)?.order ?? 0)
         ? 1
         : -1
     );

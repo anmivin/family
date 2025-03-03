@@ -12,5 +12,17 @@ export interface PercentageFieldProps {
   name: string;
   options: OptionProps[];
   label: string;
+  labelType: 'masculine' | 'feminine' | 'neuter';
   enableCreateOption?: boolean;
 }
+
+export const getLabelType = (labelType: 'masculine' | 'feminine' | 'neuter') => {
+  switch (labelType) {
+    case 'feminine':
+      return 'Связанную';
+    case 'masculine':
+      return 'Связанный';
+    default:
+      return 'Связанное';
+  }
+};

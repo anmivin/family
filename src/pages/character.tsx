@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
 import useSwr from '../shared/swr/useSwr';
 import SkillsChart from '@features/SkillsChart/SkillsChart';
-import { api } from '../shared/api/axios';
+import { api } from '../shared/api/axiosInstance';
 import CharacteristicFlow from '@features/CharacteristicFlow/CharacteristicFlow';
 
 const Character = () => {

@@ -2,8 +2,8 @@ import { Button } from '@mui/material';
 import ChangeRoutes from '@entities/ChangeRoutes';
 import ChangeTheme from '@entities/ChangeTheme';
 import QrCode from '@features/QrCode/QrCode';
-import { useAppDispatch } from '../shared/store/global.store';
-import { setIsQrCodeOpen } from '../shared/store/modals.store';
+import { useAppDispatch } from '../shared/stores/global.store';
+import { setIsQrCodeOpen } from '../shared/stores/modals.store';
 const Settings = () => {
   const dispatch = useAppDispatch();
   const onOpen = () => dispatch(setIsQrCodeOpen(true));
