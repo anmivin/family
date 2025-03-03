@@ -23,8 +23,8 @@ export interface TaskFormValues {
   description?: string;
   difficulty: TaskDifficulty;
   target: XPTarget;
-  skills: { skillId: string; percent: number }[];
-  characteristics: { characteristicId: string; percent: number }[];
+  skills: { item: { id?: string; name?: string }; percent?: number }[];
+  characteristics: { item: { id?: string; name?: string }; percent?: number }[];
   date?: Date;
   time?: Date;
   year?: boolean;
@@ -44,10 +44,10 @@ export const TaskFormSchema = object({
   difficulty: mixed<TaskDifficulty>().oneOf(Object.values(TaskDifficulty)).required(),
   target: mixed<XPTarget>().oneOf(Object.values(XPTarget)).required(),
   skills: array()
-    .of(object({ skillId: string().required(), percent: number().required() }))
+    .of(object({ item: object({ id: string(), name: string() }), percent: number() }))
     .required(),
   characteristics: array()
-    .of(object({ characteristicId: string().required(), percent: number().required() }))
+    .of(object({ item: object({ id: string(), name: string() }), percent: number() }))
     .required(),
   date: date(),
   time: date(),

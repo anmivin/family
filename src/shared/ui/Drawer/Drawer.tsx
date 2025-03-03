@@ -1,7 +1,10 @@
 import { Drawer, DrawerProps, Box, Typography, styled } from '@mui/material';
+import { FormProvider } from 'react-hook-form';
 import { ReactNode } from 'react';
+import { FieldValues, UseFormReturn } from 'react-hook-form';
 
-interface DefaultDrawerProps extends Omit<DrawerProps, 'title'> {
+interface DefaultDrawerProps<T extends FieldValues> extends Omit<DrawerProps, 'title'> {
+  formMethods: UseFormReturn<T>;
   footer?: ReactNode;
   title?: ReactNode;
 }
@@ -19,15 +22,23 @@ const StyledDrawer = styled(Drawer)`
   }
 `;
 
-const DefaultDrawer = ({ footer, title, children, ...props }: DefaultDrawerProps) => {
+const DefaultDrawer = <T extends FieldValues>({
+  footer,
+  title,
+  children,
+  formMethods,
+  ...props
+}: DefaultDrawerProps<T>) => {
   return (
-    <StyledDrawer {...props}>
-      <Box display="flex" flexDirection="column" gap={4}>
-        {typeof title === 'string' ? <Typography variant="h3">{title}</Typography> : title}
-        {children}
-      </Box>
-      {footer}
-    </StyledDrawer>
+    <FormProvider {...formMethods}>
+      <StyledDrawer {...props}>
+        <Box display="flex" flexDirection="column" gap={4}>
+          {typeof title === 'string' ? <Typography variant="h3">{title}</Typography> : title}
+          {children}
+        </Box>
+        {footer}
+      </StyledDrawer>
+    </FormProvider>
   );
 };
 

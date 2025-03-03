@@ -1,9 +1,10 @@
-import { Box, TableBody, TableRow, TableCell, TableHead, Table, Select, MenuItem } from '@mui/material';
+import { Box, Select, MenuItem } from '@mui/material';
 import TaskCard from '@ui/TaskCard/TaskCard';
 import AddTaskButton from '@ui/AddTaskButton';
 import axios, { AxiosRequestConfig } from 'axios';
 import Tabs from '../shared/ui/Tabs';
 import { groupBy, keyBy } from 'lodash';
+import HabitTable from '@entities/HabitTable/HabitTable';
 import Routine from '@entities/Routine/Routine';
 import { useEffect, useState, useMemo } from 'react';
 import { TaskCardProps } from '@ui/TaskCard/TaskCard.types';
@@ -14,62 +15,6 @@ const Tasks = () => {
 
   const { data: tasks, loading: loadingTasks, error } = useSwr({ func: () => axios.get('/tasks') });
 
-  const ta = [
-    {
-      date: '01-01-2025',
-      id: 1,
-    },
-    {
-      date: '01-03-2025',
-      id: 2,
-    },
-    {
-      date: '01-03-2025',
-      id: 3,
-    },
-    {
-      date: '01-03-2025',
-      id: 1,
-    },
-    {
-      date: '01-05-2025',
-      id: 2,
-    },
-    {
-      date: '01-06-2025',
-      id: 2,
-    },
-    {
-      date: '01-07-2025',
-      id: 3,
-    },
-    {
-      date: '01-08-2025',
-      id: 3,
-    },
-    {
-      date: '01-09-2025',
-      id: 2,
-    },
-    {
-      date: '01-09-2025',
-      id: 1,
-    },
-    {
-      date: '01-08-2025',
-      id: 9,
-    },
-    {
-      date: '01-16-2025',
-      id: 9,
-    },
-  ];
-
-  const groupedByTask = groupBy(ta, (i) => i.id);
-
-  const daysInMonth = useMemo(() => {
-    return eachDayOfInterval({ start: new Date('01-01-2025'), end: new Date('01-31-2025') });
-  }, []);
   return (
     <>
       <Tabs
@@ -105,29 +50,7 @@ const Tasks = () => {
           <AddTaskButton />
         </Box>
       )}
-      {selectedTab === 2 /*  <Routine /> */ && (
-        <Box sx={{ overflowY: 'auto' }}>
-          <Table>
-            <TableHead>
-              <TableCell>kzkzkz</TableCell>
-              {daysInMonth.map((item) => (
-                <TableCell>{format(item, 'd')}</TableCell>
-              ))}
-            </TableHead>
-            <TableBody>
-              {Object.entries(groupedByTask).map(([k, v]) => (
-                <TableRow>
-                  <TableCell>{k}</TableCell>
-                  {daysInMonth.map((item) => {
-                    const isCompleted = v.find((y) => isSameDay(new Date(y.date), item));
-                    return <TableCell>{isCompleted ? 'x' : ''}</TableCell>;
-                  })}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Box>
-      )}
+      {selectedTab === 2 /*  <Routine /> */ && <HabitTable />}
     </>
   );
 };

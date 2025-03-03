@@ -1,5 +1,6 @@
 import { Button } from '@mui/material';
-import ChangeRoutes from '../entities/ChangeRoutes';
+import ChangeRoutes from '@entities/ChangeRoutes';
+import ChangeTheme from '@entities/ChangeTheme';
 import QrCode from '@features/QrCode/QrCode';
 import { useAppDispatch } from '../shared/store/global.store';
 import { setIsQrCodeOpen } from '../shared/store/modals.store';
@@ -8,6 +9,7 @@ const Settings = () => {
   const onOpen = () => dispatch(setIsQrCodeOpen(true));
   return (
     <>
+      <ChangeTheme />
       <ChangeRoutes />
       <Button onClick={onOpen}>сгенерить код для семьи</Button>
       <>премиумы</>

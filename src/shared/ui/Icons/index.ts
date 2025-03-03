@@ -8,6 +8,7 @@ export { default as ClockIcon } from './ClockIcon';
 export { default as CodeIcon } from './CodeIcon';
 export { default as CoinIcon } from './CoinIcon';
 export { default as ConfettiIcon } from './ConfettiIcon';
+export { default as CrossIcon } from './CrossIcon';
 export { default as DialogBulbIcon } from './DialogBulbIcon';
 export { default as DumbbellIcon } from './DumbbellIcon';
 export { default as FridgeIcon } from './FridgeIcon';
@@ -34,6 +35,13 @@ export { default as ShakehandIcon } from './ShakehandIcon';
 export { default as ShareCircleIcon } from './ShareCircleIcon';
 export { default as ShoppingBasketIcon } from './ShoppingBasketIcon';
 export { default as StarRainbowIcon } from './StarRainbowIcon';
+
+export { default as StarOneIcon } from './StarOneIcon';
+export { default as StarTwoIcon } from './StarTwoIcon';
+export { default as StarThreeIcon } from './StarThreeIcon';
+export { default as StarFourIcon } from './StarFourIcon';
+export { default as StarFiveIcon } from './StarFiveIcon';
+
 export { default as TaskIcon } from './TaskIcon';
 export { default as ThermometrIcon } from './ThermometrIcon';
 export { default as TrashIcon } from './TrashIcon';

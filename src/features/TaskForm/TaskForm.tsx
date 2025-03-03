@@ -1,4 +1,5 @@
 import DefaultDrawer from '@ui/Drawer';
+import PercentageField from '@ui/PercentageField/PercentageField';
 import { useAppSelector, useAppDispatch } from '../../shared/store/global.store';
 import { setIsTaskFormOpen } from '../../shared/store/modals.store';
 import {
@@ -25,11 +26,12 @@ import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { characteristics } from '@constants/characteristics';
+
 const TaskForm = () => {
   const dispatch = useAppDispatch();
   const onClose = () => dispatch(setIsTaskFormOpen(false));
-  const { isTaskFormOpen } = useAppSelector((state) => state.modalsSlice);
 
+  const { isTaskFormOpen } = useAppSelector((state) => state.modalsSlice);
   const [dialogOpene, setDialogOpen] = useState(false);
   const [skills, setSkills] = useState<
     | {
@@ -46,10 +48,25 @@ const TaskForm = () => {
       .then((data) => setSkills(data));
   }, []);
 
+  const defaulValues = {
+    name: undefined,
+    description: undefined,
+    difficulty: undefined,
+    target: XPTarget.Skill,
+    skills: [{ item: { id: undefined, name: undefined }, percent: undefined }],
+    characteristics: [{ item: { id: undefined, name: undefined }, percent: undefined }],
+    date: undefined,
+    time: undefined,
+    year: false,
+    habit: false,
+    important: false,
+    subtasks: [],
+    repeat: undefined,
+  };
   //если не админ, то отправить на одобрение админу
-
   const formMethods = useForm<TaskFormValues>({
     resolver: yupResolver(TaskFormSchema),
+    defaultValues: defaulValues,
   });
 
   const {
@@ -61,6 +78,7 @@ const TaskForm = () => {
   } = formMethods;
 
   const formValues = watch();
+
   const {
     fields: subtaskFields,
     append: appendSubtask,
@@ -69,30 +87,16 @@ const TaskForm = () => {
     control,
     name: 'subtasks',
   });
-  const {
-    fields: skillFields,
-    append: appendSkill,
-    remove: removeSkill,
-  } = useFieldArray<TaskFormValues, 'skills'>({
-    control,
-    name: 'skills',
-  });
-  const {
-    fields: characteristicFields,
-    append: appendCharacteristic,
-    remove: removeCharacteristic,
-  } = useFieldArray<TaskFormValues, 'characteristics'>({
-    control,
-    name: 'characteristics',
-  });
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
   });
 
-  useEffect(() => console.log(errors), [errors]);
+  useEffect(() => console.log(formValues), [formValues]);
+
   return (
     <DefaultDrawer
+      formMethods={formMethods}
       open={isTaskFormOpen}
       onClose={onClose}
       title="Создание задачи"
@@ -111,95 +115,38 @@ const TaskForm = () => {
       <Controller
         control={control}
         name="description"
-        render={({ field }) => <TextField {...field} variant="standard" label="Описание" />}
+        render={({ field }) => <TextField {...field} rows={4} variant="standard" label="Описание" />}
       />
 
-      <ToggleButtonGroup
-        fullWidth
-        value={formValues.target}
-        exclusive
-        onChange={(_e, value) => setValue('target', value)}
-      >
-        {Object.values(XPTarget).map((item, index) => (
-          <ToggleButton key={index} value={item}>
-            {item}
-          </ToggleButton>
-        ))}
-      </ToggleButtonGroup>
-      {formValues.target === XPTarget.Skill ? (
-        <>
-          <Button
-            startIcon={<PlusIcon />}
-            fullWidth
-            onClick={() =>
-              appendSkill({
-                skillId: undefined,
-                percent: 100,
-              })
-            }
-          >
-            связанный навык
-          </Button>
-          {skillFields.map((field, index) => (
-            <Box key={field.id} display="flex" flexDirection="row" gap={1} width="100%">
-              <Autocomplete
-                fullWidth
-                options={[...(skills ?? []), { id: 'create', name: '' }]}
-                getOptionLabel={(option) => option.name}
-                renderInput={(params) => <TextField variant="standard" label="Навык" {...params} />}
-                renderOption={(props, option, { selected }) => {
-                  return option.id === 'create' ? (
-                    <Button fullWidth onClick={() => {}}>
-                      + Создать навык
-                    </Button>
-                  ) : (
-                    <li {...props} aria-selected={selected}>
-                      {option.name}
-                    </li>
-                  );
-                }}
-              />
-              <TextField variant="standard" label="Доля" type="number" />
-              <IconButton onClick={() => removeSkill(index)}>x</IconButton>
-            </Box>
-          ))}
-        </>
+      <Typography>Повышает навык</Typography>
+
+      {formValues.target === XPTarget.Characteristic ? (
+        <PercentageField
+          name="characteristics"
+          options={characteristics.map(({ id, name }) => ({ id, name }))}
+          label="Характеристика"
+        />
       ) : (
-        <>
-          <Button
-            fullWidth
-            onClick={() =>
-              appendCharacteristic({
-                characteristicId: undefined,
-                percent: 100,
-              })
-            }
-          >
-            связанная характеристика
-          </Button>
-          {characteristicFields.map((field, index) => (
-            <Box key={field.id} display="flex" flexDirection="row" gap={1} width="100%">
-              <Autocomplete
-                options={characteristics}
-                getOptionLabel={(option) => option.name}
-                renderInput={(params) => <TextField variant="standard" label="Характеристика" {...params} />}
-              />
-              <TextField variant="standard" label="Доля" type="number" />
-              <IconButton onClick={() => removeCharacteristic(index)}>x</IconButton>
-            </Box>
-          ))}
-        </>
+        <PercentageField name="skills" options={skills ?? []} label="Навык" enableCreateOption />
       )}
+
+      <FormControlLabel
+        control={<Checkbox />}
+        label="Повышать характеристику"
+        onChange={(_, checked) => {
+          setValue('target', checked ? XPTarget.Characteristic : XPTarget.Skill);
+        }}
+      />
       <Box>
         <FormControlLabel
           control={<Checkbox />}
           label="На весь год"
-          onChange={(e, checked) => setValue('year', checked)}
+          onChange={(_, checked) => setValue('year', checked)}
         />
         <FormControlLabel
           control={<Checkbox />}
           label="Привычка"
-          onChange={(e, checked) => {
+          onChange={(_, checked) => {
             setValue('habit', checked);
             setValue('difficulty', TaskDifficulty.Easy);
           }}
@@ -207,7 +154,7 @@ const TaskForm = () => {
         <FormControlLabel
           control={<Checkbox />}
           label="Важная задача"
-          onChange={(e, checked) => {
+          onChange={(_, checked) => {
             setValue('important', checked);
           }}
         />
@@ -273,7 +220,7 @@ const TaskForm = () => {
       >
         {Object.values(TaskDifficulty).map((item, index) => (
           <ToggleButton key={index} value={item}>
-            {TaskDifficultyXP[item].label}
+            {TaskDifficultyXP[item].icon}
           </ToggleButton>
         ))}
       </ToggleButtonGroup>

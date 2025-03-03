@@ -1,12 +1,11 @@
 import { differenceInDays } from 'date-fns';
+import { ReactNode } from 'react';
+import { StarOneIcon, StarTwoIcon, StarThreeIcon, StarFourIcon, StarFiveIcon } from '@ui/Icons';
 
 export enum TaskDifficulty {
-  Easy = 'Лёгкая',
-  Simple = 'Простая',
-  Medium = 'Средняя',
-  Challenging = 'Challenging',
+  Easy = 'Easy',
+  Medium = 'Medium',
   Hard = 'Hard',
-  Exceptional = 'Exceptional',
   Epic = 'Epic',
   Legendary = 'Legendary',
 }
@@ -92,81 +91,76 @@ Create a comprehensive and widely acclaimed documentary or film
 
 */
 
-export const TaskDifficultyXP: Record<TaskDifficulty, { xp: number; label: string; time: number; examples: string[] }> =
-  {
-    [TaskDifficulty.Easy]: {
-      xp: 15,
-      label: 'Лёгкая',
-      time: 5,
-      examples: [
-        'Передохнуть',
-        'Пройтись вокруг дома',
-        'Размяться',
-        'Проверить почту',
-        'Протереть столы',
-        'Развесить белье',
-      ],
-    },
-    [TaskDifficulty.Simple]: {
-      xp: 30,
-      label: 'Простая',
-      time: 10,
-      examples: ['Приготовить еду', 'Помыться', 'Подремать', 'Прочитать главу', 'Помыть посуду'],
-    },
-    [TaskDifficulty.Medium]: {
-      xp: 60,
-      label: 'Средняя',
-      time: 20,
-      examples: ['Помыть полы', 'Прогулка', 'Йога или медитация'],
-    },
-    [TaskDifficulty.Challenging]: {
-      xp: 120,
-      label: 'Трудная',
-      time: 40,
-      examples: [
-        'Генеральная уборка',
-        'Тренировка в спортзале',
-        'Прочитать книгу',
-        'Приготовить новое блюдо',
-        'Plan a romantic evening with a partner',
-        'Complete a complex task in a project (e.g. a multi-step task)',
-      ],
-    },
-    [TaskDifficulty.Hard]: {
-      xp: 240,
-      label: 'Сложная',
-      time: 80,
-      examples: ['Приготовить меню на неделю', 'Разобрать гардероб', 'Час практиковаться в языке'],
-    },
-    [TaskDifficulty.Exceptional]: {
-      xp: 480,
-      label: 'Исключительная',
-      time: 0,
-      examples: [
-        'Host a dinner party for friends or family',
-        'Complete a difficult workout routine (e.g. a marathon, a challenging hike)',
-        'Read a whole series of books in a short amount of time',
-        'Plan and execute a big project or event (e.g. a wedding, a move)',
-        'Take a week-long trip or vacation',
-      ],
-    },
-    [TaskDifficulty.Epic]: {
-      xp: 960,
-      label: 'Эпичная',
-      time: 0,
-      examples: ['Редекорировать дом', 'Learn a new skill or hobby (e.g. playing an instrument, painting)'],
-    },
-    [TaskDifficulty.Legendary]: {
-      xp: 1920,
-      label: 'Легендарная',
-      time: 0,
-      examples: [
-        'Спланировать и претворить в жизнь изменение в жизни',
-        'Создать произведение искусства',
-        'Путешествие в новую страну',
-      ],
-    },
-  };
+export const TaskDifficultyXP: Record<
+  TaskDifficulty,
+  { xp: number; label: string; time: number; examples: string[]; icon: ReactNode }
+> = {
+  [TaskDifficulty.Easy]: {
+    xp: 20,
+    label: 'Лёгкая',
+    time: 5,
+    examples: [
+      'Пройтись вокруг дома',
+      'Размяться',
+      'Проверить почту',
+      'Протереть столы',
+      'Развесить белье',
+      'Помыть посуду',
+    ],
+    icon: <StarOneIcon size={48} />,
+  },
+  [TaskDifficulty.Medium]: {
+    xp: 60,
+    label: 'Средняя',
+    time: 20,
+    examples: ['Помыть полы', 'Прочитать главу', 'Прогулка', 'Йога или медитация', 'Приготовить еду'],
+    icon: <StarTwoIcon size={48} />,
+  },
+
+  [TaskDifficulty.Hard]: {
+    xp: 180,
+    label: 'Сложная',
+    time: 80,
+    examples: [
+      'Приготовить меню на неделю',
+      'Разобрать гардероб',
+      'Час практиковаться в языке',
+      'Генеральная уборка',
+      'Тренировка в спортзале',
+      'Прочитать книгу',
+      'Приготовить новое блюдо',
+      'Plan a romantic evening with a partner',
+      'Complete a complex task in a project (e.g. a multi-step task)',
+    ],
+    icon: <StarThreeIcon size={48} />,
+  },
+  [TaskDifficulty.Epic]: {
+    xp: 540,
+    label: 'Эпичная',
+    time: 0,
+    examples: [
+      'Host a dinner party for friends or family',
+      'Complete a difficult workout routine (e.g. a marathon, a challenging hike)',
+      'Read a whole series of books in a short amount of time',
+      'Plan and execute a big project or event (e.g. a wedding, a move)',
+      'Take a week-long trip or vacation',
+    ],
+    icon: <StarFourIcon size={48} />,
+  },
+  [TaskDifficulty.Legendary]: {
+    xp: 1620,
+    label: 'Легендарная',
+    time: 0,
+    examples: [
+      'Спланировать и претворить в жизнь изменение в жизни',
+      'Создать произведение искусства',
+      'Путешествие в новую страну',
+      'Редекорировать дом',
+      'Learn a new skill or hobby (e.g. playing an instrument, painting)',
+    ],
+    icon: <StarFiveIcon size={48} />,
+  },
+};
 
 const XP_BASE = 100;
 
