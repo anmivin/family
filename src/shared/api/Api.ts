@@ -167,23 +167,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/auth/refresh": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Refresh Tokens */
-        post: operations["AuthController_refreshToken"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/lists/features": {
         parameters: {
             query?: never;
@@ -296,7 +279,7 @@ export interface components {
             name: string;
             /** @enum {string} */
             difficulty?: "Easy" | "Medium" | "Hard" | "Epic" | "Legendary";
-            userId: string;
+            userId?: string;
             creatorId?: string;
             description?: string;
             types: components["schemas"]["TaskTypeDto"];
@@ -306,10 +289,6 @@ export interface components {
             repeat?: components["schemas"]["PeriodDto"];
             skills: components["schemas"]["PercentDto"][];
             features: components["schemas"]["PercentDto"][];
-        };
-        FindTasksDto: {
-            userId: string;
-            types: components["schemas"]["TaskTypeDto"];
         };
         OutputTaskDto: {
             name: string;
@@ -392,16 +371,22 @@ export type $defs = Record<string, never>;
 export interface operations {
     TasksController_findTasksForUser: {
         parameters: {
-            query?: never;
+            query: {
+                isImportant?: boolean;
+                isActive?: boolean;
+                isCompleted?: boolean;
+                isApproving?: boolean;
+                isDeclined?: boolean;
+                isHoliday?: boolean;
+                isHabit?: boolean;
+                isYear?: boolean;
+                userId: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["FindTasksDto"];
-            };
-        };
+        requestBody?: never;
         responses: {
             200: {
                 headers: {
@@ -722,38 +707,6 @@ export interface operations {
                 "application/json": components["schemas"]["CreateUserDto"];
             };
         };
-        responses: {
-            /** @description Success */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    AuthController_refreshToken: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
         responses: {
             /** @description Success */
             200: {

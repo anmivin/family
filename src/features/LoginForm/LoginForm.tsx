@@ -37,7 +37,13 @@ const LoginForm = () => {
 
   const onSubmit = useCallback(
     async (data: LoginFormValues) => {
-      isSignUp ? dispatch(signUp(data)) : dispatch(signIn(data));
+      if (isSignUp) {
+        console.log('isSignUp');
+        dispatch(signUp(data));
+      } else {
+        console.log('signIn');
+        dispatch(signIn(data));
+      }
     },
     [isSignUp]
   );

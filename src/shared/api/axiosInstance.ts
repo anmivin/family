@@ -2,7 +2,7 @@ import { OpenApiAxios } from '@web-bee-ru/openapi-axios';
 import type { paths } from './Api';
 import Axios from 'axios';
 
-const axios = Axios.create({
+export const axios = Axios.create({
   adapter: 'fetch',
 });
 
@@ -21,4 +21,4 @@ axios.interceptors.response.use(
   }
 );
 
-export const axiosInstance = new OpenApiAxios<paths, 'fetch'>(axios, { validStatus: 'fetch' });
+export const axiosInstance = new OpenApiAxios<paths, 'axios'>(axios, { validStatus: 'axios' });

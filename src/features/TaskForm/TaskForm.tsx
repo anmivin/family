@@ -29,7 +29,7 @@ import { useEffect, useMemo, useCallback, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { characteristics } from '@constants/characteristics';
-
+import { createTask } from '@stores/tasks/tasks.fetchers';
 const TaskForm = () => {
   const dispatch = useAppDispatch();
   const onClose = () => dispatch(setIsTaskFormOpen(false));
@@ -92,6 +92,37 @@ const TaskForm = () => {
   });
 
   const onSubmit = handleSubmit((data) => {
+    const requestData = {
+      name: data.name,
+      difficulty: data.difficulty,
+      description: data.description,
+      types: {
+        isImportant: data.important ?? false,
+        isActive: false,
+        isCompleted: false,
+        isApproving: false,
+        isDeclined: false,
+        isHoliday: false,
+        isHabit: data.habit ?? false,
+        isYear: data.year ?? false,
+      },
+      date: data.date ? data.date.toISOString() : undefined,
+      subtasks: data.subtasks,
+      repeat: data.repeat ? { period: data.repeat?.period, currency: data.repeat?.count } : undefined,
+      skills: data.skills
+        .map((skill) => {
+          if (!skill.item.id || !skill.percent) return;
+          return { id: skill.item.id, percent: skill.percent };
+        })
+        .filter((item) => !!item),
+      features: data.characteristics
+        .map((skill) => {
+          if (!skill.item.id || !skill.percent) return;
+          return { id: skill.item.id, percent: skill.percent };
+        })
+        .filter((item) => !!item),
+    };
+    dispatch(createTask(requestData));
     console.log(data);
   });
 

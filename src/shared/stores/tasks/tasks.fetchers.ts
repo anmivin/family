@@ -3,21 +3,23 @@ import { axiosInstance } from '@api/axiosInstance';
 import type { components } from '@api/Api';
 import { useAppDispatch } from '@stores/global.store';
 
-const fetchTasks = createAsyncThunk('tasks/get', async (data: components['schemas']) => {
+const fetchTasks = createAsyncThunk('tasks/get', async (data?: components['schemas']) => {
   try {
     const response = await axiosInstance.get('/tasks', data);
-    return response.data;
+    return response;
   } catch (e) {}
 });
 
-const createTask = createAsyncThunk('tasks/createTask', async ({data: components['schemas']['CreateTaskDto'], previous: }) => {
-  const dispatch = useAppDispatch();
-  try {
-    const response = await axiosInstance.post('/tasks', data);
-    await dispatch(fetchTasks());
-    return response.data;
-  } catch (e) {}
-});
+const createTask = createAsyncThunk(
+  'tasks/createTask',
+  async (data: components['schemas']['CreateTaskDto'], thunkApi) => {
+    try {
+      const response = await axiosInstance.post('/tasks', data);
+      await thunkApi.dispatch(fetchTasks());
+      return response.data;
+    } catch (e) {}
+  }
+);
 
 const updateTask = createAsyncThunk('tasks/updateTask', async (data: components['schemas']['CreateUserDto']) => {
   const dispatch = useAppDispatch();

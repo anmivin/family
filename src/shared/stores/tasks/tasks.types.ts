@@ -1,11 +1,11 @@
 export interface UserSliceProps {
-  userInfo: any;
-  pendingUserInfo: boolean;
-  errorUserInfo: string;
+  userTasks: any;
+  pendingUserTasks: boolean;
+  errorUserTasks: string;
 }
 
 export const initialState: UserSliceProps = {
-  userInfo: null,
-  pendingUserInfo: false,
-  errorUserInfo: '',
+  userTasks: null,
+  pendingUserTasks: false,
+  errorUserTasks: '',
 };

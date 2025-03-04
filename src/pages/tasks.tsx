@@ -9,12 +9,21 @@ import Routine from '@entities/Routine/Routine';
 import { useEffect, useState, useMemo } from 'react';
 import { TaskCardProps } from '@ui/TaskCard/TaskCard.types';
 import { eachDayOfInterval, format, getDaysInMonth, isSameDay } from 'date-fns';
+import { useAppDispatch, useAppSelector } from '@stores/global.store';
 import useSwr from '../shared/swr/useSwr';
+import { fetchTasks } from '@stores/tasks/tasks.fetchers';
 const Tasks = () => {
   const [selectedTab, setSelectedTab] = useState(1);
+  const dispatch = useAppDispatch();
 
-  const { data: tasks, loading: loadingTasks, error } = useSwr({ func: () => axios.get('/tasks') });
+  const { userTasks, pendingUserTasks, errorUserTasks } = useAppSelector((state) => state.taskSlice);
+  /*   const { data: tasks, loading: loadingTasks, error } = useSwr({ func: () => axios.get('/tasks') }); */
 
+  useEffect(() => {
+    dispatch(fetchTasks());
+  }, []);
+
+  useEffect(() => console.log('userTasks', userTasks), [userTasks]);
   return (
     <>
       <Tabs
@@ -36,12 +45,12 @@ const Tasks = () => {
           </Select>
           {/*       <>кнопа создания таски</>
     <>кнопа редактирования порядка, показывать ли прошедшие</> */}
-          {error}
-          {loadingTasks || !tasks || !tasks?.length ? (
+
+          {pendingUserTasks || !userTasks ? (
             <>dkdkd</>
           ) : (
             <>
-              {tasks.map((task) => (
+              {userTasks?.map((task) => (
                 <TaskCard {...task} key={task.id} />
               ))}
             </>

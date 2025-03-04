@@ -7,10 +7,14 @@ import { menuRoutes, getRoutes, Paths } from '@constants/routes';
 import Login from '@pages/login';
 import Settings from '@pages/settings';
 import { useAppSelector } from '@stores/global.store';
+import { useEffect } from 'react';
 
 const Routing = () => {
-  const { userInfo } = useAppSelector((state) => state.userSlice);
+  const { userInfo, pendingUserInfo, errorUserInfo } = useAppSelector((state) => state.userSlice);
   const currentRoutes = getRoutes();
+
+  useEffect(() => console.log('userInfo', userInfo), [userInfo]);
+
   return (
     <Routes>
       {menuRoutes.map(({ link, Component }) => (

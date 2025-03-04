@@ -4,8 +4,8 @@ import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 
 import modalsSlice from './modals.store';
 import userSlice from './users/users.store';
-
-const rootReducer = combineReducers({ modalsSlice, userSlice });
+import taskSlice from './tasks/tasks.store';
+const rootReducer = combineReducers({ modalsSlice, userSlice, taskSlice });
 
 export const setupStore = () => {
   return configureStore({

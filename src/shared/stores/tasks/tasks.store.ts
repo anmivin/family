@@ -1,31 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchUserInfo } from './users.fetchers';
-import { initialState, UserSliceProps } from './users.types';
+import { fetchTasks } from './tasks.fetchers';
+import { initialState } from './tasks.types';
 
-export const userSlice = createSlice({
+export const taskSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {
-    setUserInfo: (state, action: PayloadAction<UserSliceProps['userInfo']>) => {
-      state.userInfo = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchUserInfo.pending, (state) => {
-      state.pendingUserInfo = true;
+    builder.addCase(fetchTasks.pending, (state) => {
+      state.pendingUserTasks = true;
     }),
-      builder.addCase(fetchUserInfo.fulfilled, (state, action: PayloadAction<any>) => {
-        state.pendingUserInfo = false;
-        state.errorUserInfo = '';
-        state.userInfo = action.payload;
+      builder.addCase(fetchTasks.fulfilled, (state, action: PayloadAction<any>) => {
+        state.pendingUserTasks = false;
+        state.errorUserTasks = '';
+        state.userTasks = action.payload.response;
       }),
-      builder.addCase(fetchUserInfo.rejected, (state, action: PayloadAction<unknown>) => {
-        state.pendingUserInfo = false;
-        state.errorUserInfo = action.payload as string;
+      builder.addCase(fetchTasks.rejected, (state, action: PayloadAction<unknown>) => {
+        state.pendingUserTasks = false;
+        state.errorUserTasks = action.payload as string;
       });
   },
 });
 
-export const { setUserInfo } = userSlice.actions;
+export const {} = taskSlice.actions;
 
-export default userSlice.reducer;
+export default taskSlice.reducer;
