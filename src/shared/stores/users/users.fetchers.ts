@@ -1,19 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosInstance } from '@api/axiosInstance';
 import type { components } from '@api/Api';
-
+import { defaultFetcher } from '@helpers/fetcher';
 const fetchUserInfo = createAsyncThunk('user/me', async (_, thunkApi) => {
   try {
-    const response = await axiosInstance.get('/auth/me');
+    const response = await defaultFetcher('/auth/me', { type: 'get' });
     return response;
   } catch (e) {
-    return thunkApi.rejectWithValue('Не удалось загрузить');
+    return thunkApi.rejectWithValue(e);
   }
 });
 
 const signIn = createAsyncThunk('user/signIn', async (data: components['schemas']['LoginInputDto'], thunkApi) => {
   try {
-    console.log('sdfsf');
     const response = await axiosInstance.post('/auth/login', data);
     await thunkApi.dispatch(fetchUserInfo());
     return response;

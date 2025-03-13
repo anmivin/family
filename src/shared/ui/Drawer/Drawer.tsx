@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 
 interface DefaultDrawerProps<T extends FieldValues> extends Omit<DrawerProps, 'title'> {
-  formMethods: UseFormReturn<T>;
+  formMethods?: UseFormReturn<T>;
   footer?: ReactNode;
   title?: ReactNode;
 }
@@ -30,7 +30,7 @@ const DefaultDrawer = <T extends FieldValues>({
   ...props
 }: DefaultDrawerProps<T>) => {
   return (
-    <FormProvider {...formMethods}>
+    <FormProvider {...(formMethods as UseFormReturn)}>
       <StyledDrawer {...props}>
         <Box display="flex" flexDirection="column" gap={6}>
           {typeof title === 'string' ? <Typography variant="h3">{title}</Typography> : title}

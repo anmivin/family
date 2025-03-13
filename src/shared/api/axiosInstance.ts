@@ -6,7 +6,9 @@ export const axios = Axios.create({
   adapter: 'fetch',
 });
 
-axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
+const baseURL =
+  import.meta.env.VITE_BACK_OR_MOCK === 'mock' ? import.meta.env.VITE_APP_URL : import.meta.env.VITE_BASE_URL;
+axios.defaults.baseURL = baseURL;
 axios.defaults.withCredentials = true;
 
 axios.interceptors.response.use(

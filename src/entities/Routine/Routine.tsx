@@ -242,14 +242,12 @@ const Routine = ({
     ) {
       setStartDate(userDate);
     }
-    /* eslint-disable react-hooks/exhaustive-deps*/
   }, [userDate]);
 
   useEffect(() => {
     if (userPeriodSize && userPeriodSize !== selectedPeriodSize) {
       handlePeriodSizeChange(userPeriodSize);
     }
-    /* eslint-disable react-hooks/exhaustive-deps*/
   }, [userPeriodSize]);
 
   useEffect(() => {

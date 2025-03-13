@@ -1,38 +1,12 @@
 import { http, HttpResponse } from 'msw';
-
+import { userSkills, skills } from './faker';
 const skillsHandler = [
-  http.post('/skill', ({ params }) => {
-    const { name, connection } = params;
-    return new HttpResponse('ok', { status: 200 });
+  http.get('/faker/lists/skills/user', () => {
+    return HttpResponse.json(userSkills());
   }),
 
-  http.get('/skills', ({ cookies }) => {
-    return HttpResponse.json([
-      {
-        id: '1',
-        name: 'Первый',
-      },
-      {
-        id: '2',
-        name: 'Второй',
-      },
-      {
-        id: '3',
-        name: 'Третий',
-      },
-      {
-        id: '4',
-        name: 'Четвертый',
-      },
-      {
-        id: '5',
-        name: 'Пятый',
-      },
-      {
-        id: '6',
-        name: 'Шестой',
-      },
-    ]);
+  http.get('/faker/lists/skills', () => {
+    return HttpResponse.json(skills);
   }),
 ];
 

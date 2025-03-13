@@ -17,30 +17,24 @@ export enum Period {
 export const PeriodLabels: Record<
   Period,
   {
+    textfieldLabel: string;
     labels: { zero?: string; one?: string; two?: string; few?: string; many?: string; other: string };
-    every: { zero?: string; one?: string; two?: string; few?: string; many?: string; other: string };
   }
 > = {
   [Period.Hour]: {
+    textfieldLabel: 'Ежечасно',
     labels: { one: 'час', two: 'часа', few: 'часа', other: 'часов' },
-    every: { one: 'Каждый', other: 'Каждые' },
   },
-  [Period.Day]: {
-    labels: { one: 'день', two: 'дня', few: 'дня', other: 'дней' },
-    every: { one: 'Каждый', other: 'Каждые' },
-  },
+  [Period.Day]: { textfieldLabel: 'Ежедневно', labels: { one: 'день', two: 'дня', few: 'дня', other: 'дней' } },
   [Period.Week]: {
+    textfieldLabel: 'Еженедельно',
     labels: { one: 'неделю', two: 'недели', few: 'недели', other: 'недель' },
-    every: { one: 'Каждую', other: 'Каждые' },
   },
   [Period.Month]: {
+    textfieldLabel: 'Ежемесячно',
     labels: { one: 'месяц', two: 'месяца', few: 'месяца', other: 'месяцев' },
-    every: { one: 'Каждый', other: 'Каждые' },
   },
-  [Period.Year]: {
-    labels: { one: 'год', two: 'года', few: 'года', other: 'лет' },
-    every: { one: 'Каждый', other: 'Каждые' },
-  },
+  [Period.Year]: { textfieldLabel: 'Ежегодно', labels: { one: 'год', two: 'года', few: 'года', other: 'лет' } },
 };
 export interface SubtaskProps {
   name: string;
@@ -55,11 +49,12 @@ export interface TaskFormValues {
   characteristics: { item: { id?: string; name?: string }; percent?: number }[];
   date?: Date;
   time?: Date;
-  year?: boolean;
+  /*   year?: boolean; */
   habit?: boolean;
-  important?: boolean;
-  subtasks: SubtaskProps[];
-  repeat?: { period: Period; count: number };
+  /*   important?: boolean; */
+  /*   subtasks: SubtaskProps[];
+  repeat?: { period: Period; count: number }; */
+  asignee?: { id: string; name: string };
 }
 
 export interface TaskFormProps {
@@ -79,10 +74,10 @@ export const TaskFormSchema = object({
     .required(),
   date: date(),
   time: date(),
-  year: boolean(),
+  /*   year: boolean(), */
   habit: boolean(),
-  important: boolean(),
-  subtasks: array()
+  /*   important: boolean(), */
+  /*   subtasks: array()
     .of(
       object({
         name: string().required(),
@@ -93,5 +88,9 @@ export const TaskFormSchema = object({
   repeat: object({
     period: mixed<Period>().oneOf(Object.values(Period)).required(),
     count: number().required(),
+  }).optional(), */
+  asignee: object({
+    id: string().required(),
+    name: string().required(),
   }).optional(),
 });

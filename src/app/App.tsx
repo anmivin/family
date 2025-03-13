@@ -6,23 +6,22 @@ import { Provider } from 'react-redux';
 import { setupStore } from '@stores/global.store';
 import ruLocale from 'date-fns/locale/ru';
 import '@theme/fonts/font.css';
-import { ReactFlowProvider } from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
 import { UserInit } from './userInit';
 import { BrowserRouter } from 'react-router-dom';
+import AbilityProvider from '../shared/ability/AbilityContext';
 
 function App() {
   return (
     <Provider store={setupStore()}>
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
         <ThemeColorModeProvider>
-          <ReactFlowProvider>
-            <BrowserRouter>
+          <BrowserRouter>
+            <AbilityProvider>
               <UserInit>
                 <Routing />
               </UserInit>
-            </BrowserRouter>
-          </ReactFlowProvider>
+            </AbilityProvider>
+          </BrowserRouter>
         </ThemeColorModeProvider>
       </LocalizationProvider>
     </Provider>

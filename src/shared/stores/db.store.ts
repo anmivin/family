@@ -10,13 +10,10 @@ interface CharacteristicsInterface {
   id: string;
   name: string;
 }
-// Define a type for the slice state
 interface DbSliceProps {
   skills: SkillsInterface[];
   characteristics: CharacteristicsInterface[];
 }
-
-// Define the initial state using that type
 const initialState: DbSliceProps = {
   skills: [],
   characteristics: [],

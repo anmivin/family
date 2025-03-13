@@ -1,52 +1,61 @@
 import { Typography, Box, Button, styled, Checkbox } from '@mui/material';
-import { TaskCardProps } from './TaskCard.types';
+import { taskType } from './TaskCard.types';
 import { getDefaultDate, getDateTime } from '../../helpers/dates';
 import { RepeatIcon, ClockIcon } from '../Icons';
-const StyledCard = styled(Box)`
-  background-color: ${({ theme }) => theme.color.secondaryLight};
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(3)};
-  border-radius: 8px;
-`;
+/* import { pluralizeString } from '@helpers/utils';
+import { PeriodLabels } from '@features/TaskForm/TaskForm.types'; */
+import { useAppDispatch } from '@stores/global.store';
+import { fetchTask } from '@stores/tasks/tasks.fetchers';
+import { setIsTaskFormOpen } from '@stores/modals/modals.store';
+import { components } from '@api/Api';
+import { StyledCard, StyledDescription } from './TaskCard.styled';
 
-export const StyledDescription = styled(Typography)`
-  width: 100%;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
+const TaskCard = (data: components['schemas']['OutputTaskListDto']) => {
+  const dispatch = useAppDispatch();
+  const onOpen = () => {
+    dispatch(fetchTask(data.id));
+    dispatch(setIsTaskFormOpen(true));
+  };
 
-const TaskCard = ({ id, name, description, date, creator, repeat }: TaskCardProps) => {
   return (
-    <StyledCard>
+    <StyledCard
+      onClick={onOpen}
+      isCompleted={data.isCompleted}
+      isApproving={data.isApproving}
+      isDeclined={data.isDeclined}
+    >
       <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Typography variant="body2">{name}</Typography>
-        {creator && <Typography variant="caption">от {creator}</Typography>}
+        <Typography variant="body2">{data.name}</Typography>
+        <Box display="flex" flexDirection="column" alignItems="end" justifyContent="space-between">
+          {data.creatorId && <Typography variant="caption">от {data.creatorId}</Typography>}
+          {data.isApproving && <Typography variant="caption">на одобрении</Typography>}
+          {data.isDeclined && <Typography variant="caption">отклонено</Typography>}
+        </Box>
       </Box>
 
-      <StyledDescription variant="body1">{description}</StyledDescription>
+      <StyledDescription variant="body1">{data.description}</StyledDescription>
       <Box display="flex" flexDirection="column" alignItems="end">
-        {!!repeat && (
+        {/*  {!!repeat?.currency && !!repeat.period && (
           <Box display="flex" alignItems="center" gap={1}>
             <RepeatIcon size={20} color="textMain" />
-            <Typography>{repeat.currency}</Typography>
+            <Typography>
+              {repeat.currency} {pluralizeString(repeat.currency, PeriodLabels[repeat.period].labels)}
+            </Typography>
           </Box>
-        )}
-        {!!date && (
+        )} */}
+        {!!data.date && (
           <Box display="flex" alignItems="center" gap={1}>
             <ClockIcon size={20} color="textMain" />
-            <Typography>{/* timed ? getDateTime(date) :  */ getDefaultDate(date)}</Typography>
+            <Typography>{/* timed ? getDateTime(date) :  */ getDefaultDate(data.date)}</Typography>
           </Box>
         )}
       </Box>
-      <Box>
-        <Button>готово</Button>
-        <Button>отложить</Button>
-      </Box>
+      {data.isActive && (
+        <Box>
+          <Button>готово</Button>
+          <Button>отложить</Button>
+        </Box>
+      )}
     </StyledCard>
   );
 };

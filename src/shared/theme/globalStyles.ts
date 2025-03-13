@@ -42,20 +42,20 @@ export const globalStyles = (theme: Theme) => css`
   }
 
   *::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 0px;
+    height: 0px;
     border-radius: 4px;
   }
 
   *::-webkit-scrollbar-track {
     background-color: transparent;
-    width: 16px;
+    width: 0px;
   }
 
   *::-webkit-scrollbar-thumb {
     background-color: ${theme.color.secondaryDark};
     border-radius: 8px;
-    min-height: 24px;
+    min-height: 0px;
 
     &:active,
     &:hover {

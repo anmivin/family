@@ -1,14 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface ModalsSliceProps {
-  isTaskFormOpen: boolean;
-  isQrCodeOpen: boolean;
-}
-
-const initialState: ModalsSliceProps = {
-  isTaskFormOpen: false,
-  isQrCodeOpen: false,
-};
+import { initialState } from './modals.types';
 
 export const modalsSlice = createSlice({
   name: 'modals',

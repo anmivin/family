@@ -2,10 +2,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 
-import modalsSlice from './modals.store';
+import modalsSlice from './modals/modals.store';
 import userSlice from './users/users.store';
 import taskSlice from './tasks/tasks.store';
-const rootReducer = combineReducers({ modalsSlice, userSlice, taskSlice });
+import listSlice from './lists/lists.store';
+const rootReducer = combineReducers({ modalsSlice, userSlice, taskSlice, listSlice });
 
 export const setupStore = () => {
   return configureStore({

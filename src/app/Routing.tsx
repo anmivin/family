@@ -13,8 +13,6 @@ const Routing = () => {
   const { userInfo, pendingUserInfo, errorUserInfo } = useAppSelector((state) => state.userSlice);
   const currentRoutes = getRoutes();
 
-  useEffect(() => console.log('userInfo', userInfo), [userInfo]);
-
   return (
     <Routes>
       {menuRoutes.map(({ link, Component }) => (

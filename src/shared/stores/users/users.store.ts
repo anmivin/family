@@ -13,17 +13,14 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserInfo.pending, (state) => {
-      console.log('pending');
       state.pendingUserInfo = true;
     }),
       builder.addCase(fetchUserInfo.fulfilled, (state, action: PayloadAction<any>) => {
-        console.log('fulfilled', action);
         state.pendingUserInfo = false;
         state.errorUserInfo = '';
-        state.userInfo = action.payload.response;
+        state.userInfo = action.payload;
       }),
       builder.addCase(fetchUserInfo.rejected, (state, action: PayloadAction<unknown>) => {
-        console.log('rejected', action);
         state.pendingUserInfo = false;
         state.errorUserInfo = action.payload as string;
       });

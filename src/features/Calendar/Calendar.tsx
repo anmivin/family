@@ -1,22 +1,8 @@
-import {
-  DateCalendar,
-  PickersDay,
-  PickersDayProps,
-  PickerValidDate,
-  TimeClock,
-  DigitalClock,
-  MultiSectionDigitalClock,
-  StaticDatePicker,
-  PickersLayout,
-} from '@mui/x-date-pickers';
-import { Box, Button, styled, IconButton, Typography } from '@mui/material';
+import { DateCalendar, PickersDayProps, PickerValidDate } from '@mui/x-date-pickers';
+import { Box, styled, IconButton, Typography } from '@mui/material';
 import { getDate, getDefaultDate } from '@helpers/dates';
-import { isSameMonth, isSameDay } from 'date-fns';
-import axios from 'axios';
-import useSwr from '../../shared/swr/useSwr';
-import { useState } from 'react';
 
-import { FC, useMemo } from 'react';
+import { useState } from 'react';
 
 import { PickersCalendarHeaderProps } from '@mui/x-date-pickers';
 import { addMonths } from 'date-fns';
@@ -94,19 +80,10 @@ const CalendarHeader = <TDate extends PickerValidDate>(props: PickersCalendarHea
   );
 };
 
-const Day = <T extends PickerValidDate>(
-  props: PickersDayProps<T>
-  /*  onClick: (props: { id: string; name: string; type: string; date: string }[]) => void,
-    data?: { id: string; name: string; type: string; date: string }[] */
-) => {
-  /* const dayData = data?.filter((info) => isSameDay(new Date(info.date), props.day)); */
-
+const Day = <T extends PickerValidDate>(props: PickersDayProps<T>) => {
   const dayData = [{ type: 'dddd' }, { type: 'sss' }, { type: 'sss' }, { type: 'sss' }];
   return (
-    <DayContainer
-      /* onClick={() => dayData && onClick(dayData)} */
-      className={props.outsideCurrentMonth ? 'disabled' : undefined}
-    >
+    <DayContainer className={props.outsideCurrentMonth ? 'disabled' : undefined}>
       <Box display="block">
         <Box sx={{ position: 'relative', top: '0px', left: '0px' }}>{getDate(props.day)}</Box>
         <TaskContainer>

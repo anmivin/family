@@ -20,22 +20,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tasks/for_approval": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["TasksController_findTasksForApproval"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/tasks/{id}": {
         parameters: {
             query?: never;
@@ -50,6 +34,22 @@ export interface paths {
         options?: never;
         head?: never;
         patch: operations["TasksController_completeTask"];
+        trace?: never;
+    };
+    "/tasks/for_approval": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TasksController_findTasksForApproval"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/tasks/updateStatus": {
@@ -68,7 +68,7 @@ export interface paths {
         patch: operations["TasksController_updateTaskStatus"];
         trace?: never;
     };
-    "/users": {
+    "/users/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -77,43 +77,11 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["UsersController_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/users/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["UsersController_findUser"];
-        put?: never;
         post?: never;
         delete: operations["UsersController_remove"];
         options?: never;
         head?: never;
         patch: operations["UsersController_update"];
-        trace?: never;
-    };
-    "/users/wishes/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["UsersController_getUserWishes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
         trace?: never;
     };
     "/auth/me": {
@@ -167,7 +135,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/lists/features": {
+    "/lists/features/user": {
         parameters: {
             query?: never;
             header?: never;
@@ -175,22 +143,6 @@ export interface paths {
             cookie?: never;
         };
         get: operations["ListsController_getFeatures"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/lists/skills": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["ListsController_getSkills"];
         put?: never;
         post?: never;
         delete?: never;
@@ -215,14 +167,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/lists/features/user": {
+    "/lists/skills": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["ListsController_getUserFeatures"];
+        get: operations["ListsController_getSkills"];
         put?: never;
         post?: never;
         delete?: never;
@@ -231,14 +183,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/lists/enums": {
+    "/lists/abilities": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["ListsController_getEnums"];
+        get: operations["ListsController_getUserAbilitie"];
         put?: never;
         post?: never;
         delete?: never;
@@ -251,89 +203,75 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        TaskTypeDto: {
-            isImportant: boolean;
-            isActive: boolean;
-            isCompleted: boolean;
-            isApproving: boolean;
-            isDeclined: boolean;
-            isHoliday: boolean;
-            isHabit: boolean;
-            isYear: boolean;
-        };
-        SubtaskDto: {
+        OutputTaskListDto: {
+            id: string;
             name: string;
-            /** @enum {string} */
-            difficulty?: "Easy" | "Medium" | "Hard" | "Epic" | "Legendary";
+            description?: string;
+            isActive?: boolean;
+            isCompleted?: boolean;
+            isApproving?: boolean;
+            isDeclined?: boolean;
+            isHabit?: boolean;
+            /** Format: date-time */
+            date: string;
+            creatorId?: string;
         };
-        PeriodDto: {
+        CreatorDto: {
+            id: string;
+            name: string;
+        };
+        OutputTaskDto: {
+            id: string;
+            name: string;
+            description?: string;
+            isActive?: boolean;
+            isCompleted?: boolean;
+            isApproving?: boolean;
+            isDeclined?: boolean;
+            isHabit?: boolean;
+            /** Format: date-time */
+            date: string;
+            creatorId?: string;
             /** @enum {string} */
-            period: "Hour" | "Day" | "Week" | "Month" | "Year" | "Simple";
-            currency: number;
+            difficulty: "Easy" | "Medium" | "Hard" | "Epic" | "Legendary";
+            creator?: components["schemas"]["CreatorDto"];
         };
         PercentDto: {
             id: string;
             percent: number;
         };
-        CreateTaskDto: {
+        /** @description кокойто дискрипшен */
+        InputCreateTaskDto: {
             name: string;
             /** @enum {string} */
             difficulty?: "Easy" | "Medium" | "Hard" | "Epic" | "Legendary";
-            userId?: string;
-            creatorId?: string;
+            asigneeId?: string;
             description?: string;
-            types: components["schemas"]["TaskTypeDto"];
+            isHabit: boolean;
             /** Format: date-time */
             date?: string;
-            subtasks: components["schemas"]["SubtaskDto"][];
-            repeat?: components["schemas"]["PeriodDto"];
             skills: components["schemas"]["PercentDto"][];
             features: components["schemas"]["PercentDto"][];
         };
-        OutputTaskDto: {
-            name: string;
+        OutputCreateTaskDto: {
+            id: string;
+        };
+        InputEditTaskDto: {
+            name?: string;
             /** @enum {string} */
             difficulty?: "Easy" | "Medium" | "Hard" | "Epic" | "Legendary";
-            creatorId?: string;
+            asigneeId?: string;
             description?: string;
-            types: components["schemas"]["TaskTypeDto"];
+            isHabit?: boolean;
             /** Format: date-time */
             date?: string;
-            subtasks: components["schemas"]["SubtaskDto"][];
-            repeat?: components["schemas"]["PeriodDto"];
-            skills: components["schemas"]["PercentDto"][];
-            features: components["schemas"]["PercentDto"][];
-        };
-        PartialTypeClass: {
-            isImportant?: boolean;
+            skills?: components["schemas"]["PercentDto"][];
+            features?: components["schemas"]["PercentDto"][];
+            id: string;
             isActive?: boolean;
             isCompleted?: boolean;
             isApproving?: boolean;
             isDeclined?: boolean;
-            isHoliday?: boolean;
-            isHabit?: boolean;
-            isYear?: boolean;
-        };
-        UpdateStatusTaskDto: {
-            taskId: string;
-            types: components["schemas"]["PartialTypeClass"];
-        };
-        CreateUserDto: {
-            name: string;
-            email?: string;
-            password: string;
-            familyid?: string;
-            role?: string;
-        };
-        DefaultResponseDto: {
-            id: string;
-        };
-        OutputUserDto: {
-            id: string;
-            name: string;
-            role: string;
-            xp: number;
-            gold: number;
         };
         EditUserDto: {
             name?: string;
@@ -342,23 +280,54 @@ export interface components {
             familyid?: string;
             role?: string;
         };
+        OutputUserDto: {
+            id: string;
+            name: string;
+            email?: string;
+            xp: number;
+            gold: number;
+            familyId: string;
+        };
         LoginInputDto: {
             name: string;
             password: string;
+        };
+        CreateUserDto: {
+            name: string;
+            email?: string;
+            password: string;
+            familyid?: string;
+            role?: string;
+        };
+        FeatureBaseDto: {
+            id: string;
+            name: string;
+            description: string;
+            parentBrunchId: string;
+            userXp: number;
         };
         FeatureDto: {
             id: string;
             name: string;
             description: string;
+            userXp: number;
+            children: components["schemas"]["FeatureBaseDto"][];
             color: string;
-            sorceHandle: string;
-            targetHandle: string;
-            positionX: number;
-            positionY: number;
         };
-        SkillDto: {
+        SkillXpDto: {
             id: string;
             name: string;
+            xp: number;
+        };
+        SkillListDto: {
+            id: string;
+            name: string;
+        };
+        UserAbilityDto: {
+            create: ("ASSIGN_TASK" | "CREATE_SKILL")[];
+            read: ("ASSIGN_TASK" | "CREATE_SKILL")[];
+            update: ("ASSIGN_TASK" | "CREATE_SKILL")[];
+            delete: ("ASSIGN_TASK" | "CREATE_SKILL")[];
         };
     };
     responses: never;
@@ -371,16 +340,12 @@ export type $defs = Record<string, never>;
 export interface operations {
     TasksController_findTasksForUser: {
         parameters: {
-            query: {
-                isImportant?: boolean;
+            query?: {
                 isActive?: boolean;
                 isCompleted?: boolean;
                 isApproving?: boolean;
                 isDeclined?: boolean;
-                isHoliday?: boolean;
                 isHabit?: boolean;
-                isYear?: boolean;
-                userId: string;
             };
             header?: never;
             path?: never;
@@ -393,7 +358,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["OutputTaskDto"][];
+                    "application/json": components["schemas"]["OutputTaskListDto"][];
                 };
             };
         };
@@ -407,7 +372,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateTaskDto"];
+                "application/json": components["schemas"]["InputCreateTaskDto"];
             };
         };
         responses: {
@@ -415,29 +380,8 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
-            };
-        };
-    };
-    TasksController_findTasksForApproval: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": string;
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
                 content: {
-                    "application/json": components["schemas"]["OutputTaskDto"][];
+                    "application/json": components["schemas"]["OutputCreateTaskDto"];
                 };
             };
         };
@@ -501,57 +445,11 @@ export interface operations {
             };
         };
     };
-    TasksController_updateTaskStatus: {
+    TasksController_findTasksForApproval: {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateStatusTaskDto"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    UsersController_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateUserDto"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DefaultResponseDto"];
-                };
-            };
-        };
-    };
-    UsersController_findUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
             cookie?: never;
         };
         requestBody?: never;
@@ -561,8 +459,29 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["OutputUserDto"];
+                    "application/json": components["schemas"]["OutputTaskDto"][];
                 };
+            };
+        };
+    };
+    TasksController_updateTaskStatus: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InputEditTaskDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -608,25 +527,6 @@ export interface operations {
             };
         };
     };
-    UsersController_getUserWishes: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
     AuthController_me: {
         parameters: {
             query?: never;
@@ -636,12 +536,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["OutputUserDto"];
+                };
             };
             /** @description Bad Request */
             400: {
@@ -750,6 +651,25 @@ export interface operations {
             };
         };
     };
+    ListsController_getUserSkills: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SkillXpDto"][];
+                };
+            };
+        };
+    };
     ListsController_getSkills: {
         parameters: {
             query?: never;
@@ -768,76 +688,26 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["SkillDto"][];
+                    "application/json": components["schemas"]["SkillListDto"][];
                 };
             };
         };
     };
-    ListsController_getUserSkills: {
+    ListsController_getUserAbilitie: {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": string;
-            };
-        };
+        requestBody?: never;
         responses: {
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["SkillDto"][];
-                };
-            };
-        };
-    };
-    ListsController_getUserFeatures: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": string;
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["FeatureDto"][];
-                };
-            };
-        };
-    };
-    ListsController_getEnums: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": string;
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["FeatureDto"][];
+                    "application/json": components["schemas"]["UserAbilityDto"];
                 };
             };
         };

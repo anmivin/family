@@ -38,10 +38,8 @@ const LoginForm = () => {
   const onSubmit = useCallback(
     async (data: LoginFormValues) => {
       if (isSignUp) {
-        console.log('isSignUp');
         dispatch(signUp(data));
       } else {
-        console.log('signIn');
         dispatch(signIn(data));
       }
     },
@@ -49,7 +47,7 @@ const LoginForm = () => {
   );
 
   return (
-    <Box display="flex" flexDirection="column" p={3}>
+    <Box display="flex" flexDirection="column" gap={4} p={4} height="100vh" justifyContent="center">
       <Controller
         control={control}
         name="name"
@@ -97,9 +95,10 @@ const LoginForm = () => {
           render={({ field }) => <TextField {...field} variant="standard" label="айди семьи" />}
         />
       )}
-
-      <Button onClick={() => setIsSignUp((prev) => !prev)}>{isSignUp ? 'вход' : 'регистрация'}</Button>
-      <Button onClick={handleSubmit(onSubmit)}>{isSignUp ? 'зарегистрироваться' : 'войти'}</Button>
+      <Box alignSelf="center">
+        <Button onClick={() => setIsSignUp((prev) => !prev)}>{isSignUp ? 'вход' : 'регистрация'}</Button>
+        <Button onClick={handleSubmit(onSubmit)}>{isSignUp ? 'зарегистрироваться' : 'войти'}</Button>
+      </Box>
     </Box>
   );
 };

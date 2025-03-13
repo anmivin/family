@@ -19,7 +19,7 @@ export interface PercentageFieldProps {
 export const getLabelType = (labelType: 'masculine' | 'feminine' | 'neuter') => {
   switch (labelType) {
     case 'feminine':
-      return 'Связанную';
+      return 'Связанная';
     case 'masculine':
       return 'Связанный';
     default:

@@ -1,23 +1,13 @@
 import { Box, Typography, Button } from '@mui/material';
 import { menuRoutes } from '@constants/routes';
 import Draggable from 'react-draggable';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import FormSection from '@ui/FormSection';
 
 // Styles
 const styles = {
-  column: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '20px',
-    border: '1px solid #ccc',
-    width: '200px',
-    minHeight: '300px',
-    position: 'relative',
-  },
   item: {
     padding: '10px',
-    margin: '5px 0',
     border: '1px solid #ddd',
     borderRadius: '4px',
     cursor: 'move',
@@ -26,79 +16,72 @@ const styles = {
     boxSizing: 'border-box',
   },
 };
-
+const ITEM_HEIGHT = 46;
 const ChangeRoutes = () => {
   const [items, setItems] = useState(menuRoutes);
-  const [draggedIndex, setDraggedIndex] = useState(null);
 
-  // Function to calculate overlap percentage
-  const calculateOverlap = (dragY, itemTop, itemHeight) => {
-    const dragBottom = dragY + itemHeight / 2; // Center of dragged item
-    const overlapTop = Math.max(itemTop, dragY);
-    const overlapBottom = Math.min(itemTop + itemHeight, dragBottom);
-    const overlapHeight = Math.max(0, overlapBottom - overlapTop);
-    return (overlapHeight / itemHeight) * 100;
+  const draggedItemIndex = useRef(-1);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const swapItems = (fromIndex, toIndex) => {
+    const newItems = [...items];
+    const [movedItem] = newItems.splice(fromIndex, 1);
+    newItems.splice(toIndex, 0, movedItem);
+    setItems(newItems);
   };
 
-  const handleDragStart = (index) => {
-    setDraggedIndex(index);
+  const handleDragStart = (index: number) => {
+    draggedItemIndex.current = index;
   };
 
-  const handleDrag = (e, data) => {
-    if (draggedIndex === null) return;
-
-    const draggedItemHeight = e.target.offsetHeight;
-    const draggedItemTop = data.clientY - draggedItemHeight / 2;
-
-    // Find the target index based on overlap
+  const handleDrag = (e, data, itemId: number) => {
+    const draggedIndex = draggedItemIndex.current;
+    if (draggedIndex === -1 || !containerRef.current) return;
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const mouseY = e.clientY - containerRect.top;
     let targetIndex = draggedIndex;
-    items.forEach((_, index) => {
-      if (index !== draggedIndex) {
-        const itemRef = document.getElementById(`item-${index}`);
-        console.log(itemRef);
-        if (itemRef) {
-          const itemRect = itemRef.getBoundingClientRect();
-          const overlapPercentage = calculateOverlap(draggedItemTop, itemRect.top, itemRect.height);
 
-          if (overlapPercentage > 50) {
-            targetIndex = index;
-          }
-        }
-      }
-    });
+    // Calculate midpoints for next and previous items
+    const nextMidpoint = (draggedIndex + 1) * ITEM_HEIGHT + ITEM_HEIGHT / 2;
+    const prevMidpoint = draggedIndex * ITEM_HEIGHT + ITEM_HEIGHT / 2;
+    /*     console.log(nextMidpoint, prevMidpoint, mouseY); */
+    if (mouseY >= nextMidpoint) {
+      targetIndex = draggedIndex + 1;
+    } else if (mouseY <= prevMidpoint) {
+      targetIndex = draggedIndex - 1;
+    }
 
-    // Swap items if the target index has changed
+    // Ensure targetIndex stays within bounds
+    targetIndex = Math.max(0, Math.min(targetIndex, items.length - 1));
+
     if (targetIndex !== draggedIndex) {
-      const updatedItems = [...items];
-      const draggedItem = updatedItems[draggedIndex];
-      updatedItems.splice(draggedIndex, 1);
-      updatedItems.splice(targetIndex, 0, draggedItem);
-      setItems(updatedItems);
-      setDraggedIndex(targetIndex);
+      console.log('swap', targetIndex, draggedIndex);
+      swapItems(draggedIndex, targetIndex);
+      draggedItemIndex.current = targetIndex;
     }
   };
 
-  const handleDragStop = () => {
-    setDraggedIndex(null); // Reset dragged index
-  };
-
   return (
-    <>
-      <>настроить разделы </>
-      <Box display="flex" flexDirection="column" gap={2}>
+    <FormSection title="настроить разделы">
+      <Box display="flex" flexDirection="column" gap={2} ref={containerRef}>
         {items.map((route, index) => (
           <Draggable
             axis="y"
-            bounds="parent"
+            /*  bounds="parent" */
+            /*             onStart={() => handleDragStart(index)}
+            onDrag={handleDrag} 
+            onStop={handleDragStop}*/
+            key={index}
             onStart={() => handleDragStart(index)}
-            onDrag={handleDrag}
-            onStop={handleDragStop}
+            onDrag={(e, data) => handleDrag(e, data, index)}
+            /* position={{ x: 0, y: index * ITEM_HEIGHT }} */
+
+            /*     scale={1} */
           >
             <Box
-              id={`item-${index}`}
               display="flex"
               gap={2}
-              sx={{ ...styles.item, backgroundColor: draggedIndex === index ? '#f0f0f0' : '#fff' }}
+              sx={{ ...styles.item, backgroundColor: draggedItemIndex.current === index ? '#f0f0f0' : '#fff' }}
             >
               {route.icon}
               <Typography>{route.name}</Typography>
@@ -106,7 +89,7 @@ const ChangeRoutes = () => {
           </Draggable>
         ))}
       </Box>
-    </>
+    </FormSection>
   );
 };
 

@@ -34,7 +34,7 @@ export const themeColor: Record<
     secondaryLight: commonColors.blue100,
 
     textMain: commonColors.dark900,
-    textDark: commonColors.dark900,
+    textDark: commonColors.pink900,
     textLight: commonColors.dark900,
 
     accentMain: commonColors.pink400,
@@ -51,12 +51,12 @@ export const themeColor: Record<
     secondaryLight: commonColors.green100,
 
     textMain: commonColors.dark900,
-    textDark: commonColors.dark900,
+    textDark: commonColors.violet900,
     textLight: commonColors.dark600,
 
     accentMain: commonColors.violet400,
-    accentDark: commonColors.violet500,
-    accentLight: commonColors.violet300,
+    accentDark: commonColors.violet600,
+    accentLight: commonColors.violet200,
   },
   [ThemeName._3]: {
     primaryMain: commonColors.marine800,

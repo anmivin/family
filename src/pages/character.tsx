@@ -1,17 +1,20 @@
-import CharacterCard from '../entities/CharacterCard';
 import AddTaskButton from '../shared/ui/AddTaskButton';
-import { Box, Button, styled } from '@mui/material';
+import { Box } from '@mui/material';
 import Tabs from '../shared/ui/Tabs';
 import axios from 'axios';
-import { useEffect, useState, useCallback } from 'react';
+import { useState } from 'react';
 import useSwr from '../shared/swr/useSwr';
-import SkillsChart from '@features/SkillsChart/SkillsChart';
-import { api } from '../shared/api/axiosInstance';
-import CharacteristicFlow from '@features/CharacteristicFlow/CharacteristicFlow';
+import SkillsChart from '@features/SkillsTab/SkillsChart';
+
+import FeaturesTab from '@features/FeaturesTab/FeaturesTab';
+
+import CharacterTab from '@features/CharacterTab/CharacterTab';
+import { useAppSelector } from '@stores/global.store';
 
 const Character = () => {
   const [selectedTab, setSelectedTab] = useState(1);
-  const { data: user, loading: loadingUser } = useSwr({
+
+  /*   const { data: user, loading: loadingUser } = useSwr({
     func: () => axios.get('/users'),
   });
 
@@ -26,12 +29,14 @@ const Character = () => {
   } = useSwr({
     func: () => axios.get('/error').then((res) => res.data),
   });
+ */
+
+  const { userFeatures, pendingUserFeatures, errorUserFeatures, userSkills } = useAppSelector(
+    (state) => state.listSlice
+  );
 
   return (
     <>
-      {error && 'dataError'}
-      {loadingError && 'loadingError'}
-      {justError && 'errorError'}
       <Tabs
         tabs={[
           { label: 'Персонаж', value: 1 },
@@ -42,9 +47,9 @@ const Character = () => {
         onChange={setSelectedTab}
       />
       <Box display="flex" flexDirection="column" gap={2} p={2}>
-        {selectedTab === 1 && user && <CharacterCard {...user} />}
-        {user && <> {selectedTab === 2 && <CharacteristicFlow data={user.features} />}</>}
-        {user && skills && <>{selectedTab === 3 && <SkillsChart skills={skills} userSkills={user.skills} />}</>}
+        {selectedTab === 1 && <CharacterTab />}
+        {selectedTab === 2 && <FeaturesTab />}
+        {selectedTab === 3 && <SkillsChart />}
         <AddTaskButton />
 
         <>
