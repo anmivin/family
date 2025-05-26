@@ -1,15 +1,7 @@
 import { differenceInDays } from 'date-fns';
 import { ReactNode } from 'react';
 import { StarOneIcon, StarTwoIcon, StarThreeIcon, StarFourIcon, StarFiveIcon } from '@ui/Icons';
-
-export enum TaskDifficulty {
-  Easy = 'Easy',
-  Medium = 'Medium',
-  Hard = 'Hard',
-  Epic = 'Epic',
-  Legendary = 'Legendary',
-}
-
+import { Difficulty } from '@api/Api';
 /* Easy (10 XP)
 
 Make a to-do list for the day
@@ -92,11 +84,11 @@ Create a comprehensive and widely acclaimed documentary or film
 */
 
 export const TaskDifficultyXP: Record<
-  TaskDifficulty,
+  Difficulty,
   { xp: number; label: string; time: number; examples: string[]; icon: ReactNode }
 > = {
-  [TaskDifficulty.Easy]: {
-    xp: 20,
+  [Difficulty.EASY]: {
+    xp: 10,
     label: 'Лёгкая',
     time: 5,
     examples: [
@@ -109,16 +101,16 @@ export const TaskDifficultyXP: Record<
     ],
     icon: <StarOneIcon size={48} />,
   },
-  [TaskDifficulty.Medium]: {
-    xp: 60,
+  [Difficulty.MEDIUM]: {
+    xp: 40,
     label: 'Средняя',
     time: 20,
     examples: ['Помыть полы', 'Прочитать главу', 'Прогулка', 'Йога или медитация', 'Приготовить еду'],
     icon: <StarTwoIcon size={48} />,
   },
 
-  [TaskDifficulty.Hard]: {
-    xp: 180,
+  [Difficulty.HARD]: {
+    xp: 160,
     label: 'Сложная',
     time: 80,
     examples: [
@@ -134,8 +126,8 @@ export const TaskDifficultyXP: Record<
     ],
     icon: <StarThreeIcon size={48} />,
   },
-  [TaskDifficulty.Epic]: {
-    xp: 540,
+  [Difficulty.EPIC]: {
+    xp: 640,
     label: 'Эпичная',
     time: 0,
     examples: [
@@ -147,8 +139,8 @@ export const TaskDifficultyXP: Record<
     ],
     icon: <StarFourIcon size={48} />,
   },
-  [TaskDifficulty.Legendary]: {
-    xp: 1620,
+  [Difficulty.LEGENDARY]: {
+    xp: 2560,
     label: 'Легендарная',
     time: 0,
     examples: [
@@ -166,7 +158,7 @@ const XP_BASE = 100;
 
 export const calcXpPerLevel = (level: number) => XP_BASE * Math.pow(level, 2);
 export const calcLevel = (xp: number) => Math.floor(Math.sqrt(xp / 100));
-export const calcEarnedXp = (difficulty: TaskDifficulty, prevEarnedXP: Date) => {
+export const calcEarnedXp = (difficulty: Difficulty, prevEarnedXP: Date) => {
   const XP_RATE_BASE = TaskDifficultyXP[difficulty].xp;
   const TIME_PASSED = differenceInDays(new Date(), prevEarnedXP) / 10;
   const XP_MULTIPLIER = 1 - TIME_PASSED;

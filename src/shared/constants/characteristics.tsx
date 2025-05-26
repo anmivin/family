@@ -26,7 +26,7 @@ import {
 } from '@ui/Icons';
 
 export const characteristics = [
-  /*  {
+  {
     sorceHandle: 'right',
     targetHandle: 'left',
     id: 'art',
@@ -105,7 +105,7 @@ export const characteristics = [
         id: 'communication',
       },
     ],
-  }, */
+  },
   {
     id: 'health',
     position: { x: 0, y: -80 },

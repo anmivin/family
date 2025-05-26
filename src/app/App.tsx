@@ -9,7 +9,7 @@ import '@theme/fonts/font.css';
 import { UserInit } from './userInit';
 import { BrowserRouter } from 'react-router-dom';
 import AbilityProvider from '../shared/ability/AbilityContext';
-
+import ToastProvider from '@ui/Toast/ToastProvider';
 function App() {
   return (
     <Provider store={setupStore()}>
@@ -17,9 +17,11 @@ function App() {
         <ThemeColorModeProvider>
           <BrowserRouter>
             <AbilityProvider>
-              <UserInit>
-                <Routing />
-              </UserInit>
+              <ToastProvider>
+                <UserInit>
+                  <Routing />
+                </UserInit>
+              </ToastProvider>
             </AbilityProvider>
           </BrowserRouter>
         </ThemeColorModeProvider>

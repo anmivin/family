@@ -14,12 +14,13 @@ const userHandler = [
     }
   }),
 
-  http.get('/faker/auth/me', () => {
+  http.get('/auth/me', () => {
     /*     return new HttpResponse('null', { status: 404 }); */
+    const rand = HttpResponse.json(randomUser());
     return HttpResponse.json(randomUser());
   }),
 
-  http.get('/faker/lists/features/user', () => {
+  http.get('/characteristics/features/user', () => {
     return HttpResponse.json(featureList());
   }),
 ];

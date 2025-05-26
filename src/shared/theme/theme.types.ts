@@ -1,11 +1,10 @@
 import type { Theme } from '@mui/material';
 
-import type { Breakpoints, Media } from './common/media';
+import type { Media } from './common/media';
 import type { FontStyle, Typography } from './common/typography';
-import type { Color, ColorOptions } from './lightTheme';
-import { ThemeKey } from './theme.constants';
 
-export type { Color, ColorOptions, Breakpoints, Media };
+import { ThemeKey } from './theme.constants';
+import { ColorOptions } from './themeVariants';
 
 export type PaletteMode = ThemeKey;
 

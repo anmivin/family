@@ -4,7 +4,8 @@ import { ProgressBarProps } from './ProgressBar.types';
 const ProgressBar = ({ value, title, subtitle, color }: ProgressBarProps) => {
   return (
     <Box display="flex" flexDirection="column" gap={2}>
-      <Typography variant="body1">{title}</Typography>
+      {typeof title === 'string' ? <Typography variant="body1">{title}</Typography> : title}
+
       <StyledLinearProgress variant="determinate" value={value} barcolor={color} />
       <Typography variant="caption" alignSelf="end">
         {subtitle}

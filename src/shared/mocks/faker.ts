@@ -1,22 +1,25 @@
-import { components } from '@api/Api';
+import { components, Difficulty, TaskStatus, TaskType } from '@api/Api';
 import { faker } from '@faker-js/faker';
 
 const userTask: () => components['schemas']['OutputTaskDto'] & { id: string } = () => {
-  const difficulty = faker.helpers.arrayElement(['Easy', 'Medium', 'Hard', 'Epic', 'Legendary']);
+  const difficulty = faker.helpers.arrayElement(Object.values(Difficulty));
+  const status = faker.helpers.arrayElement(Object.values(TaskStatus));
+  const type = faker.helpers.arrayElement(Object.values(TaskType));
   return {
     id: faker.string.ulid(),
-    name: faker.string.alpha({ length: { min: 3, max: 20 } }),
-    difficulty: difficulty,
-    creatorId: Math.random() < 0.5 ? faker.string.uuid() : undefined,
+    title: faker.string.alpha({ length: { min: 3, max: 20 } }),
+    difficulty,
+    creator:
+      Math.random() < 0.5
+        ? {
+            id: faker.string.uuid(),
+            name: faker.string.alpha({ length: { min: 3, max: 20 } }),
+          }
+        : undefined,
     description: faker.string.alpha({ length: { min: 3, max: 150 } }),
-
-    isActive: Math.random() < 0.5 ? faker.datatype.boolean() : undefined,
-    isCompleted: Math.random() < 0.5 ? faker.datatype.boolean() : undefined,
-    isApproving: Math.random() < 0.5 ? faker.datatype.boolean() : undefined,
-    isDeclined: Math.random() < 0.5 ? faker.datatype.boolean() : undefined,
-    isHabit: Math.random() < 0.5 ? faker.datatype.boolean() : undefined,
-
-    date: Math.random() < 0.5 ? faker.date.anytime().toISOString() : undefined,
+    status,
+    type,
+    deadline: /*  Math.random() < 0.5 ?  */ faker.date.anytime().toISOString() /* : undefined */,
     skills: faker.helpers.multiple(() => ({
       id: faker.string.uuid(),
       percent: faker.number.int({ min: 0, max: 100 }),
@@ -224,4 +227,18 @@ export const skills = faker.helpers.multiple(
 
 export const userSkills: () => components['schemas']['SkillXpDto'][] = () => {
   return skills.map((ski) => ({ ...ski, xp: faker.number.int({ min: 0, max: 1000 }) }));
+};
+
+export const selectedSkill: (id: string) => components['schemas']['OutputSkillDto'] | null = (id: string) => {
+  const foundSkill = userSkills().find((task) => task.id === id);
+  if (!foundSkill) return null;
+  const featuresIds = features.flatMap((feat) => feat.children.map((f) => f.id));
+  return {
+    ...foundSkill,
+    description: /* Math.random() < 0.5 ?  */ faker.string.alpha() /*  : undefined */,
+    features: faker.helpers.multiple(() => ({
+      id: faker.helpers.arrayElement(featuresIds),
+      percent: faker.number.int({ max: 100, min: 0 }),
+    })),
+  };
 };

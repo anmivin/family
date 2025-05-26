@@ -4,7 +4,7 @@ import { setIsQrCodeOpen } from '@stores/modals/modals.store';
 import QRCode from 'react-qr-code';
 import { Button, useTheme } from '@mui/material';
 
-const url = import.meta.env.VITE_APP_UTL;
+const url = import.meta.env.VITE_APP_URL;
 const QrCode = () => {
   const dispatch = useAppDispatch();
   const onClose = () => dispatch(setIsQrCodeOpen(false));

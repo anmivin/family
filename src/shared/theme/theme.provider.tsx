@@ -5,18 +5,15 @@ import { ThemeProvider } from '@mui/material/styles';
 import { ThemeName } from './theme.constants';
 import { globalStyles } from './globalStyles';
 
-import useStorage from '../helpers/usestorage';
+import { useLocalStorage } from '@helpers/useLocalstorage';
 import { Theme } from './theme.types';
-interface ThemeColorModeProviderProps {
-  children: ReactNode;
-  currentThemeName?: ThemeName;
-}
+
 export const ColorModeContext = createContext({
   changeColorMode: (_: ThemeName) => {},
 });
 
-const ThemeColorModeProvider = ({ children, currentThemeName }: ThemeColorModeProviderProps) => {
-  const { storedValue: mode, setValue: setMode } = useStorage<ThemeName>('themeMode', currentThemeName || ThemeName._2);
+const ThemeColorModeProvider = ({ children }: { children: ReactNode }) => {
+  const [mode, setMode] = useLocalStorage<ThemeName>('themeMode', ThemeName._2);
 
   const colorMode = useMemo(
     () => ({

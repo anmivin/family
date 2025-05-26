@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate:api": "npx openapi-typescript http://localhost:3001/api-json --output src/shared/api/Api.ts"
+    "generate:api": "npx openapi-typescript http://localhost:3001/api-json --output src/shared/api/Api.ts --enum",
+    "generate:kinopoisk": "npx openapi-typescript https://api.kinopoisk.dev/documentation-json --output src/shared/api/KinopoiskApi.ts"
   },
   "dependencies": {
     "@capacitor/cli": "^6.2.0",

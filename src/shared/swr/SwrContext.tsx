@@ -4,23 +4,30 @@ import { paths } from '@api/Api';
 export type KeyType = keyof paths;
 export type ParameterType<KP extends KeyType> = paths[KP]['parameters']['query'];
 
-export type DataType<KP> = KP extends KeyType
-  ? paths[KP]['get']['responses'] extends infer Responses
-    ? Responses extends {
-        [code: number]: infer CodeObject extends {
-          content?: {
-            [type: string]: unknown;
-          };
-          headers: {
-            [name: string]: unknown;
-          };
-        };
-      }
-      ? CodeObject['content'] extends infer Content
-        ? Content extends { [key: string]: infer Value }
+export type DataType<KP extends KeyType> = KP extends keyof paths
+  ? paths[KP] extends { get: infer Get }
+    ? Get extends { responses: any }
+      ? Get['responses'] extends { [code: number]: infer Response }
+        ? Response extends {
+            content?: { [type: string]: infer Value };
+          }
           ? Value
           : never
         : never
+      : never
+    : never
+  : never;
+
+type CheckNever<T> = {
+  [K in keyof T]-?: T[K][keyof T[K]] extends never ? true : false;
+}[keyof T] extends true
+  ? { params?: never }
+  : { params: T };
+
+export type ParamType<KP extends KeyType> = KP extends keyof paths
+  ? paths[KP] extends { get: infer Get }
+    ? Get extends { parameters: any }
+      ? CheckNever<Get['parameters']>
       : never
     : never
   : never;

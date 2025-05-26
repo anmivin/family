@@ -1,59 +1,51 @@
 import { object, string, mixed, number, date, boolean, array } from 'yup';
-import { TaskDifficulty } from '@helpers/calcLavel';
+import { Difficulty, RepeatPeriod } from '@api/Api';
 
 export enum XPTarget {
   Skill = 'Skill',
   Characteristic = 'Characteristic',
 }
 
-export enum Period {
-  Hour = 'Hour',
-  Day = 'Day',
-  Week = 'Week',
-  Month = 'Month',
-  Year = 'Year',
-}
-
 export const PeriodLabels: Record<
-  Period,
+  RepeatPeriod | 'SIMPLE',
   {
     textfieldLabel: string;
-    labels: { zero?: string; one?: string; two?: string; few?: string; many?: string; other: string };
+    labels?: { zero?: string; one?: string; two?: string; few?: string; many?: string; other: string };
   }
 > = {
-  [Period.Hour]: {
+  [RepeatPeriod.HOURLY]: {
     textfieldLabel: 'Ежечасно',
     labels: { one: 'час', two: 'часа', few: 'часа', other: 'часов' },
   },
-  [Period.Day]: { textfieldLabel: 'Ежедневно', labels: { one: 'день', two: 'дня', few: 'дня', other: 'дней' } },
-  [Period.Week]: {
+  [RepeatPeriod.DAILY]: { textfieldLabel: 'Ежедневно', labels: { one: 'день', two: 'дня', few: 'дня', other: 'дней' } },
+  [RepeatPeriod.WEEKLY]: {
     textfieldLabel: 'Еженедельно',
     labels: { one: 'неделю', two: 'недели', few: 'недели', other: 'недель' },
   },
-  [Period.Month]: {
+  [RepeatPeriod.MONTHLY]: {
     textfieldLabel: 'Ежемесячно',
     labels: { one: 'месяц', two: 'месяца', few: 'месяца', other: 'месяцев' },
   },
-  [Period.Year]: { textfieldLabel: 'Ежегодно', labels: { one: 'год', two: 'года', few: 'года', other: 'лет' } },
+  [RepeatPeriod.YEARLY]: { textfieldLabel: 'Ежегодно', labels: { one: 'год', two: 'года', few: 'года', other: 'лет' } },
+  SIMPLE: { textfieldLabel: 'После завершения' },
 };
 export interface SubtaskProps {
   name: string;
-  difficulty: TaskDifficulty;
+  difficulty: Difficulty;
 }
 export interface TaskFormValues {
   name: string;
   description?: string;
-  difficulty: TaskDifficulty;
+  difficulty: Difficulty;
   target: XPTarget;
   skills: { item: { id?: string; name?: string }; percent?: number }[];
   characteristics: { item: { id?: string; name?: string }; percent?: number }[];
   date?: Date;
   time?: Date;
-  /*   year?: boolean; */
+  year?: boolean;
   habit?: boolean;
-  /*   important?: boolean; */
-  /*   subtasks: SubtaskProps[];
-  repeat?: { period: Period; count: number }; */
+  important?: boolean;
+  repeat?: { period: RepeatPeriod; count: number };
   asignee?: { id: string; name: string };
 }
 
@@ -64,7 +56,7 @@ export interface TaskFormProps {
 export const TaskFormSchema = object({
   name: string().required(),
   description: string(),
-  difficulty: mixed<TaskDifficulty>().oneOf(Object.values(TaskDifficulty)).required(),
+  difficulty: mixed<Difficulty>().oneOf(Object.values(Difficulty)).required(),
   target: mixed<XPTarget>().oneOf(Object.values(XPTarget)).required(),
   skills: array()
     .of(object({ item: object({ id: string(), name: string() }), percent: number() }))
@@ -74,21 +66,13 @@ export const TaskFormSchema = object({
     .required(),
   date: date(),
   time: date(),
-  /*   year: boolean(), */
+  year: boolean(),
   habit: boolean(),
-  /*   important: boolean(), */
-  /*   subtasks: array()
-    .of(
-      object({
-        name: string().required(),
-        difficulty: mixed<TaskDifficulty>().oneOf(Object.values(TaskDifficulty)).required(),
-      })
-    )
-    .required(),
+  important: boolean(),
   repeat: object({
-    period: mixed<Period>().oneOf(Object.values(Period)).required(),
+    period: mixed<RepeatPeriod>().oneOf(Object.values(RepeatPeriod)).required(),
     count: number().required(),
-  }).optional(), */
+  }).optional(),
   asignee: object({
     id: string().required(),
     name: string().required(),

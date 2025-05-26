@@ -4,7 +4,9 @@ import { useAppSelector, useAppDispatch } from '@stores/global.store';
 import { setIsTaskFormOpen } from '@stores/modals/modals.store';
 import { setSelectedTask } from '@stores/tasks/tasks.store';
 import FormSection from '@ui/FormSection';
-import { pluralizeString } from '@helpers/utils';
+import { Abilities, Difficulty, RepeatPeriod, TaskType } from '@api/Api';
+import { pluralizeString, getErrorMessage } from '@helpers/utils';
+import { useToast } from '@ui/Toast/ToastProvider';
 import {
   TextField,
   Autocomplete,
@@ -22,15 +24,15 @@ import {
   Tooltip,
 } from '@mui/material';
 import { Can, useCan } from '../../shared/ability/helpers';
-
-import { TaskDifficulty, TaskDifficultyXP } from '@helpers/calcLavel';
-import { TaskFormProps, TaskFormValues, TaskFormSchema, XPTarget, Period, PeriodLabels } from './TaskForm.types';
+import { createTask } from '@helpers/fetcher';
+import { TaskDifficultyXP } from '@helpers/calcLavel';
+import { TaskFormProps, TaskFormValues, TaskFormSchema, XPTarget, PeriodLabels } from './TaskForm.types';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { useEffect, useMemo, useCallback, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, useFieldArray, Controller } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
-import { createTask } from '@stores/tasks/tasks.fetchers';
+import useSwr from '../../shared/swr/useSwr';
 
 const TaskForm = () => {
   const dispatch = useAppDispatch();
@@ -39,28 +41,32 @@ const TaskForm = () => {
     dispatch(setSelectedTask(null));
   };
 
-  const { skillList, featureList } = useAppSelector((state) => state.listSlice);
+  const { successToast, errorToast } = useToast();
+  const { isTaskFormOpen } = useAppSelector((state) => state.modalsSlice);
+  const { selectedTaskId } = useAppSelector((state) => state.taskSlice);
+  const { data: selectedTask } = useSwr({ url: '/tasks/{id}', params: { path: { id: selectedTaskId ?? '' } } });
+  const { data: skillList } = useSwr({ url: '/characteristics/skills' });
+  const { data: featureList } = useSwr({ url: '/characteristics/features/user' });
 
   const { ability } = useCan();
-  const { isTaskFormOpen } = useAppSelector((state) => state.modalsSlice);
-  const { selectedTask } = useAppSelector((state) => state.taskSlice);
+
   const [showRepeat, setShowRepeat] = useState(false);
 
   const defaultValues = useMemo(() => {
     return {
-      name: selectedTask ? selectedTask.name : undefined,
+      name: selectedTask ? selectedTask.title : undefined,
       description: selectedTask ? selectedTask.description : undefined,
-      difficulty: selectedTask ? (selectedTask.difficulty as TaskDifficulty | undefined) : undefined,
+      difficulty: selectedTask ? selectedTask.difficulty : undefined,
       target: XPTarget.Skill,
       skills: [{ item: { id: undefined, name: undefined }, percent: undefined }],
       characteristics: [{ item: { id: undefined, name: undefined }, percent: undefined }],
       date: undefined,
       time: undefined,
-      /*   year: false, */
-      habit: selectedTask ? selectedTask.isHabit : false,
-      /*       important: selectedTask ? selectedTask.name : false, */
-      /*       subtasks: [],
-      repeat: { count: 1, period: Period.Day }, */
+      year: false,
+      habit: selectedTask ? selectedTask.type === 'HABIT' : false,
+      important: selectedTask ? selectedTask.isImportant : false,
+      subtasks: [],
+      repeat: { count: 1, period: RepeatPeriod.DAILY },
     };
   }, [selectedTask]);
   //если не админ, то отправить на одобрение админу
@@ -83,33 +89,16 @@ const TaskForm = () => {
   useEffect(() => {
     reset(defaultValues);
   }, [defaultValues]);
-  /*   const {
-    fields: subtaskFields,
-    append: appendSubtask,
-    remove: removeSubtask,
-  } = useFieldArray<TaskFormValues, 'subtasks'>({
-    control,
-    name: 'subtasks',
-  });
- */
-  const onSubmit = handleSubmit((data) => {
+
+  const onSubmit = handleSubmit(async (data) => {
     const requestData = {
-      name: data.name,
+      title: data.name,
       difficulty: data.difficulty,
       description: data.description,
-
-      /*  isImportant: data.important ?? false, */
-      isActive: false,
-      isCompleted: false,
-      isApproving: false,
-      isDeclined: false,
-      /*         isHoliday: false, */
-      isHabit: data.habit ?? false,
-      /*         isYear: data.year ?? false, */
-
-      date: data.date ? data.date.toISOString() : undefined,
-      /*  subtasks: data.subtasks,
-      repeat: data.repeat && showRepeat ? { period: data.repeat?.period, currency: data.repeat?.count } : undefined, */
+      isImportant: data.important ?? false,
+      type: data.habit ? TaskType.HABIT : TaskType.TODO,
+      deadline: data.date ? data.date.toISOString() : undefined,
+      repeat: data.repeat && showRepeat ? { period: data.repeat?.period, currency: data.repeat?.count } : undefined,
       skills: data.skills
         .map((skill) => {
           if (!skill.item.id || !skill.percent) return;
@@ -123,8 +112,12 @@ const TaskForm = () => {
         })
         .filter((item) => !!item),
     };
-    dispatch(createTask(requestData));
-    console.log(data);
+    try {
+      await createTask(requestData);
+      successToast({ title: 'Задача создана' });
+    } catch (e) {
+      errorToast({ title: getErrorMessage(e) });
+    }
   });
 
   const tooltipTitle = useMemo(() => {
@@ -133,7 +126,7 @@ const TaskForm = () => {
   }, [formValues]);
 
   const getTooltipTitle = useCallback(
-    (item: TaskDifficulty) => {
+    (item: Difficulty) => {
       const examples = TaskDifficultyXP[item].examples.join(', ');
       return (
         <Box>
@@ -212,10 +205,10 @@ const TaskForm = () => {
             label="Привычка"
             onChange={(_, checked) => {
               setValue('habit', checked);
-              setValue('difficulty', TaskDifficulty.Easy);
+              setValue('difficulty', Difficulty.EASY);
             }}
           />
-          {/*  <Tooltip title="За важную задачу вы получаете больше XP">
+          <Tooltip title="За важную задачу вы получаете больше XP">
             <FormControlLabel
               control={<Checkbox />}
               label="Важная задача"
@@ -223,7 +216,7 @@ const TaskForm = () => {
                 setValue('important', checked);
               }}
             />
-          </Tooltip> */}
+          </Tooltip>
         </Box>
       </FormSection>
 
@@ -241,7 +234,7 @@ const TaskForm = () => {
             options={skillList ?? []}
             label="Навык"
             labelType="masculine"
-            enableCreateOption={ability({ crud: 'create', can: 'CREATE_SKILL' })}
+            enableCreateOption={ability({ crud: 'create', can: Abilities.CREATE_SKILL })}
           />
         )}
 
@@ -261,7 +254,7 @@ const TaskForm = () => {
           <TimePicker />
         </Box>
         {/*    )} */}
-        {/*         <Box>
+        <Box>
           <FormControlLabel
             control={<Checkbox />}
             label="На весь год"
@@ -269,15 +262,15 @@ const TaskForm = () => {
           />
           <FormControlLabel
             control={<Checkbox />}
-            label={'Повторять' + repeatText}
+            label={'Повторять' /* + repeatText */}
             onChange={(_, checked) => {
               setShowRepeat(checked);
             }}
           />
-        </Box> */}
+        </Box>
       </FormSection>
 
-      {/* {showRepeat && (
+      {showRepeat && (
         <Box display="flex" flexDirection="row" gap={2}>
           <Controller
             control={control}
@@ -287,7 +280,7 @@ const TaskForm = () => {
                 {...field}
                 fullWidth
                 onChange={(_, newValue) => field.onChange(newValue)}
-                options={Object.values(Period)}
+                options={Object.values(RepeatPeriod)}
                 getOptionLabel={(option) => PeriodLabels[option].textfieldLabel}
                 renderInput={(params) => <TextField variant="standard" label="Период" {...params} />}
               />
@@ -304,7 +297,7 @@ const TaskForm = () => {
                 variant="standard"
                 label="Кажд."
                 onChange={(e) => {
-                  if (!formValues?.repeat?.period) setValue('repeat.period', Period.Day);
+                  if (!formValues?.repeat?.period) setValue('repeat.period', RepeatPeriod.DAILY);
                   field.onChange(e);
                 }}
               />
@@ -312,52 +305,17 @@ const TaskForm = () => {
           />
         </Box>
       )}
-      {formValues.year && (
-        <>
-          <Button
-            onClick={() =>
-              appendSubtask({
-                name: '',
-                difficulty: TaskDifficulty.Easy,
-              })
-            }
-          >
-            добавить подзадачу
-          </Button>
-          {subtaskFields.map((subtaskField, index) => (
-            <Box key={subtaskField.id}>
-              <Controller
-                control={control}
-                name={`subtasks.${index}.name`}
-                render={({ field }) => <TextField {...field} label="Название" />}
-              />
-              <ToggleButtonGroup
-                value={formValues.subtasks[index].difficulty}
-                exclusive
-                onChange={(_e, value) => setValue(`subtasks.${index}.difficulty`, value)}
-              >
-                {Object.values(TaskDifficulty).map((item, index) => (
-                  <ToggleButton key={index} value={item}>
-                    {item}
-                  </ToggleButton>
-                ))}
-              </ToggleButtonGroup>
-              <IconButton onClick={() => removeSubtask(index)}>x</IconButton>
-            </Box>
-          ))}
-        </>
-      )}
- */}
+
       <FormSection title="Сложность">
         <Tooltip title={tooltipTitle}>
           <ToggleButtonGroup
             fullWidth
             value={formValues.difficulty}
             exclusive
-            disabled={formValues.habit /*  || !!formValues.subtasks.length */}
+            disabled={formValues.habit}
             onChange={(_e, value) => setValue('difficulty', value)}
           >
-            {Object.values(TaskDifficulty).map((item, index) => (
+            {Object.values(Difficulty).map((item, index) => (
               <Tooltip title={getTooltipTitle(item)}>
                 <ToggleButton key={index} value={item}>
                   {TaskDifficultyXP[item].icon}

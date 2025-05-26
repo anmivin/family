@@ -1,56 +1,48 @@
-import { Typography, Box, Button, styled, Checkbox } from '@mui/material';
-import { taskType } from './TaskCard.types';
-import { getDefaultDate, getDateTime } from '../../helpers/dates';
-import { RepeatIcon, ClockIcon } from '../Icons';
-/* import { pluralizeString } from '@helpers/utils';
-import { PeriodLabels } from '@features/TaskForm/TaskForm.types'; */
-import { useAppDispatch } from '@stores/global.store';
-import { fetchTask } from '@stores/tasks/tasks.fetchers';
-import { setIsTaskFormOpen } from '@stores/modals/modals.store';
-import { components } from '@api/Api';
-import { StyledCard, StyledDescription } from './TaskCard.styled';
+import { Typography, Box, Button } from '@mui/material';
 
-const TaskCard = (data: components['schemas']['OutputTaskListDto']) => {
+import { getDefaultDate } from '../../helpers/dates';
+import { ClockIcon } from '../Icons';
+
+import { useAppDispatch } from '@stores/global.store';
+
+import { setIsTaskFormOpen } from '@stores/modals/modals.store';
+import { setSelectedTask } from '@stores/tasks/tasks.store';
+import { components, TaskStatus } from '@api/Api';
+import { StyledCard } from './TaskCard.styled';
+
+const TaskCard = (data: components['schemas']['OutputTaskDto']) => {
   const dispatch = useAppDispatch();
-  const onOpen = () => {
-    dispatch(fetchTask(data.id));
+  const onOpen = (id: string) => {
+    dispatch(setSelectedTask(id));
     dispatch(setIsTaskFormOpen(true));
   };
 
   return (
     <StyledCard
-      onClick={onOpen}
-      isCompleted={data.isCompleted}
-      isApproving={data.isApproving}
-      isDeclined={data.isDeclined}
+      onClick={() => onOpen(data.id)}
+      isCompleted={data.status === TaskStatus.COMPLETED}
+      isApproving={data.status === TaskStatus.PENDING}
+      isDeclined={data.status === TaskStatus.REJECTED}
     >
       <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Typography variant="body2">{data.name}</Typography>
+        <Typography variant="body2">{data.title}</Typography>
         <Box display="flex" flexDirection="column" alignItems="end" justifyContent="space-between">
-          {data.creatorId && <Typography variant="caption">от {data.creatorId}</Typography>}
-          {data.isApproving && <Typography variant="caption">на одобрении</Typography>}
-          {data.isDeclined && <Typography variant="caption">отклонено</Typography>}
+          {data.creator && <Typography variant="caption">от {data.creator?.name}</Typography>}
+          {data.status === TaskStatus.PENDING && <Typography variant="caption">на одобрении</Typography>}
+          {data.status === TaskStatus.REJECTED && <Typography variant="caption">отклонено</Typography>}
         </Box>
       </Box>
 
-      <StyledDescription variant="body1">{data.description}</StyledDescription>
-      <Box display="flex" flexDirection="column" alignItems="end">
-        {/*  {!!repeat?.currency && !!repeat.period && (
-          <Box display="flex" alignItems="center" gap={1}>
-            <RepeatIcon size={20} color="textMain" />
-            <Typography>
-              {repeat.currency} {pluralizeString(repeat.currency, PeriodLabels[repeat.period].labels)}
-            </Typography>
-          </Box>
-        )} */}
-        {!!data.date && (
+      <Box display="flex" alignItems="start" justifyContent="space-between">
+        {!!data.deadline && (
           <Box display="flex" alignItems="center" gap={1}>
             <ClockIcon size={20} color="textMain" />
-            <Typography>{/* timed ? getDateTime(date) :  */ getDefaultDate(data.date)}</Typography>
+            <Typography>{getDefaultDate(data.deadline)}</Typography>
           </Box>
         )}
       </Box>
-      {data.isActive && (
+
+      {data.status === TaskStatus.IN_PROGRESS && (
         <Box>
           <Button>готово</Button>
           <Button>отложить</Button>

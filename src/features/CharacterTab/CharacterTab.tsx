@@ -4,10 +4,12 @@ import CharacterCard from '@entities/CharacterTab/CharacterCard';
 import StreakSection from '@entities/CharacterTab/StreakSection/StreakSection';
 
 import { useAppSelector } from '@stores/global.store';
+import useSwr from '../../shared/swr/useSwr';
 
 const CharacterTab = () => {
   const { userInfo } = useAppSelector((state) => state.userSlice);
-  const { userFeatures, userSkills } = useAppSelector((state) => state.listSlice);
+  const { data: userFeatures } = useSwr({ url: '/characteristics/features/user' });
+  const { data: userSkills } = useSwr({ url: '/characteristics/skills/user' });
 
   const bestFeature = useMemo(() => {
     if (!userFeatures?.length) return;

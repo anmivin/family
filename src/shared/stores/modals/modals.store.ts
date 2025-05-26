@@ -12,9 +12,13 @@ export const modalsSlice = createSlice({
     setIsQrCodeOpen: (state, action: PayloadAction<boolean>) => {
       state.isQrCodeOpen = action.payload;
     },
+
+    setIsSkillFormOpen: (state, action: PayloadAction<boolean>) => {
+      state.isSkillFormOpen = action.payload;
+    },
   },
 });
 
-export const { setIsTaskFormOpen, setIsQrCodeOpen } = modalsSlice.actions;
+export const { setIsTaskFormOpen, setIsQrCodeOpen, setIsSkillFormOpen } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

@@ -1,6 +1,6 @@
 import { PaletteOptions } from '@mui/material/styles';
 
-import { ColorOptions } from '../theme.types';
+import { ColorOptions } from '../themeVariants';
 
 export const commonPalette: (color: ColorOptions) => PaletteOptions = (color) => ({
   primary: {

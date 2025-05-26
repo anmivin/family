@@ -1,9 +1,7 @@
-/* import SimsFont from '@assets/fonts/Loucos Lyne - thesimssansbold.otf'; */
-
 import SteticaRegular from '../fonts/SteticaRegular.otf';
 import { Components } from '@mui/material/styles';
 
-import { ColorOptions } from '../theme.types';
+import { ColorOptions } from '../themeVariants';
 import { typography } from './typography';
 
 export const customFont = {
@@ -51,12 +49,10 @@ export const commonComponents = (color: ColorOptions): Components => ({
   MuiButton: {
     styleOverrides: {
       startIcon: {
-        marginLeft: 0,
-        marginRight: 0,
+        margin: 0,
       },
       endIcon: {
-        marginLeft: 0,
-        marginRight: 0,
+        margin: 0,
       },
     },
   },

@@ -5,6 +5,15 @@ export enum ThemeName {
   _4 = '4',
   _5 = '5',
   _6 = '6',
+  BabushkasHearth = 'BabushkasHearth',
+  TsaristGold = 'TsaristGold',
+  SovietMinimal = 'SovietMinimal',
+  ForestSpirit = 'ForestSpirit',
+  MidnightCastle = 'MidnightCastle',
+  SunriseMotivator = 'SunriseMotivator',
+  CandyChaos = 'CandyChaos',
+  ArcticChill = 'ArcticChill',
+  AutumnHarvest = 'AutumnHarvest',
 }
 
 export type ThemeKey = keyof typeof ThemeName;

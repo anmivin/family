@@ -1,16 +1,13 @@
-import { useAppDispatch } from '@stores/global.store';
 import { TextField, Button, Box, Tooltip, InputAdornment, IconButton } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { LoginFormSchema, LoginFormValues } from './LoginForm.types';
-
+import { signIn, signUp } from '@helpers/fetcher';
 import { useCallback, useMemo } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 import { useState } from 'react';
-import { signIn, signUp } from '@stores/users/users.fetchers';
 
 const LoginForm = () => {
-  const dispatch = useAppDispatch();
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const path = useLocation();
@@ -38,9 +35,9 @@ const LoginForm = () => {
   const onSubmit = useCallback(
     async (data: LoginFormValues) => {
       if (isSignUp) {
-        dispatch(signUp(data));
+        await signUp(data);
       } else {
-        dispatch(signIn(data));
+        await signIn(data);
       }
     },
     [isSignUp]

@@ -4,6 +4,7 @@ import { PlusIcon, CrossIcon } from '@ui/Icons';
 import { useFieldArray, useFormContext, Controller } from 'react-hook-form';
 
 import { PercentageFieldProps, ItemProps, getLabelType } from './PercentageField.types';
+import { useEffect } from 'react';
 
 const PercentageField = ({ name, options, label, labelType, enableCreateOption }: PercentageFieldProps) => {
   const {
@@ -20,6 +21,8 @@ const PercentageField = ({ name, options, label, labelType, enableCreateOption }
     control,
     name: name,
   });
+
+  useEffect(() => console.log('errors', errors), [errors]);
 
   return (
     <>
@@ -54,7 +57,16 @@ const PercentageField = ({ name, options, label, labelType, enableCreateOption }
           <Controller
             control={control}
             name={`${name}.${index}.percent`}
-            render={({ field }) => <TextField {...field} variant="standard" label="Доля" type="number" />}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                variant="standard"
+                label="Доля"
+                type="number"
+                error={!!errors[name]}
+                helperText={errors[name]?.root?.message}
+              />
+            )}
           />
 
           <IconButton onClick={() => remove(index)}>

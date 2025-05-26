@@ -3,11 +3,11 @@ import { Box, Typography } from '@mui/material';
 import ProgressBar from '@ui/ProgressBar';
 import AccordionState from '@ui/AccordionState';
 import { calcLevel, calcXpPerLevel } from '@helpers/calcLavel';
-import { useAppSelector } from '@stores/global.store';
-import { CodeIcon } from '@ui/Icons';
 
+import { IconMap } from './FeaturesTab.constants';
+import useSwr from '../../shared/swr/useSwr';
 const FeaturesTab = () => {
-  const { userFeatures, pendingUserFeatures, errorUserFeatures } = useAppSelector((state) => state.listSlice);
+  const { data: userFeatures } = useSwr({ url: '/characteristics/features/user' });
 
   const featureInfo = (xp: number) => {
     const level = calcLevel(xp);
@@ -22,15 +22,19 @@ const FeaturesTab = () => {
 
   return (
     <Box>
-      {userFeatures.map((feature) => {
+      {userFeatures?.map((feature) => {
         const featInfo = featureInfo(feature.userXp);
         return (
           <AccordionState
             key={feature.id}
             collapsedNode={
               <Box width="100%">
-                <CodeIcon />
-                <Typography>{`${feature.name} (${featInfo.currentLevel} lvl.)`}</Typography>
+                <Box display="flex" gap={2} alignItems="center">
+                  {IconMap[feature.id].icon}
+
+                  <Typography>{`${feature.name} (${featInfo.currentLevel} lvl.)`}</Typography>
+                </Box>
+
                 <ProgressBar
                   value={featInfo.currentPercent}
                   subtitle={`${feature.userXp}/${featInfo.nextLevelXp}`}
@@ -46,7 +50,13 @@ const FeaturesTab = () => {
                 <ProgressBar
                   key={feat.id}
                   value={info.currentPercent}
-                  title={`${feat.name} (${info.currentLevel} lvl.)`}
+                  title={
+                    <Box display="flex" gap={2} alignItems="center">
+                      {IconMap[feat.id].icon}
+
+                      <Typography>{`${feat.name} (${info.currentLevel} lvl.)`}</Typography>
+                    </Box>
+                  }
                   subtitle={`${info.nextLevelXp}`}
                   color={feature.color}
                 />

@@ -1,5 +1,12 @@
+import { Box } from '@mui/material';
+import MenuForm from '@features/MenuForm/MenuForm';
 const Menu = () => {
-  return <></>;
+  
+  return (
+    <>
+      <MenuForm />
+    </>
+  );
 };
 
 export default Menu;

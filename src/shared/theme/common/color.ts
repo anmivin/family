@@ -130,6 +130,17 @@ export const commonColors = {
   dark900: 'rgba(0, 0, 0, 0.9)',
   dark950: 'rgba(0, 0, 0, 0.95)',
   dark: 'rgba(0, 0, 0, 1)',
+
+  //babushka
+  autumn: '#a52a2a',
+  tan: '#d2b48c',
+  oldlace: '#fff3e0',
+  ochre: '#cc7722',
+  //tsarist
+  royalblue: '#2c2a6e',
+  yellow: '#ffb700',
+  ivory: 'fffff0',
+  madder: '#9e1b34',
 } as const;
 
 export type CommonColor = keyof typeof commonColors;

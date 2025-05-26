@@ -10,6 +10,7 @@ import Household from '@pages/household';
 import Notes from '@pages/notes';
 import Shopping from '@pages/shopping';
 import Budget from '@pages/budget';
+import Lists from '@pages/lists';
 
 import {
   NotesIcon,
@@ -43,15 +44,16 @@ fostering a sense of community and accountability.
 
 export const Paths = {
   achievemnts: '/achievemnts',
-  /*   budget: '/budget', */
+  budget: '/budget',
   calendar: '/calendar',
   character: '/character',
-  /*   family: '/family', */
-  /*   household: '/household', */
-  /*   menu: '/menu',
-  notes: '/notes', */
+  family: '/family',
+  household: '/household',
+  lists: '/lists',
+  menu: '/menu',
+  notes: '/notes',
   settings: '/settings',
-  /*   shopping: '/shopping', */
+  shopping: '/shopping',
   tasks: '/tasks',
   login: '/login',
   loginID: '/login/:id',
@@ -73,13 +75,13 @@ export const menuRoutes: RoutesProps[] = [
     icon: <TrophyCapIcon />,
     name: 'Достижения',
   },
-  /*   {
+  {
     key: '',
     link: Paths.budget,
     Component: Budget,
     icon: <WalletIcon />,
     name: 'Бюджет',
-  }, */
+  },
   {
     key: '',
     link: Paths.calendar,
@@ -94,41 +96,55 @@ export const menuRoutes: RoutesProps[] = [
     icon: <CharacterIcon />,
     name: 'Персонаж',
   },
-  /*   {
+  {
     key: '',
     link: Paths.family,
     Component: Family,
     icon: <TwoHeartsIcon />,
     name: 'Семья',
-  }, */
-  /*   {
+  },
+  {
     key: '',
     link: Paths.household,
     Component: Household,
     icon: <HomeIcon />,
     name: 'Дом',
-  }, */
-  /*   {
+  },
+  {
+    key: '',
+    link: Paths.lists,
+    Component: Lists,
+    icon: <NotesIcon />,
+    name: 'Списки',
+  },
+  {
     key: '',
     link: Paths.menu,
     Component: Menu,
     icon: <FridgeIcon />,
     name: 'Меню',
-  }, */
-  /*   {
+  },
+  {
     key: '',
     link: Paths.notes,
     Component: Notes,
     icon: <NotesIcon />,
     name: 'Заметки',
-  }, */
-  /*   {
+  },
+  {
     key: '',
     link: Paths.shopping,
     Component: Shopping,
     icon: <ShoppingBasketIcon />,
     name: 'Покупки',
-  }, */
+  },
+  {
+    key: '',
+    link: Paths.settings,
+    Component: Settings,
+    icon: <SettingsIcon />,
+    name: 'Настройки',
+  },
   {
     key: '',
     link: Paths.tasks,
@@ -138,7 +154,7 @@ export const menuRoutes: RoutesProps[] = [
   },
 ];
 
-const defaultRouting = [
+export const defaultRouting = [
   {
     key: Paths.character,
     order: 1,
@@ -147,49 +163,25 @@ const defaultRouting = [
     key: Paths.tasks,
     order: 2,
   },
-  /*   {
-    key: Paths.notes,
-    order: 3,
-  }, */
-  /*   {
-    key: Paths.shopping,
-    order: 4,
-  }, */
-  /*   {
-    key: Paths.household,
-    order: 5,
-  }, */
-  /*   {
-    key: Paths.menu,
-    order: 6,
-  }, */
   {
     key: Paths.achievemnts,
-    order: 7,
+    order: 3,
   },
-  /*   {
-    key: Paths.budget,
-    order: 8,
-  }, */
+  {
+    key: Paths.lists,
+    order: 4,
+  },
   {
     key: Paths.calendar,
-    order: 9,
+    order: 5,
   },
-
-  /*   {
-    key: Paths.family,
-    order: 10,
-  }, */
 ];
 export const getRoutes = () => {
   const storage = localStorage.getItem('routes');
   const initialState: { key: string; order: number }[] = storage ? JSON.parse(storage) : defaultRouting;
-  return menuRoutes
-    .filter((route) => initialState.some((state) => state.key === route.link))
-    .sort((a, b) =>
-      (initialState.find((item) => item.key === a.link)?.order ?? 0) >
-      (initialState.find((item) => item.key === b.link)?.order ?? 0)
-        ? 1
-        : -1
-    );
+  return initialState
+    .sort((a, b) => (a.order > b.order ? 1 : -1))
+    .map((route) => menuRoutes.find((item) => item.link === route.key));
 };
+
+export const otherRoots = menuRoutes.filter((route) => !getRoutes().find((item) => item?.link === route.link));

@@ -2,33 +2,29 @@ import { http, HttpResponse } from 'msw';
 import { components } from '@api/Api';
 import { userTasks, selectedTask } from './faker';
 const taskHandler = [
-  http.get('/faker/tasks', ({ request }) => {
-    const url = new URL(request.url);
-
-    const isActive = url.searchParams.get('isActive');
-    const isCompleted = url.searchParams.get('isCompleted');
-    const isApproving = url.searchParams.get('isApproving');
-    const isDeclined = url.searchParams.get('isDeclined');
-    const isHabit = url.searchParams.get('isHabit');
+  http.get('/tasks', (props /* { params, request } */) => {
+    /*     const url = new URL(request.url); */
+    console.log('tasks', props);
+    /*     const status = url.searchParams.get('status'); */
 
     const filteredTasks = userTasks.filter((task) => {
-      if (isActive) return task.isActive;
-      if (isCompleted) return task.isCompleted;
+      /*  if (status) return task.status === status; */
+      /*  if (isCompleted) return task.isCompleted;
       if (isApproving) return task.isApproving;
       if (isDeclined) return task.isDeclined;
-      if (isHabit) return task.isHabit;
-      return task;
+      if (isHabit) return task.isHabit; */
+      return true;
     });
-    return HttpResponse.json(filteredTasks);
+    return HttpResponse.json({ total: userTasks.length, items: filteredTasks });
   }),
 
-  http.get('/faker/tasks/:id', ({ params }) => {
+  http.get('/tasks/:id', (params) => {
     const { id } = params;
-
+    console.log('params', params);
     const task = selectedTask(id as string);
     if (!task) return new HttpResponse(null, { status: 404 });
 
-    return HttpResponse.json(selectedTask(id as string));
+    return HttpResponse.json(task);
   }),
 ];
 
