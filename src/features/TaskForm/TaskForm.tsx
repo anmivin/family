@@ -114,9 +114,9 @@ const TaskForm = () => {
     };
     try {
       await createTask(requestData);
-      successToast({ title: 'Задача создана' });
+      successToast('Задача создана');
     } catch (e) {
-      errorToast({ title: getErrorMessage(e) });
+      errorToast(getErrorMessage(e));
     }
   });
 

@@ -1,7 +1,8 @@
 import { Box, Button, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { getRoutes } from '../../constants/routes';
+
+import { useAppSelector } from '@stores/global.store';
 const StyledMenu = styled(Box)`
   background-color: ${({ theme }) => theme.color.primaryMain};
   position: fixed;
@@ -21,12 +22,12 @@ const StyledButton = styled(Button)<{ $selected: boolean; $count: number }>`
 export interface BottomTabsProps {}
 const BottomTabs = ({}: BottomTabsProps) => {
   const path = useLocation();
-
+  const { mainPages } = useAppSelector((state) => state.userSlice);
   return (
     <StyledMenu>
-      {getRoutes().map((route) => (
+      {mainPages.map((route) => (
         <Link to={route.link} key={route.link}>
-          <StyledButton $count={getRoutes().length} $selected={path.pathname === route.link}>
+          <StyledButton $count={mainPages.length} $selected={path.pathname === route.link}>
             {route.icon}
           </StyledButton>
         </Link>

@@ -59,7 +59,7 @@ export const Paths = {
   loginID: '/login/:id',
 } as const;
 
-interface RoutesProps {
+export interface RoutesProps {
   key: string;
   link: string;
   Component: () => ReactElement;

@@ -1,8 +1,8 @@
 export enum Toastlevel {
-  'SUCCESS',
-  'INFO',
-  'WARNING',
-  'ERROR',
+  SUCCESS = 'success',
+  INFO = 'info',
+  WARNING = 'warning',
+  ERROR = 'error',
 }
 export interface ToastProps {
   onClose?: () => void;

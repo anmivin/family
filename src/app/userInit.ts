@@ -39,7 +39,7 @@ export const UserInit: FC<{ children: ReactNode }> = ({ children }) => {
       .filter((item) => !!item);
     const otherPages = menuRoutes
       .filter((route) => !mainPages.find((item) => item?.link === route.link))
-      .filter((item) => !item);
+      .filter((item) => !!item);
     dispatch(setMainPages(mainPages));
     dispatch(setOtherPages(otherPages));
   }, [value]);

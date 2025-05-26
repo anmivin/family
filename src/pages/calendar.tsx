@@ -1,26 +1,10 @@
-import {
-  DateCalendar,
-  PickersDay,
-  PickersDayProps,
-  PickerValidDate,
-  TimeClock,
-  DigitalClock,
-  MultiSectionDigitalClock,
-  StaticDatePicker,
-  PickersLayout,
-} from '@mui/x-date-pickers';
-import { Box, Button, styled, IconButton, Typography } from '@mui/material';
-import { getDate, getDefaultDate } from '@helpers/dates';
-import { isSameMonth, isSameDay } from 'date-fns';
-import axios from 'axios';
-import useSwr from '../shared/swr/useSwr';
+import { DateCalendar, PickersDayProps, PickerValidDate } from '@mui/x-date-pickers';
+import { Box, styled } from '@mui/material';
+import { getDay } from '@helpers/dates';
+
 import { useState } from 'react';
 
-import { FC, useMemo } from 'react';
-
-import { PickersCalendarHeaderProps } from '@mui/x-date-pickers';
-import { addMonths } from 'date-fns';
-
+import { CalendarHeader } from '@ui/CalendarHeader';
 const StyledCalendar = styled(DateCalendar)`
   width: 100%;
 
@@ -74,26 +58,6 @@ const TaskItem = styled(Box)`
   background: ${({ theme }) => `linear-gradient(50deg, ${theme.color.red100}, ${theme.color.red400})`};
 `;
 
-const CalendarHeader = <TDate extends PickerValidDate>(props: PickersCalendarHeaderProps<TDate>) => {
-  const handlePrevMonth = () => {
-    const prevDate = addMonths(props.currentMonth, -1) as TDate;
-    props.onMonthChange(prevDate, 'right');
-  };
-
-  const handleNextMonth = () => {
-    const nextDate = addMonths(props.currentMonth, 1) as TDate;
-    props.onMonthChange(nextDate, 'left');
-  };
-
-  return (
-    <Box display="flex" alignItems="center" justifyContent="center">
-      <IconButton onClick={handlePrevMonth}>{'<'}</IconButton>
-      <Typography>{getDefaultDate(props.currentMonth)}</Typography>
-      <IconButton onClick={handleNextMonth}>{'>'}</IconButton>
-    </Box>
-  );
-};
-
 const Day = <T extends PickerValidDate>(
   props: PickersDayProps<T>
   /*  onClick: (props: { id: string; name: string; type: string; date: string }[]) => void,
@@ -108,7 +72,7 @@ const Day = <T extends PickerValidDate>(
       className={props.outsideCurrentMonth ? 'disabled' : undefined}
     >
       <Box display="block">
-        <Box sx={{ position: 'relative', top: '0px', left: '0px' }}>{getDate(props.day)}</Box>
+        <Box sx={{ position: 'relative', top: '0px', left: '0px' }}>{getDay(props.day)}</Box>
         <TaskContainer>
           {dayData.slice(0, dayData.length > 3 ? 2 : 3).map((info) => (
             <TaskItem>{info.type}</TaskItem>

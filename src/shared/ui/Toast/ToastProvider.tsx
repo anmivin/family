@@ -12,10 +12,10 @@ export interface ToastType extends ToastItemProps {
 }
 
 interface ToastsContextProps {
-  successToast: (props: ToastItemProps) => void;
-  errorToast: (props: ToastItemProps) => void;
-  infoToast: (props: ToastItemProps) => void;
-  warningToast: (props: ToastItemProps) => void;
+  successToast: (title: string, options?: Omit<ToastItemProps, 'title'>) => void;
+  errorToast: (title: string, options?: Omit<ToastItemProps, 'title'>) => void;
+  infoToast: (title: string, options?: Omit<ToastItemProps, 'title'>) => void;
+  warningToast: (title: string, options?: Omit<ToastItemProps, 'title'>) => void;
 }
 
 export const ToastContext = createContext({} as ToastsContextProps);
@@ -31,21 +31,32 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
 
   const addToast = (toast: ToastItemProps, level: Toastlevel) => {
     const timestamp = Date.now();
-    setToasts((prevState) => [...prevState, { ...toast, level, toastId: timestamp }]);
-    !toast.disableClose && setTimeout(() => handleClose(timestamp), toast.closeTime ?? 5000);
+    setToasts((prevState) => [
+      ...prevState,
+      {
+        ...toast,
+        onClose: () => {
+          toast.onClose?.();
+          handleClose(timestamp);
+        },
+        level,
+        toastId: timestamp,
+      },
+    ]);
+    /*  !toast.disableClose && setTimeout(() => handleClose(timestamp), toast.closeTime ?? 5000) */
   };
 
-  const successToast = (props: ToastItemProps) => {
-    addToast(props, Toastlevel.SUCCESS);
+  const successToast = (title: string, options?: Omit<ToastItemProps, 'title'>) => {
+    addToast({ title, ...options }, Toastlevel.SUCCESS);
   };
-  const errorToast = (props: ToastItemProps) => {
-    addToast(props, Toastlevel.ERROR);
+  const errorToast = (title: string, options?: Omit<ToastItemProps, 'title'>) => {
+    addToast({ title, ...options }, Toastlevel.ERROR);
   };
-  const infoToast = (props: ToastItemProps) => {
-    addToast(props, Toastlevel.INFO);
+  const infoToast = (title: string, options?: Omit<ToastItemProps, 'title'>) => {
+    addToast({ title, ...options }, Toastlevel.INFO);
   };
-  const warningToast = (props: ToastItemProps) => {
-    addToast(props, Toastlevel.WARNING);
+  const warningToast = (title: string, options?: Omit<ToastItemProps, 'title'>) => {
+    addToast({ title, ...options }, Toastlevel.WARNING);
   };
   return (
     <ToastContext.Provider value={{ successToast, errorToast, infoToast, warningToast }}>

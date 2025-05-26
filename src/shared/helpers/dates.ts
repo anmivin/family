@@ -1,11 +1,14 @@
 import { format } from 'date-fns';
-
-const formatDateDefault = 'dd.MM.yyyy';
-const formatDateWithTime = 'dd.MM.yyyy, HH:mm';
-const formatDateDay = 'd';
-
+import { ru } from 'date-fns/locale';
+const formatDefault = 'dd.MM.yyyy';
+const formatWithTime = 'dd.MM.yyyy, HH:mm';
+const formatDay = 'd';
+const formatDayMonth = 'dd MMM';
+const formatMonthYear = 'LLLL yyyy';
 export const toDate = (date: string | number | Date) => new Date(date);
 
-export const getDefaultDate = (date: number | string | Date) => format(toDate(date), formatDateDefault);
-export const getDateTime = (date: number | string | Date) => format(toDate(date), formatDateWithTime);
-export const getDate = (date: number | string | Date) => format(toDate(date), formatDateDay);
+export const getDefaultDate = (date: number | string | Date) => format(toDate(date), formatDefault);
+export const getDateTime = (date: number | string | Date) => format(toDate(date), formatWithTime);
+export const getDay = (date: number | string | Date) => format(toDate(date), formatDay);
+export const getDayMonth = (date: number | string | Date) => format(toDate(date), formatDayMonth, { locale: ru });
+export const getMonthYear = (date: number | string | Date) => format(toDate(date), formatMonthYear, { locale: ru });

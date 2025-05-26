@@ -16,9 +16,13 @@ export const modalsSlice = createSlice({
     setIsSkillFormOpen: (state, action: PayloadAction<boolean>) => {
       state.isSkillFormOpen = action.payload;
     },
+
+    setIsMenuDrawerOpen: (state, action: PayloadAction<boolean>) => {
+      state.isMenuDrawerOpen = action.payload;
+    },
   },
 });
 
-export const { setIsTaskFormOpen, setIsQrCodeOpen, setIsSkillFormOpen } = modalsSlice.actions;
+export const { setIsTaskFormOpen, setIsQrCodeOpen, setIsSkillFormOpen, setIsMenuDrawerOpen } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

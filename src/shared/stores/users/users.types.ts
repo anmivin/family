@@ -1,6 +1,7 @@
 import type { components } from '@api/Api';
-import { defaultRouting, menuRoutes } from '@constants/routes';
-import { RoutesProps } from 'react-router-dom';
+
+import { RoutesProps } from '@constants/routes';
+
 export interface UserSliceProps {
   userInfo: components['schemas']['OutputUserDto'] | null;
   pendingUserInfo: boolean;
@@ -11,13 +12,7 @@ export interface UserSliceProps {
 }
 
 export const initialState: UserSliceProps = {
-  userInfo: null /* {
-    id: 'ff',
-    name: 'df',
-    xp: 200,
-    gold: 10,
-    familyId: '',
-  } */,
+  userInfo: null,
   pendingUserInfo: false,
   errorUserInfo: '',
   userAbilities: { create: [], read: [], update: [], delete: [] },

@@ -1,4 +1,5 @@
 export { default as AcademicCapIcon } from './AcademicCapIcon';
+export { default as BurgerIcon } from './BurgerIcon';
 export { default as CalendarIcon } from './CalendarIcon';
 export { default as CharacterIcon } from './CharacterIcon';
 export { default as ChevronDownIcon } from './ChevronDownIcon';
@@ -39,14 +40,13 @@ export { default as SettingsIcon } from './SettingsIcon';
 export { default as ShakehandIcon } from './ShakehandIcon';
 export { default as ShareCircleIcon } from './ShareCircleIcon';
 export { default as ShoppingBasketIcon } from './ShoppingBasketIcon';
+export { default as StarIcon } from './StarIcon';
 export { default as StarRainbowIcon } from './StarRainbowIcon';
-
 export { default as StarOneIcon } from './StarOneIcon';
 export { default as StarTwoIcon } from './StarTwoIcon';
 export { default as StarThreeIcon } from './StarThreeIcon';
 export { default as StarFourIcon } from './StarFourIcon';
 export { default as StarFiveIcon } from './StarFiveIcon';
-
 export { default as TaskIcon } from './TaskIcon';
 export { default as ThermometrIcon } from './ThermometrIcon';
 export { default as TrashIcon } from './TrashIcon';

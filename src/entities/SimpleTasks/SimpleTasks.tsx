@@ -1,61 +1,49 @@
-import { groupBy, keyBy } from 'lodash';
-import { addWeeks, eachDayOfInterval, endOfWeek, format, getDaysInMonth, isSameDay, startOfWeek } from 'date-fns';
-import { useMemo, useState, useCallback } from 'react';
-import { Box, Typography, IconButton, TableBody, TableRow, TableCell, TableHead, Table } from '@mui/material';
-import { getDefaultDate } from '@helpers/dates';
+import { addWeeks, eachDayOfInterval, endOfWeek, startOfWeek } from 'date-fns';
+import { useMemo, useState } from 'react';
+import { Box, TableBody, TableRow, TableCell, TableHead, Table, IconButton, Typography } from '@mui/material';
+import { getDayMonth } from '@helpers/dates';
+import { StarIcon, CoinIcon } from '@ui/Icons';
+import { ChangeInterval } from '@ui/CalendarHeader';
 const SimpleTasks = () => {
   const [currentWeek, setCurrentWeek] = useState(new Date());
-  const ta = [
+  const tasks = [
     {
-      date: '03-01-2025',
-      id: 1,
+      id: '12',
+      name: 'Первый чел',
+      tasks: [
+        {
+          name: 'задача 1',
+          count: 26,
+        },
+        {
+          name: 'задача 2',
+          count: 199,
+        },
+        {
+          name: 'задача 3',
+          count: 0,
+        },
+      ],
     },
     {
-      date: '03-03-2025',
-      id: 2,
-    },
-    {
-      date: '03-03-2025',
-      id: 3,
-    },
-    {
-      date: '03-03-2025',
-      id: 1,
-    },
-    {
-      date: '03-05-2025',
-      id: 2,
-    },
-    {
-      date: '03-06-2025',
-      id: 2,
-    },
-    {
-      date: '03-07-2025',
-      id: 3,
-    },
-    {
-      date: '03-03-2025',
-      id: 3,
-    },
-    {
-      date: '03-07-2025',
-      id: 2,
-    },
-    {
-      date: '03-09-2025',
-      id: 1,
-    },
-    {
-      date: '03-08-2025',
-      id: 9,
-    },
-    {
-      date: '03-05-2025',
-      id: 9,
+      id: '12',
+      name: 'Второй чел',
+      tasks: [
+        {
+          name: 'задача 1 с длиннююююююююююююююююююююююююююююющим названием',
+          count: 2,
+        },
+        {
+          name: 'задача 2',
+          count: 20,
+        },
+        {
+          name: 'задача 3',
+          count: 57,
+        },
+      ],
     },
   ];
-  const groupedByTask = groupBy(ta, (i) => i.id);
 
   const daysInWeek = useMemo(() => {
     return eachDayOfInterval({
@@ -64,32 +52,80 @@ const SimpleTasks = () => {
     });
   }, [currentWeek]);
 
+  const getChecks = (rest: number, grouped: number = 0) => {
+    let byTen = grouped;
+    let single = rest;
+
+    if (rest >= 10) {
+      byTen += 1;
+      single -= 10;
+      return getChecks(single, byTen);
+    } else return { single, byTen };
+  };
   return (
     <Box sx={{ overflowY: 'auto' }}>
-      <Box display="flex" alignItems="center" justifyContent="center">
-        <IconButton onClick={() => setCurrentWeek((prev) => addWeeks(prev, -1))}>{'<'}</IconButton>
-        <Typography>
-          {getDefaultDate(daysInWeek[0])} - {getDefaultDate(daysInWeek[6])}
-        </Typography>
-        <IconButton onClick={() => setCurrentWeek((prev) => addWeeks(prev, 1))}>{'>'}</IconButton>
-      </Box>
+      <ChangeInterval
+        currentValue={`${getDayMonth(daysInWeek[0])} - ${getDayMonth(daysInWeek[6])}`}
+        changeNextInterval={() => setCurrentWeek((prev) => addWeeks(prev, 1))}
+        changePrevInterval={() => setCurrentWeek((prev) => addWeeks(prev, -1))}
+      />
+
       <Table>
         <TableHead>
-          <TableCell>kzkzkz</TableCell>
-          {daysInWeek.map((item) => (
-            <TableCell width="20px">{format(item, 'd')}</TableCell>
-          ))}
+          <TableCell width={50} />
+          <TableCell width={200} />
+          <TableCell />
         </TableHead>
         <TableBody>
-          {Object.entries(groupedByTask).map(([k, v]) => (
-            <TableRow>
-              <TableCell height="20px">{k}</TableCell>
-              {daysInWeek.map((item) => {
-                const isCompleted = v.find((y) => isSameDay(new Date(y.date), item));
-                return <TableCell sx={{ backgroundColor: isCompleted && 'red' }}>{isCompleted ? 'x' : ''}</TableCell>;
-              })}
-            </TableRow>
-          ))}
+          {tasks.map((task) => {
+            const personTotal = getChecks(task.tasks.reduce((acc, curr) => acc + curr.count, 0));
+            return (
+              <>
+                <TableRow>
+                  <TableCell colSpan={2}>{task.name}</TableCell>
+                  <TableCell>
+                    <Box display="flex" alignItems="center" gap={2}>
+                      {personTotal.byTen && (
+                        <>
+                          <CoinIcon />
+                          <Typography>x {personTotal.byTen}</Typography>
+                        </>
+                      )}
+                      <StarIcon size={16} />
+                      <Typography>x {personTotal.single}</Typography>
+                    </Box>
+                  </TableCell>
+                </TableRow>
+                {task.tasks.map((item) => {
+                  const checks = getChecks(item.count);
+                  return (
+                    <TableRow>
+                      <TableCell>
+                        <IconButton>
+                          <CoinIcon />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell>
+                        <Typography noWrap maxWidth={200}>
+                          {item.name}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Box display="flex" alignItems="center">
+                          {[...Array(checks.byTen)].map(() => (
+                            <CoinIcon />
+                          ))}
+                          {[...Array(checks.single)].map(() => (
+                            <StarIcon size={16} />
+                          ))}
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </>
+            );
+          })}
         </TableBody>
       </Table>
     </Box>

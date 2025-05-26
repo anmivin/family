@@ -126,6 +126,227 @@ export const themeColor: Record<
     accentDark: commonColors.blue300,
     accentLight: commonColors.blue300,
   },
+  [ThemeName.BabushkasHearth]: {
+    primaryMain: commonColors.autumn,
+    primaryDark: commonColors.blue300,
+    primaryLight: commonColors.blue300,
+
+    secondaryMain: commonColors.tan,
+    secondaryDark: commonColors.blue300,
+    secondaryLight: commonColors.blue300,
+
+    textMain: commonColors.blue300,
+    textDark: commonColors.blue300,
+    textLight: commonColors.blue300,
+
+    accentMain: commonColors.ochre,
+    accentDark: commonColors.blue300,
+    accentLight: commonColors.blue300,
+  },
+  [ThemeName.TsaristGold]: {
+    primaryMain: commonColors.royalblue,
+    primaryDark: commonColors.blue300,
+    primaryLight: commonColors.blue300,
+
+    secondaryMain: commonColors.yellow,
+    secondaryDark: commonColors.blue300,
+    secondaryLight: commonColors.blue300,
+
+    textMain: commonColors.blue300,
+    textDark: commonColors.blue300,
+    textLight: commonColors.blue300,
+
+    accentMain: commonColors.madder,
+    accentDark: commonColors.blue300,
+    accentLight: commonColors.blue300,
+  },
+  [ThemeName.SovietMinimal]: {
+    primaryMain: commonColors.jet,
+    primaryDark: commonColors.blue300,
+    primaryLight: commonColors.blue300,
+
+    secondaryMain: commonColors.cardinal,
+    secondaryDark: commonColors.blue300,
+    secondaryLight: commonColors.blue300,
+
+    textMain: commonColors.blue300,
+    textDark: commonColors.blue300,
+    textLight: commonColors.blue300,
+
+    accentMain: commonColors.gold,
+    accentDark: commonColors.blue300,
+    accentLight: commonColors.blue300,
+  },
+  [ThemeName.ForestSpirit]: {
+    primaryMain: commonColors.forest,
+    primaryDark: commonColors.blue300,
+    primaryLight: commonColors.blue300,
+
+    secondaryMain: commonColors.cambridge,
+    secondaryDark: commonColors.blue300,
+    secondaryLight: commonColors.blue300,
+
+    textMain: commonColors.blue300,
+    textDark: commonColors.blue300,
+    textLight: commonColors.blue300,
+
+    accentMain: commonColors.amber,
+    accentDark: commonColors.blue300,
+    accentLight: commonColors.blue300,
+  },
+  [ThemeName.MidnightCastle]: {
+    primaryMain: commonColors.purple,
+    primaryDark: commonColors.blue300,
+    primaryLight: commonColors.blue300,
+
+    secondaryMain: commonColors.french,
+    secondaryDark: commonColors.blue300,
+    secondaryLight: commonColors.blue300,
+
+    textMain: commonColors.blue300,
+    textDark: commonColors.blue300,
+    textLight: commonColors.blue300,
+
+    accentMain: commonColors.oark,
+    accentDark: commonColors.blue300,
+    accentLight: commonColors.blue300,
+  },
+  [ThemeName.SunriseMotivator]: {
+    primaryMain: commonColors.orange,
+    primaryDark: commonColors.blue300,
+    primaryLight: commonColors.blue300,
+
+    secondaryMain: commonColors.sky,
+    secondaryDark: commonColors.blue300,
+    secondaryLight: commonColors.blue300,
+
+    textMain: commonColors.blue300,
+    textDark: commonColors.blue300,
+    textLight: commonColors.blue300,
+
+    accentMain: commonColors.hotpink,
+    accentDark: commonColors.blue300,
+    accentLight: commonColors.blue300,
+  },
+  [ThemeName.CandyChaos]: {
+    primaryMain: commonColors.rosepink,
+    primaryDark: commonColors.blue300,
+    primaryLight: commonColors.blue300,
+
+    secondaryMain: commonColors.teal,
+    secondaryDark: commonColors.blue300,
+    secondaryLight: commonColors.blue300,
+
+    textMain: commonColors.blue300,
+    textDark: commonColors.blue300,
+    textLight: commonColors.blue300,
+
+    accentMain: commonColors.chartreus,
+    accentDark: commonColors.blue300,
+    accentLight: commonColors.blue300,
+  },
+  [ThemeName.ArcticChill]: {
+    primaryMain: commonColors.phototblue,
+    primaryDark: commonColors.blue300,
+    primaryLight: commonColors.blue300,
+
+    secondaryMain: commonColors.gray,
+    secondaryDark: commonColors.blue300,
+    secondaryLight: commonColors.blue300,
+
+    textMain: commonColors.blue300,
+    textDark: commonColors.blue300,
+    textLight: commonColors.blue300,
+
+    accentMain: commonColors.red,
+    accentDark: commonColors.blue300,
+    accentLight: commonColors.blue300,
+  },
+  [ThemeName.AutumnHarvest]: {
+    primaryMain: commonColors.burntorange,
+    primaryDark: commonColors.blue300,
+    primaryLight: commonColors.blue300,
+
+    secondaryMain: commonColors.sunset,
+    secondaryDark: commonColors.blue300,
+    secondaryLight: commonColors.blue300,
+
+    textMain: commonColors.blue300,
+    textDark: commonColors.blue300,
+    textLight: commonColors.blue300,
+
+    accentMain: commonColors.ferngreen,
+    accentDark: commonColors.blue300,
+    accentLight: commonColors.blue300,
+  },
+  [ThemeName.PixelLegends]: {
+    primaryMain: commonColors.hookergreen,
+    primaryDark: commonColors.blue300,
+    primaryLight: commonColors.blue300,
+
+    secondaryMain: commonColors.night,
+    secondaryDark: commonColors.blue300,
+    secondaryLight: commonColors.blue300,
+
+    textMain: commonColors.blue300,
+    textDark: commonColors.blue300,
+    textLight: commonColors.blue300,
+
+    accentMain: commonColors.vermilion,
+    accentDark: commonColors.blue300,
+    accentLight: commonColors.blue300,
+  },
+  [ThemeName.TheFinalFrontier]: {
+    primaryMain: commonColors.night1,
+    primaryDark: commonColors.blue300,
+    primaryLight: commonColors.blue300,
+
+    secondaryMain: commonColors.violet,
+    secondaryDark: commonColors.blue300,
+    secondaryLight: commonColors.blue300,
+
+    textMain: commonColors.blue300,
+    textDark: commonColors.blue300,
+    textLight: commonColors.blue300,
+
+    accentMain: commonColors.bittersweet,
+    accentDark: commonColors.blue300,
+    accentLight: commonColors.blue300,
+  },
+  [ThemeName.TeaAndTidy]: {
+    primaryMain: commonColors.teagreen,
+    primaryDark: commonColors.blue300,
+    primaryLight: commonColors.blue300,
+
+    secondaryMain: commonColors.parchement,
+    secondaryDark: commonColors.blue300,
+    secondaryLight: commonColors.blue300,
+
+    textMain: commonColors.blue300,
+    textDark: commonColors.blue300,
+    textLight: commonColors.blue300,
+
+    accentMain: commonColors.claret,
+    accentDark: commonColors.blue300,
+    accentLight: commonColors.blue300,
+  },
+  [ThemeName.TheLostSock]: {
+    primaryMain: commonColors.daysgray,
+    primaryDark: commonColors.blue300,
+    primaryLight: commonColors.blue300,
+
+    secondaryMain: commonColors.whitesmoke1,
+    secondaryDark: commonColors.blue300,
+    secondaryLight: commonColors.blue300,
+
+    textMain: commonColors.blue300,
+    textDark: commonColors.blue300,
+    textLight: commonColors.blue300,
+
+    accentMain: commonColors.arangepeel,
+    accentDark: commonColors.blue300,
+    accentLight: commonColors.blue300,
+  },
 };
 
 export const color = { ...themeColor, ...commonColors } as const;

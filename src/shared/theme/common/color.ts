@@ -141,6 +141,66 @@ export const commonColors = {
   yellow: '#ffb700',
   ivory: 'fffff0',
   madder: '#9e1b34',
+  //soviet
+  jet: '#333333',
+  cardinal: '#C91F37',
+  whitesmoke: '#F2F2F2',
+  gold: '#FFD700',
+  //forest
+  forest: '#228B22',
+  cambridge: '#A8C3A1',
+  cosmiclatte: '#F8F4E3',
+  amber: '#FFBF00',
+  //midnight
+  purple: '#2E1B3B',
+  french: '#C0C6D4',
+  jet1: '#2D2D2D',
+  oark: '#8B0000',
+  //sunrise
+  orange: '#FFA500',
+  sky: '#87CEEB',
+  white: '#FFFFFF',
+  hotpink: '#FF69B4',
+  //candy
+  rosepink: '#FF66CC',
+  teal: '#008080',
+  lemon: '#FFFACD',
+  chartreus: '#7FFF00',
+  //arctic
+  phototblue: '#A8DADC',
+  gray: '#76787A',
+  antiflash: '#F0F4F8',
+  red: '#E63946',
+
+  //autumn
+  burntorange: '#B85B1E',
+  sunset: '#F2C47E',
+  seashell: '#FDF6EE',
+  ferngreen: '#5A7F5A',
+
+  //pixel
+  hookergreen: '#3B755F',
+  uclablue: '#4A789C',
+  night: '#111111',
+  vermilion: '#FF3333',
+
+  //frontier
+  night1: '#121212',
+  violet: '#7F00FF',
+  eerieblack: '#1E1E1E',
+  bittersweet: '#FF6F61',
+
+  //tea
+  teagreen: '#BCD2B0',
+  parchement: '#F8EED2',
+  babypowder: '#FAF9F6',
+  claret: '#8E2541',
+
+  //sock
+  daysgray: '#4D4D4D',
+  whitesmoke1: '#F2F2F2',
+  platinum: '#EAEAEA',
+  arangepeel: '#FFA000',
 } as const;
 
 export type CommonColor = keyof typeof commonColors;

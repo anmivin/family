@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { components } from '@api/Api';
+
 import { userTasks, selectedTask } from './faker';
 const taskHandler = [
   http.get('/tasks', (props /* { params, request } */) => {
@@ -15,6 +15,7 @@ const taskHandler = [
       if (isHabit) return task.isHabit; */
       return true;
     });
+
     return HttpResponse.json({ total: userTasks.length, items: filteredTasks });
   }),
 

@@ -1,8 +1,10 @@
 import { groupBy, keyBy } from 'lodash';
 import { addWeeks, eachDayOfInterval, endOfWeek, format, getDaysInMonth, isSameDay, startOfWeek } from 'date-fns';
 import { useMemo, useState, useCallback } from 'react';
-import { Box, Typography, IconButton, TableBody, TableRow, TableCell, TableHead, Table } from '@mui/material';
-import { getDefaultDate } from '@helpers/dates';
+import { Box, Typography, IconButton, TableBody, TableRow, TableCell, TableHead, Table, Checkbox } from '@mui/material';
+import { getDayMonth, getDefaultDate } from '@helpers/dates';
+import { ChangeInterval } from '@ui/CalendarHeader';
+import { CoinIcon } from '@ui/Icons';
 const HabitTable = () => {
   const [currentWeek, setCurrentWeek] = useState(new Date());
   const ta = [
@@ -66,13 +68,12 @@ const HabitTable = () => {
 
   return (
     <Box sx={{ overflowY: 'auto' }}>
-      <Box display="flex" alignItems="center" justifyContent="center">
-        <IconButton onClick={() => setCurrentWeek((prev) => addWeeks(prev, -1))}>{'<'}</IconButton>
-        <Typography>
-          {getDefaultDate(daysInWeek[0])} - {getDefaultDate(daysInWeek[6])}
-        </Typography>
-        <IconButton onClick={() => setCurrentWeek((prev) => addWeeks(prev, 1))}>{'>'}</IconButton>
-      </Box>
+      <ChangeInterval
+        currentValue={`${getDayMonth(daysInWeek[0])} - ${getDayMonth(daysInWeek[6])}`}
+        changeNextInterval={() => setCurrentWeek((prev) => addWeeks(prev, 1))}
+        changePrevInterval={() => setCurrentWeek((prev) => addWeeks(prev, -1))}
+      />
+
       <Table>
         <TableHead>
           <TableCell>kzkzkz</TableCell>
@@ -86,7 +87,15 @@ const HabitTable = () => {
               <TableCell height="20px">{k}</TableCell>
               {daysInWeek.map((item) => {
                 const isCompleted = v.find((y) => isSameDay(new Date(y.date), item));
-                return <TableCell sx={{ backgroundColor: isCompleted && 'red' }}>{isCompleted ? 'x' : ''}</TableCell>;
+                return (
+                  <TableCell>
+                    <Checkbox
+                      checked={!!isCompleted}
+                      icon={<CoinIcon />}
+                      checkedIcon={<CoinIcon svgColor="green700" />}
+                    />
+                  </TableCell>
+                );
               })}
             </TableRow>
           ))}

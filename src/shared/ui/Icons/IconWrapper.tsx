@@ -1,20 +1,21 @@
 import { FC, HTMLAttributes, ReactNode } from 'react';
-
+import { Color } from '@theme/themeVariants';
 import { css, styled } from '@mui/material/styles';
 
-export interface IconProps extends HTMLAttributes<SVGSVGElement> {
+export interface IconProps extends Omit<HTMLAttributes<SVGSVGElement>, 'color'> {
   size?: number;
   viewBox?: string;
   isLineIcon?: boolean;
   responsive?: boolean;
   children?: ReactNode;
+  svgColor?: Color;
 }
 export type IconComponent = FC<IconProps>;
 
 const IconWrapper: IconComponent = ({
   size = 24,
   viewBox = '0 0 24 24',
-  color,
+  svgColor,
   children,
   responsive,
   ...rest
@@ -26,16 +27,16 @@ const IconWrapper: IconComponent = ({
       height={responsive ? undefined : size}
       responsive={responsive}
       viewBox={viewBox}
-      color={color}
+      svgColor={svgColor}
     >
       {children}
     </StyledSvg>
   );
 };
 
-const StyledSvg = styled('svg')<IconProps>`
-  ${({ theme, isLineIcon, color, responsive }) => {
-    const cssColor = color ? theme.color[color] : 'currentColor';
+const StyledSvg = styled('svg')<IconProps & { svgColor?: Color }>`
+  ${({ theme, isLineIcon, svgColor, responsive }) => {
+    const cssColor = svgColor ? theme.color[svgColor] : 'currentColor';
 
     return isLineIcon
       ? css`

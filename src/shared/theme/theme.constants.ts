@@ -14,6 +14,10 @@ export enum ThemeName {
   CandyChaos = 'CandyChaos',
   ArcticChill = 'ArcticChill',
   AutumnHarvest = 'AutumnHarvest',
+  PixelLegends = 'PixelLegends',
+  TheFinalFrontier = 'TheFinalFrontier',
+  TeaAndTidy = 'TeaAndTidy',
+  TheLostSock = 'TheLostSock',
 }
 
 export type ThemeKey = keyof typeof ThemeName;
