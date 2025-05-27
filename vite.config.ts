@@ -15,6 +15,7 @@ export default defineConfig({
       '@constants': `${path.resolve(__dirname, './src/shared/constants/')}`,
       '@helpers': `${path.resolve(__dirname, './src/shared/helpers/')}`,
       '@stores': `${path.resolve(__dirname, './src/shared/stores/')}`,
+      '@swr': `${path.resolve(__dirname, './src/shared/swr/')}`,
       '@theme': `${path.resolve(__dirname, './src/shared/theme/')}`,
       '@types': `${path.resolve(__dirname, './src/shared/types/')}`,
       '@ui': `${path.resolve(__dirname, './src/shared/ui/')}`,

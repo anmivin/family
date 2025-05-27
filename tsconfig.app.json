@@ -32,6 +32,7 @@
       "@constants/*": ["./src/shared/constants/*"],
       "@helpers/*": ["./src/shared/helpers/*"],
       "@stores/*": ["./src/shared/stores/*"],
+      "@swr/*": ["./src/shared/swr/*"],
       "@theme/*": ["./src/shared/theme/*"],
       "@types/*": ["./src/shared/types/*"],
       "@ui/*": ["./src/shared/ui/*"]

@@ -1,4 +1,4 @@
-import { FC, ReactNode, createContext, useCallback } from 'react';
+import { FC, ReactNode, createContext, useCallback, useEffect } from 'react';
 import { components } from '@api/Api';
 import { useAppSelector } from '@stores/global.store';
 
@@ -17,7 +17,7 @@ export const AbilityContext = createContext<AbillityContextProps>({ ability: () 
 
 const AbilityProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const { userAbilities } = useAppSelector((state) => state.userSlice);
-
+  useEffect(() => console.log(userAbilities), [userAbilities]);
   const ability = useCallback(
     <T extends Crud>({ crud, can, not }: AbilityProps<T>) => {
       return not ? !userAbilities[crud].includes(can) : userAbilities[crud].includes(can);

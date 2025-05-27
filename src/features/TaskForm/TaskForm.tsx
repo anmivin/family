@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from '@stores/global.store';
 import { setIsTaskFormOpen } from '@stores/modals/modals.store';
 import { setSelectedTask } from '@stores/tasks/tasks.store';
 import FormSection from '@ui/FormSection';
-import { Abilities, Difficulty, RepeatPeriod, TaskType } from '@api/Api';
+import { Abilities, DayOfWeek, Difficulty, RepeatPeriod, TaskType } from '@api/Api';
 import { pluralizeString, getErrorMessage } from '@helpers/utils';
 import { useToast } from '@ui/Toast/ToastProvider';
 import {
@@ -26,13 +26,13 @@ import {
 import { Can, useCan } from '../../shared/ability/helpers';
 import { createTask } from '@helpers/fetcher';
 import { TaskDifficultyXP } from '@helpers/calcLavel';
-import { TaskFormProps, TaskFormValues, TaskFormSchema, XPTarget, PeriodLabels } from './TaskForm.types';
+import { TaskFormProps, TaskFormValues, TaskFormSchema, XPTarget, PeriodLabels, DayLabels } from './TaskForm.types';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { useEffect, useMemo, useCallback, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 
-import useSwr from '../../shared/swr/useSwr';
+import useSwr from '@swr/useSwr';
 
 const TaskForm = () => {
   const dispatch = useAppDispatch();
@@ -44,7 +44,7 @@ const TaskForm = () => {
   const { successToast, errorToast } = useToast();
   const { isTaskFormOpen } = useAppSelector((state) => state.modalsSlice);
   const { selectedTaskId } = useAppSelector((state) => state.taskSlice);
-  const { data: selectedTask } = useSwr({ url: '/tasks/{id}', params: { path: { id: selectedTaskId ?? '' } } });
+  const { data: selectedTask } = useSwr({ url: '/tasks/{id}', params: { id: selectedTaskId ?? '' } });
   const { data: skillList } = useSwr({ url: '/characteristics/skills' });
   const { data: featureList } = useSwr({ url: '/characteristics/features/user' });
 
@@ -63,10 +63,10 @@ const TaskForm = () => {
       date: undefined,
       time: undefined,
       year: false,
-      habit: selectedTask ? selectedTask.type === 'HABIT' : false,
+      habit: selectedTask ? selectedTask.type === TaskType.HABIT : false,
+      simple: selectedTask ? selectedTask.type === TaskType.SMALL : false,
       important: selectedTask ? selectedTask.isImportant : false,
-      subtasks: [],
-      repeat: { count: 1, period: RepeatPeriod.DAILY },
+      repeat: undefined,
     };
   }, [selectedTask]);
   //если не админ, то отправить на одобрение админу
@@ -122,7 +122,6 @@ const TaskForm = () => {
 
   const tooltipTitle = useMemo(() => {
     if (formValues.habit) return 'Привычка оценивается как лёгкая задача';
-    /*  if (formValues.subtasks.length) return 'Если есть подзадачи, то сложность оценивается по сумме сложностей подзадач'; */
   }, [formValues]);
 
   const getTooltipTitle = useCallback(
@@ -138,12 +137,12 @@ const TaskForm = () => {
     [formValues]
   );
 
-  /*   const repeatText = useMemo(() => {
-    if (!formValues.repeat) return '';
+  const repeatText = useMemo(() => {
+    if (!formValues.repeat?.period) return '';
     const period = PeriodLabels[formValues.repeat.period];
     const count = !!formValues.repeat.count ? +formValues.repeat.count : 1;
     return formValues.repeat ? ` (Кажд. ${count > 1 ? count : ''} ${pluralizeString(count, period.labels)})` : '';
-  }, [formValues]); */
+  }, [formValues]);
 
   return (
     <DefaultDrawer
@@ -200,8 +199,19 @@ const TaskForm = () => {
         />
         {/*   </Can> */}
         <Box>
+          <Tooltip title="Простая задача в пределах пяти минут">
+            <FormControlLabel
+              control={<Checkbox checked={formValues.simple} />}
+              label="Простая задача"
+              onChange={(_, checked) => {
+                setValue('simple', checked);
+                setValue('important', false);
+                setValue('habit', false);
+              }}
+            />
+          </Tooltip>
           <FormControlLabel
-            control={<Checkbox />}
+            control={<Checkbox checked={formValues.habit} />}
             label="Привычка"
             onChange={(_, checked) => {
               setValue('habit', checked);
@@ -210,10 +220,11 @@ const TaskForm = () => {
           />
           <Tooltip title="За важную задачу вы получаете больше XP">
             <FormControlLabel
-              control={<Checkbox />}
+              control={<Checkbox checked={formValues.important} />}
               label="Важная задача"
               onChange={(_, checked) => {
                 setValue('important', checked);
+                setValue('simple', false);
               }}
             />
           </Tooltip>
@@ -247,84 +258,95 @@ const TaskForm = () => {
         />
       </FormSection>
 
-      <FormSection title="Дата и время">
-        {/*  {!formValues.year && ( */}
-        <Box display="flex" flexDirection="row" gap={2}>
-          <DatePicker />
-          <TimePicker />
-        </Box>
-        {/*    )} */}
-        <Box>
-          <FormControlLabel
-            control={<Checkbox />}
-            label="На весь год"
-            onChange={(_, checked) => setValue('year', checked)}
-          />
-          <FormControlLabel
-            control={<Checkbox />}
-            label={'Повторять' /* + repeatText */}
-            onChange={(_, checked) => {
-              setShowRepeat(checked);
-            }}
-          />
-        </Box>
-      </FormSection>
+      {!formValues.simple && (
+        <>
+          <FormSection title="Дата и время">
+            <Box display="flex" flexDirection="row" gap={2}>
+              <DatePicker />
+              <TimePicker />
+            </Box>
 
-      {showRepeat && (
-        <Box display="flex" flexDirection="row" gap={2}>
-          <Controller
-            control={control}
-            name="repeat.period"
-            render={({ field }) => (
-              <Autocomplete
-                {...field}
-                fullWidth
-                onChange={(_, newValue) => field.onChange(newValue)}
-                options={Object.values(RepeatPeriod)}
-                getOptionLabel={(option) => PeriodLabels[option].textfieldLabel}
-                renderInput={(params) => <TextField variant="standard" label="Период" {...params} />}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name="repeat.count"
-            render={({ field }) => (
-              <TextField
-                {...field}
-                type="number"
-                fullWidth
-                variant="standard"
-                label="Кажд."
-                onChange={(e) => {
-                  if (!formValues?.repeat?.period) setValue('repeat.period', RepeatPeriod.DAILY);
-                  field.onChange(e);
+            <Box>
+              <FormControlLabel
+                control={<Checkbox />}
+                label={'Повторять' + repeatText}
+                onChange={(_, checked) => {
+                  setValue('repeat', { count: 1, period: RepeatPeriod.DAILY });
+                  setShowRepeat(checked);
                 }}
               />
-            )}
-          />
-        </Box>
+            </Box>
+          </FormSection>
+          {showRepeat && (
+            <>
+              <Box display="flex" flexDirection="row" gap={2}>
+                <Controller
+                  control={control}
+                  name="repeat.period"
+                  render={({ field }) => (
+                    <Autocomplete
+                      {...field}
+                      fullWidth
+                      onChange={(_, newValue) => field.onChange(newValue)}
+                      options={Object.values(RepeatPeriod)}
+                      getOptionLabel={(option) => PeriodLabels[option].textfieldLabel}
+                      renderInput={(params) => <TextField variant="standard" label="Период" {...params} />}
+                    />
+                  )}
+                />
+                <Controller
+                  control={control}
+                  name="repeat.count"
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      type="number"
+                      fullWidth
+                      variant="standard"
+                      label="Кажд."
+                      onChange={(e) => {
+                        if (!formValues?.repeat?.period) setValue('repeat.period', RepeatPeriod.DAILY);
+                        field.onChange(e);
+                      }}
+                    />
+                  )}
+                />
+              </Box>
+              <ToggleButtonGroup
+                fullWidth
+                value={formValues.repeat?.days}
+                exclusive
+                onChange={(_e, value) => setValue('repeat.days', value)}
+              >
+                {Object.values(DayOfWeek).map((item, index) => (
+                  <ToggleButton key={index} value={item}>
+                    {DayLabels[item]}
+                  </ToggleButton>
+                ))}
+              </ToggleButtonGroup>
+            </>
+          )}
+          <FormSection title="Сложность">
+            <Tooltip title={tooltipTitle}>
+              <ToggleButtonGroup
+                fullWidth
+                value={formValues.difficulty}
+                exclusive
+                disabled={formValues.habit}
+                onChange={(_e, value) => setValue('difficulty', value)}
+              >
+                {Object.values(Difficulty).map((item, index) => (
+                  <Tooltip title={getTooltipTitle(item)}>
+                    <ToggleButton key={index} value={item}>
+                      {TaskDifficultyXP[item].icon}
+                    </ToggleButton>
+                  </Tooltip>
+                ))}
+              </ToggleButtonGroup>
+            </Tooltip>
+          </FormSection>
+        </>
       )}
-
-      <FormSection title="Сложность">
-        <Tooltip title={tooltipTitle}>
-          <ToggleButtonGroup
-            fullWidth
-            value={formValues.difficulty}
-            exclusive
-            disabled={formValues.habit}
-            onChange={(_e, value) => setValue('difficulty', value)}
-          >
-            {Object.values(Difficulty).map((item, index) => (
-              <Tooltip title={getTooltipTitle(item)}>
-                <ToggleButton key={index} value={item}>
-                  {TaskDifficultyXP[item].icon}
-                </ToggleButton>
-              </Tooltip>
-            ))}
-          </ToggleButtonGroup>
-        </Tooltip>
-      </FormSection>
     </DefaultDrawer>
   );
 };

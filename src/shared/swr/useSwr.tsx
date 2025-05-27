@@ -1,11 +1,13 @@
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { getErrorMessage } from '@helpers/utils';
-import { SwrContext, KeyType, DataType, ParamType } from './SwrContext';
+import { SwrContext, KeyType, KinoKeyType, DataType, ParamTypeFetched } from './SwrContext';
 import { defaultSwrFetcher } from '@helpers/fetcher';
+import { isEqual } from 'lodash';
 
-type UseSwrOptions<T extends KeyType> = { url: T } & ParamType<T>;
+type FetchType<T extends KeyType | KinoKeyType> = { kinoFetch: T extends KinoKeyType ? true : false };
+export type UseSwrProps<T extends KeyType | KinoKeyType> = { url: T } & ParamTypeFetched<T> & FetchType<T>;
 
-interface ReturnType<T extends KeyType> {
+interface ReturnType<T extends KeyType | KinoKeyType> {
   data: DataType<T> | null;
   loading: boolean;
   error: string | null;
@@ -13,9 +15,10 @@ interface ReturnType<T extends KeyType> {
 }
 
 const RETRY_DELAY = 3000;
-const MAX_RETRIES = 3;
-const isMock = import.meta.env.VITE_BACK_OR_MOCK === 'mock';
-export const useSwr = <T extends KeyType>({ url, params }: UseSwrOptions<T>): ReturnType<T> => {
+const MAX_RETRIES = 2;
+
+export const useSwr = <T extends KeyType | KinoKeyType>(props: UseSwrProps<T>): ReturnType<T> => {
+  const { url, kinoFetch, ...rest } = props;
   const context = useContext(SwrContext);
   const [data, setData] = useState<DataType<T> | null>(null);
   const [loading, setLoading] = useState(false);
@@ -26,11 +29,15 @@ export const useSwr = <T extends KeyType>({ url, params }: UseSwrOptions<T>): Re
     setError(null);
 
     let retries = 0;
-
+    context.set(url, { prevParams: rest });
     while (retries <= MAX_RETRIES) {
       try {
-        const newData = await defaultSwrFetcher({ url, ...params });
-        context.set(url, { data: newData });
+        if (kinoFetch) {
+        } else {
+          const newData = await defaultSwrFetcher(props);
+        }
+
+        context.set(url, { data: newData, prevParams: rest });
         setData(newData);
         break;
       } catch (e) {
@@ -44,20 +51,23 @@ export const useSwr = <T extends KeyType>({ url, params }: UseSwrOptions<T>): Re
     }
 
     setLoading(false);
-  }, [url]);
+  }, [url, rest]);
 
   useEffect(() => {
     const currentState = context.get(url);
-    if (currentState?.data) {
+
+    if ((!!error && isEqual(currentState?.prevParams, rest)) || loading) return;
+    if (currentState?.data && isEqual(currentState.prevParams, rest)) {
       setData(currentState.data as DataType<T>);
     } else {
       fetch();
     }
-  }, [url, fetch]);
+  }, [url, rest, loading]);
 
   const mutate = useCallback(async () => {
     await fetch();
   }, [fetch]);
+
   return { data, loading, error, mutate };
 };
 

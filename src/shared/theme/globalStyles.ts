@@ -11,11 +11,8 @@ export const globalStyles = (theme: Theme) => css`
     letter-spacing: ${theme.typography.body1.letterSpacing}px;
     font-weight: ${theme.typography.body1.fontWeight};
     color: ${theme.color.textMain};
-
-    font-feature-settings: 'tnum' on, 'lnum' on;
     color: #000;
     background-color: ${theme.color.secondaryMain};
-    /*     overflow: hidden; */
   }
 
   p,
@@ -44,22 +41,10 @@ export const globalStyles = (theme: Theme) => css`
   *::-webkit-scrollbar {
     width: 0px;
     height: 0px;
-    border-radius: 4px;
   }
 
   *::-webkit-scrollbar-track {
-    background-color: transparent;
     width: 0px;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: ${theme.color.secondaryDark};
-    border-radius: 8px;
-    min-height: 0px;
-
-    &:active,
-    &:hover {
-      background-color: ${theme.color.secondaryLight};
-    }
+    height: 0px;
   }
 `;

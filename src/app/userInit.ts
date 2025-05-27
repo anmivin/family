@@ -11,7 +11,7 @@ export const UserInit: FC<{ children: ReactNode }> = ({ children }) => {
   const [value, setValue] = useLocalStorage<{ key: string; order: number }[]>('routes', defaultRouting);
   const [isInit, setInit] = useState(false);
   const dispatch = useAppDispatch();
-
+  const router = useNavigate();
   useEffect(() => {
     if (!isInit) {
       if (userInfo?.id) {
@@ -25,7 +25,7 @@ export const UserInit: FC<{ children: ReactNode }> = ({ children }) => {
             }
           })
           .catch(() => {
-            useNavigate()('../login');
+            router('../login');
             setInit(true);
           });
       }

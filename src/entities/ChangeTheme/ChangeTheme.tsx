@@ -1,4 +1,4 @@
-import { themeColor } from '@theme/themeVariants';
+import { themeColor } from '@theme/color';
 import { ThemeName } from '@theme/theme.constants';
 import { Box } from '@mui/material';
 import { ColorModeContext } from '@theme/theme.provider';

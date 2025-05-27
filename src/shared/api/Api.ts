@@ -152,6 +152,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/lists/{type}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ListsController_getListsByType"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["ListsController_createList"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["ListsController_editList"];
+        trace?: never;
+    };
     "/characteristics/features/user": {
         parameters: {
             query?: never;
@@ -338,6 +370,34 @@ export interface components {
             read: components["schemas"]["Abilities"][];
             update: components["schemas"]["Abilities"][];
             delete: components["schemas"]["Abilities"][];
+        };
+        ListItemDto: {
+            id: string;
+            title: string;
+            description?: string;
+            isCompleted: boolean;
+        };
+        OutputListDto: {
+            title: string;
+            description?: string;
+            /** Format: date-time */
+            deadline?: string;
+            listItems: components["schemas"]["ListItemDto"][];
+        };
+        CreateListDto: {
+            title: string;
+            description?: string;
+            /** Format: date-time */
+            deadline?: string;
+            listItems: components["schemas"]["ListItemDto"][];
+        };
+        EditListDto: {
+            title?: string;
+            description?: string;
+            /** Format: date-time */
+            deadline?: string;
+            listItems?: components["schemas"]["ListItemDto"][];
+            listId: string;
         };
         FeatureBaseDto: {
             id: string;
@@ -719,6 +779,69 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["UserAbilityDto"];
                 };
+            };
+        };
+    };
+    ListsController_getListsByType: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                type: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OutputListDto"];
+                };
+            };
+        };
+    };
+    ListsController_createList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateListDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ListsController_editList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EditListDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

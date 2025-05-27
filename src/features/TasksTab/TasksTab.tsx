@@ -6,10 +6,10 @@ import { debounce } from 'lodash';
 import { TaskType, TaskStatus } from '@api/Api';
 
 import { useIntersectionObserver } from '@helpers/useIntersectionObserver';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@stores/global.store';
-import useSwr from '../../shared/swr/useSwr';
+import useSwr from '@swr/useSwr';
 
 import { setTaskTypes, setTaskStatus } from '@stores/tasks/tasks.store';
 
@@ -23,14 +23,20 @@ const TasksTab = () => {
   const { taskStatus, taskType } = useAppSelector((state) => state.taskSlice);
   const { data: userTasks } = useSwr({
     url: '/tasks',
-    params: { query: { limit, offset: 0, type: taskType, status: taskStatus } },
+    query: { limit, offset: 0, type: taskType, status: taskStatus },
   });
 
-  useEffect(() => console.log('userTasks', userTasks), [userTasks]);
+  const debouncedLoad = useMemo(() => {
+    return debounce(() => {
+      setLimit((prev) => prev + 10);
+    }, 3000);
+  }, []);
+
   const handleIntersect = useCallback(() => {
-    if (userTasks && userTasks.total > userTasks.items.length)
-      debounce(() => setLimit((prev) => prev + 10), 3000, { leading: true });
-  }, [userTasks]);
+    if (userTasks && userTasks.total > userTasks.items.length) {
+      debouncedLoad();
+    }
+  }, [userTasks, debouncedLoad]);
 
   useIntersectionObserver(ref, handleIntersect);
 

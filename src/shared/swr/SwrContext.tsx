@@ -1,39 +1,82 @@
 import { FC, ReactNode, createContext } from 'react';
 import { paths } from '@api/Api';
+import { paths as kinoPaths } from '@api/KinopoiskApi';
 
-export type KeyType = keyof paths;
-export type ParameterType<KP extends KeyType> = paths[KP]['parameters']['query'];
+type GetKeys<T> = {
+  [K in keyof T]: T[K] extends { get?: never } ? never : K;
+}[keyof T];
 
-export type DataType<KP extends KeyType> = KP extends keyof paths
-  ? paths[KP] extends { get: infer Get }
-    ? Get extends { responses: any }
-      ? Get['responses'] extends { [code: number]: infer Response }
-        ? Response extends {
-            content?: { [type: string]: infer Value };
-          }
-          ? Value
-          : never
+export type KeyType = GetKeys<paths>;
+export type KinoKeyType = GetKeys<kinoPaths>;
+
+export type GetDataType<T, K extends keyof T> = T[K] extends { get: infer Get }
+  ? Get extends { responses: any }
+    ? Get['responses'] extends { [code: number]: infer Response }
+      ? Response extends {
+          content?: { [type: string]: infer Value };
+        }
+        ? Value
         : never
       : never
     : never
   : never;
 
-type CheckNever<T> = {
-  [K in keyof T]-?: T[K][keyof T[K]] extends never ? true : false;
-}[keyof T] extends true
-  ? { params?: never }
-  : { params: T };
+export type DataType<KP extends KeyType | KinoKeyType> = KP extends keyof paths
+  ? GetDataType<paths, KP>
+  : KP extends keyof kinoPaths
+  ? GetDataType<kinoPaths, KP>
+  : never;
 
-export type ParamType<KP extends KeyType> = KP extends keyof paths
-  ? paths[KP] extends { get: infer Get }
-    ? Get extends { parameters: any }
-      ? CheckNever<Get['parameters']>
-      : never
+export type TransformParams<T> = {
+  [K in keyof T as K extends 'query'
+    ? /* T[K] extends undefined
+      ? never
+      : */ K
+    : K extends 'path'
+    ? /* T[K] extends undefined
+      ? never
+      : */ 'params'
+    : never]-?: T[K];
+};
+
+export type CheckNever<T> = {
+  [K in keyof T as K extends 'query'
+    ? T[K] extends undefined
+      ? never
+      : K
+    : K extends 'path'
+    ? T[K] extends undefined
+      ? never
+      : 'params'
+    : never]-?: T[K];
+};
+export type GetParamsType<T, K extends keyof T> = T[K] extends { get: infer Get }
+  ? Get extends { parameters: any }
+    ? TransformParams<Get['parameters']>
     : never
+  : never;
+
+export type GetParamsTypeFetcher<T, K extends keyof T> = T[K] extends { get: infer Get }
+  ? Get extends { parameters: any }
+    ? CheckNever<Get['parameters']>
+    : never
+  : never;
+
+export type ParamType<KP extends KeyType | KinoKeyType> = KP extends keyof paths
+  ? GetParamsType<paths, KP>
+  : KP extends keyof kinoPaths
+  ? GetParamsType<kinoPaths, KP>
+  : never;
+
+export type ParamTypeFetched<KP extends KeyType | KinoKeyType> = KP extends keyof paths
+  ? GetParamsTypeFetcher<paths, KP>
+  : KP extends keyof kinoPaths
+  ? GetParamsTypeFetcher<kinoPaths, KP>
   : never;
 
 export interface SwrContextProps {
   data?: any;
+  prevParams?: any;
 }
 
 const currentState: Map<string, SwrContextProps> = new Map();

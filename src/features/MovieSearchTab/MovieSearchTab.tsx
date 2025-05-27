@@ -6,9 +6,10 @@ import MovieCard from '@entities/MovieCard/MovieCard';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { MovieSearchTabProps, MovieSearchTabSchema } from './MovieSearchTab.types';
+import useSwr from '@swr/useSwr';
 const MovieSearchTab = () => {
   const [searchString, setSearchstring] = useState('');
-  const { moviesList, pendingMoviesList } = useAppSelector((state) => state.listSlice);
+  const { data } = useSwr({ url: '/', fetchType: 'kino' });
   const dispatch = useAppDispatch();
   useEffect(() => {
     searchString.length && dispatch(fetchMovies(searchString));

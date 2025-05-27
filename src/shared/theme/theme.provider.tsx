@@ -4,9 +4,9 @@ import { GlobalStyles } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { ThemeName } from './theme.constants';
 import { globalStyles } from './globalStyles';
-
 import { useLocalStorage } from '@helpers/useLocalstorage';
 import { Theme } from './theme.types';
+import '@theme/fonts/font.css';
 
 export const ColorModeContext = createContext({
   changeColorMode: (_: ThemeName) => {},

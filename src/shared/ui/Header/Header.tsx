@@ -1,5 +1,5 @@
 import { Box, IconButton, styled, Typography } from '@mui/material';
-import { useAppSelector, useAppDispatch } from '@stores/global.store';
+import { useAppDispatch } from '@stores/global.store';
 import { setIsMenuDrawerOpen } from '@stores/modals/modals.store';
 
 import { menuRoutes } from '@constants/routes';

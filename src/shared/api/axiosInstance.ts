@@ -11,14 +11,9 @@ export const axios = Axios.create({
   baseURL,
 });
 
-axios.interceptors.response.use(
-  (response) => {
-    return response.data;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+axios.interceptors.response.use((error) => {
+  return Promise.reject(error);
+});
 
 const kinopoiskUrl = import.meta.env.VITE_KINOPOISK_BASE_URL;
 const token = import.meta.env.VITE_KINOPOISK_TOKEN;

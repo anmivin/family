@@ -58,9 +58,7 @@ const SkillForm = () => {
     reset(defaultValues);
   }, [defaultValues]);
 
-  const onSubmit = handleSubmit((data) => {
-    console.log('skill', data);
-  });
+  const onSubmit = handleSubmit((data) => {});
 
   return (
     <DefaultDrawer

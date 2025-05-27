@@ -1,5 +1,5 @@
 import { object, string, mixed, number, date, boolean, array } from 'yup';
-import { Difficulty, RepeatPeriod } from '@api/Api';
+import { Difficulty, RepeatPeriod, DayOfWeek } from '@api/Api';
 
 export enum XPTarget {
   Skill = 'Skill',
@@ -7,10 +7,10 @@ export enum XPTarget {
 }
 
 export const PeriodLabels: Record<
-  RepeatPeriod | 'SIMPLE',
+  RepeatPeriod,
   {
     textfieldLabel: string;
-    labels?: { zero?: string; one?: string; two?: string; few?: string; many?: string; other: string };
+    labels: { zero?: string; one?: string; two?: string; few?: string; many?: string; other: string };
   }
 > = {
   [RepeatPeriod.HOURLY]: {
@@ -27,12 +27,18 @@ export const PeriodLabels: Record<
     labels: { one: 'месяц', two: 'месяца', few: 'месяца', other: 'месяцев' },
   },
   [RepeatPeriod.YEARLY]: { textfieldLabel: 'Ежегодно', labels: { one: 'год', two: 'года', few: 'года', other: 'лет' } },
-  SIMPLE: { textfieldLabel: 'После завершения' },
 };
-export interface SubtaskProps {
-  name: string;
-  difficulty: Difficulty;
-}
+
+export const DayLabels: Record<DayOfWeek, string> = {
+  [DayOfWeek.MONDAY]: 'ПН',
+  [DayOfWeek.TUESDAY]: 'ВТ',
+  [DayOfWeek.WEDNESDAY]: 'СР',
+  [DayOfWeek.THURSDAY]: 'ЧТ',
+  [DayOfWeek.FRIDAY]: 'ПТ',
+  [DayOfWeek.SATURDAY]: 'СБ',
+  [DayOfWeek.SUNDAY]: 'ВС',
+};
+
 export interface TaskFormValues {
   name: string;
   description?: string;
@@ -42,10 +48,10 @@ export interface TaskFormValues {
   characteristics: { item: { id?: string; name?: string }; percent?: number }[];
   date?: Date;
   time?: Date;
-  year?: boolean;
   habit?: boolean;
   important?: boolean;
-  repeat?: { period: RepeatPeriod; count: number };
+  simple?: boolean;
+  repeat?: { period: RepeatPeriod; count: number; days?: DayOfWeek };
   asignee?: { id: string; name: string };
 }
 
@@ -66,12 +72,13 @@ export const TaskFormSchema = object({
     .required(),
   date: date(),
   time: date(),
-  year: boolean(),
   habit: boolean(),
+  simple: boolean(),
   important: boolean(),
   repeat: object({
     period: mixed<RepeatPeriod>().oneOf(Object.values(RepeatPeriod)).required(),
     count: number().required(),
+    days: mixed<DayOfWeek>().oneOf(Object.values(DayOfWeek)),
   }).optional(),
   asignee: object({
     id: string().required(),

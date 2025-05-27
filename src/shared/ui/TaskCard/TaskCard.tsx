@@ -36,7 +36,7 @@ const TaskCard = (data: components['schemas']['OutputTaskDto']) => {
       <Box display="flex" alignItems="start" justifyContent="space-between">
         {!!data.deadline && (
           <Box display="flex" alignItems="center" gap={1}>
-            <ClockIcon size={20} color="textMain" />
+            <ClockIcon size={20} svgColor="textMain" />
             <Typography>{getDefaultDate(data.deadline)}</Typography>
           </Box>
         )}

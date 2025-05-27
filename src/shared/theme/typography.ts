@@ -122,7 +122,7 @@ Object.keys(typography).forEach((variant) => {
   if (variant) {
     const typoVariant = variant as keyof typeof TypoVariant;
     const variantStyles = typography[typoVariant];
-    // @ts-expect-error style generation type error (не понимаю как решить)
+    // @ts-expect-error style generation type error
     fontStyle[typoVariant] = css(variantStyles);
   }
 });

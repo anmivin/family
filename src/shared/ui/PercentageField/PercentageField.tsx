@@ -22,8 +22,6 @@ const PercentageField = ({ name, options, label, labelType, enableCreateOption }
     name: name,
   });
 
-  useEffect(() => console.log('errors', errors), [errors]);
-
   return (
     <>
       {fields.map((field, index) => (

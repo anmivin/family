@@ -5,7 +5,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Provider } from 'react-redux';
 import { setupStore } from '@stores/global.store';
 import ruLocale from 'date-fns/locale/ru';
-import '@theme/fonts/font.css';
+
 import { UserInit } from './userInit';
 import { BrowserRouter } from 'react-router-dom';
 import AbilityProvider from '../shared/ability/AbilityContext';

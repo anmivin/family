@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchUserInfo } from './users.fetchers';
+import { fetchUserInfo, fetchUserAbilities } from './users.fetchers';
 import { initialState, UserSliceProps } from './users.types';
 
 export const userSlice = createSlice({
@@ -21,7 +21,6 @@ export const userSlice = createSlice({
       state.pendingUserInfo = true;
     }),
       builder.addCase(fetchUserInfo.fulfilled, (state, action: PayloadAction<any>) => {
-        console.log('stroe', action);
         state.pendingUserInfo = false;
         state.errorUserInfo = '';
         state.userInfo = action.payload;
@@ -29,6 +28,19 @@ export const userSlice = createSlice({
       builder.addCase(fetchUserInfo.rejected, (state, action: PayloadAction<unknown>) => {
         state.pendingUserInfo = false;
         state.errorUserInfo = action.payload as string;
+      });
+
+    builder.addCase(fetchUserAbilities.pending, (state) => {
+      state.pendingAbilities = true;
+    }),
+      builder.addCase(fetchUserAbilities.fulfilled, (state, action: PayloadAction<any>) => {
+        state.pendingAbilities = false;
+        state.errorAbilities = null;
+        state.userInfo = action.payload;
+      }),
+      builder.addCase(fetchUserAbilities.rejected, (state, action: PayloadAction<unknown>) => {
+        state.pendingAbilities = false;
+        state.errorAbilities = action.payload as string;
       });
   },
 });

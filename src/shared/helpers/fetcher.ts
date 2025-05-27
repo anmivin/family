@@ -1,19 +1,15 @@
 import { axiosInstance } from '@api/axiosInstance';
-import { KeyType, DataType } from '../swr/SwrContext';
+import { KeyType, KinoKeyType, DataType, ParamType } from '@swr/SwrContext';
 import { components } from '@api/Api';
 
-export type DefaultFetcherProps<Key extends KeyType = KeyType> = {
-  url: Key;
-  options?: { params?: any; query?: any };
-};
+export type DefaultFetcherProps<T extends KeyType | KinoKeyType> = { url: T } & ParamType<T>;
 
-export const defaultSwrFetcher = async <Key extends KeyType>({
-  url,
-  options,
-}: DefaultFetcherProps<Key>): Promise<DataType<Key>> => {
-  const defaultOptions = { params: undefined, query: undefined };
-  const { params, query } = options || defaultOptions;
-  return axiosInstance.get(url as any, { params, query });
+export const defaultSwrFetcher = async <Key extends KeyType>(
+  props: DefaultFetcherProps<Key>
+): Promise<DataType<Key>> => {
+  const { url, ...rest } = props;
+
+  return (await axiosInstance.get(url as KeyType, rest)).response.data as DataType<Key>;
 };
 
 export const signIn = async (data: components['schemas']['LoginInputDto']) => {
@@ -29,12 +25,7 @@ export const createTask = async (data: components['schemas']['InputCreateTaskDto
   return response;
 };
 
-export const completeTask = async (data: string) => {
-  const response = await axiosInstance.patch('/tasks/{id}', undefined, { params: { id: data } });
-  return response;
-};
-
-export const updateTaskStatus = async (data: components['schemas']['InputEditTaskDto']) => {
-  const response = await axiosInstance.patch('/tasks/updateStatus', data);
+export const editTask = async (data: components['schemas']['InputEditTaskDto']) => {
+  const response = await axiosInstance.patch('/tasks/{id}', data, { params: { id: data.id } });
   return response;
 };
