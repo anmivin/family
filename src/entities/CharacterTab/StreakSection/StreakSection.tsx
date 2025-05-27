@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import { FireIcon, MedalIcon, CrownIcon } from '@ui/Icons';
 
 import StreakCard from '@ui/StreakCard';
-import { Paths } from '@constants/routes';
+import { Paths } from '@shared/constants/routes';
 
 const StreakSection = () => {
   return (

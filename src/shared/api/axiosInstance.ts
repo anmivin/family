@@ -7,13 +7,19 @@ const baseURL =
   import.meta.env.VITE_BACK_OR_MOCK === 'mock' ? import.meta.env.VITE_APP_URL : import.meta.env.VITE_BASE_URL;
 
 export const axios = Axios.create({
+  adapter: 'fetch',
   withCredentials: true,
   baseURL,
 });
 
-axios.interceptors.response.use((error) => {
-  return Promise.reject(error);
-});
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 const kinopoiskUrl = import.meta.env.VITE_KINOPOISK_BASE_URL;
 const token = import.meta.env.VITE_KINOPOISK_TOKEN;
@@ -31,7 +37,7 @@ kinoAxios.interceptors.request.use((value) => {
 
 kinoAxios.interceptors.response.use(
   (response) => {
-    return response.data;
+    return response;
   },
   (error) => {
     return Promise.reject(error);

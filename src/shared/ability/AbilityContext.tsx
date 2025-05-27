@@ -1,6 +1,6 @@
 import { FC, ReactNode, createContext, useCallback, useEffect } from 'react';
-import { components } from '@api/Api';
-import { useAppSelector } from '@stores/global.store';
+import { components } from '@shared/api/Api';
+import { useAppSelector } from '@shared/stores/global.store';
 
 type Crud = 'create' | 'read' | 'update' | 'delete';
 export interface AbilityProps<T extends Crud> {
@@ -17,7 +17,7 @@ export const AbilityContext = createContext<AbillityContextProps>({ ability: () 
 
 const AbilityProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const { userAbilities } = useAppSelector((state) => state.userSlice);
-  useEffect(() => console.log(userAbilities), [userAbilities]);
+  useEffect(() => console.log('userAbilities', userAbilities), [userAbilities]);
   const ability = useCallback(
     <T extends Crud>({ crud, can, not }: AbilityProps<T>) => {
       return not ? !userAbilities[crud].includes(can) : userAbilities[crud].includes(can);

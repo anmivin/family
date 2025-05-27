@@ -3,8 +3,8 @@ import { useMemo, useEffect } from 'react';
 import CharacterCard from '@entities/CharacterTab/CharacterCard';
 import StreakSection from '@entities/CharacterTab/StreakSection/StreakSection';
 
-import { useAppSelector } from '@stores/global.store';
-import useSwr from '@swr/useSwr';
+import { useAppSelector } from '@shared/stores/global.store';
+import useSwr from '@shared/swr/useSwr';
 
 const CharacterTab = () => {
   const { userInfo } = useAppSelector((state) => state.userSlice);

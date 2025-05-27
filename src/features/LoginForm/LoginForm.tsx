@@ -1,7 +1,7 @@
 import { TextField, Button, Box, Tooltip, InputAdornment, IconButton } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { LoginFormSchema, LoginFormValues } from './LoginForm.types';
-import { signIn, signUp } from '@helpers/fetcher';
+import { signIn, signUp } from '@shared/helpers/fetcher';
 import { useCallback, useMemo } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';

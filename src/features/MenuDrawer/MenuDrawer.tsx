@@ -1,6 +1,6 @@
 import DefaultDrawer from '@ui/Drawer';
-import { useAppSelector, useAppDispatch } from '@stores/global.store';
-import { setIsMenuDrawerOpen } from '@stores/modals/modals.store';
+import { useAppSelector, useAppDispatch } from '@shared/stores/global.store';
+import { setIsMenuDrawerOpen } from '@shared/stores/modals/modals.store';
 import { Link } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 const MenuDrawer = () => {

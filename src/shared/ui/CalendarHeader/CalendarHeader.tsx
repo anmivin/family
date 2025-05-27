@@ -1,6 +1,6 @@
 import { PickerValidDate } from '@mui/x-date-pickers';
 
-import { getMonthYear } from '@helpers/dates';
+import { getMonthYear } from '@shared/helpers/dates';
 import ChangeInterval from './ChangeInterval';
 import { addMonths } from 'date-fns';
 

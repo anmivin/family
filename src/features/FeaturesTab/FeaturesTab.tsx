@@ -2,10 +2,10 @@ import { Box, Typography } from '@mui/material';
 
 import ProgressBar from '@ui/ProgressBar';
 import AccordionState from '@ui/AccordionState';
-import { calcLevel, calcXpPerLevel } from '@helpers/calcLavel';
+import { calcLevel, calcXpPerLevel } from '@shared/helpers/calcLavel';
 
 import { IconMap } from './FeaturesTab.constants';
-import useSwr from '../../shared/swr/useSwr';
+import useSwr from '@shared/swr/useSwr';
 const FeaturesTab = () => {
   const { data: userFeatures } = useSwr({ url: '/characteristics/features/user' });
 

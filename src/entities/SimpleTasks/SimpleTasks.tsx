@@ -1,7 +1,7 @@
 import { addWeeks, eachDayOfInterval, endOfWeek, startOfWeek } from 'date-fns';
 import { useMemo, useState } from 'react';
 import { Box, TableBody, TableRow, TableCell, TableHead, Table, IconButton, Typography } from '@mui/material';
-import { getDayMonth } from '@helpers/dates';
+import { getDayMonth } from '@shared/helpers/dates';
 import { StarIcon, CoinIcon } from '@ui/Icons';
 import { ChangeInterval } from '@ui/CalendarHeader';
 const SimpleTasks = () => {

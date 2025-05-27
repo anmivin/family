@@ -1,5 +1,5 @@
 import { Fab, styled } from '@mui/material';
-import { PlusIcon } from '../Icons';
+import { PlusIcon } from '@ui/Icons';
 
 const StyledFab = styled(Fab)`
   position: fixed;

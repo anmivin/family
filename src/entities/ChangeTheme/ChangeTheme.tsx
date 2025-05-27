@@ -1,7 +1,7 @@
-import { themeColor } from '@theme/color';
-import { ThemeName } from '@theme/theme.constants';
+import { themeColor } from '@shared/theme/color';
+import { ThemeName } from '@shared/theme/theme.constants';
 import { Box } from '@mui/material';
-import { ColorModeContext } from '@theme/theme.provider';
+import { ColorModeContext } from '@shared/theme/theme.provider';
 import { useContext } from 'react';
 import FormSection from '@ui/FormSection';
 const ChangeTheme = () => {

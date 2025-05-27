@@ -1,10 +1,10 @@
 import { Box, Typography } from '@mui/material';
 import ProgressBar from '@ui/ProgressBar';
-import { setIsSkillFormOpen } from '@stores/modals/modals.store';
+import { setIsSkillFormOpen } from '@shared/stores/modals/modals.store';
 
-import { calcLevel, calcXpPerLevel } from '@helpers/calcLavel';
-import { useAppDispatch } from '@stores/global.store';
-import useSwr from '../../shared/swr/useSwr';
+import { calcLevel, calcXpPerLevel } from '@shared/helpers/calcLavel';
+import { useAppDispatch } from '@shared/stores/global.store';
+import useSwr from '@shared/swr/useSwr';
 
 const SkillsChart = () => {
   const { data: userSkills } = useSwr({ url: '/characteristics/skills/user' });

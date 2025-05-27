@@ -1,4 +1,4 @@
-import { components } from '@api/Api';
+import { components } from '@shared/api/Api';
 
 export const taskType = ({
   isActive,

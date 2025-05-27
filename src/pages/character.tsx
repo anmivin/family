@@ -1,15 +1,15 @@
-import PlusButton from '../shared/ui/PlusButton';
+import PlusButton from '@ui/PlusButton';
 import { Box } from '@mui/material';
-import Tabs from '../shared/ui/Tabs';
+import Tabs from '@ui/Tabs';
 
 import { useCallback, useState } from 'react';
 
 import SkillsChart from '@features/SkillsTab/SkillsChart';
 
 import FeaturesTab from '@features/FeaturesTab/FeaturesTab';
-import { setIsTaskFormOpen, setIsSkillFormOpen } from '@stores/modals/modals.store';
+import { setIsTaskFormOpen, setIsSkillFormOpen } from '@shared/stores/modals/modals.store';
 import CharacterTab from '@features/CharacterTab/CharacterTab';
-import { useAppDispatch } from '@stores/global.store';
+import { useAppDispatch } from '@shared/stores/global.store';
 
 const Character = () => {
   const [selectedTab, setSelectedTab] = useState(1);

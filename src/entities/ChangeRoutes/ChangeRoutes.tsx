@@ -1,5 +1,5 @@
 import { Box, Typography, Button } from '@mui/material';
-import { menuRoutes } from '@constants/routes';
+import { menuRoutes } from '@shared/constants/routes';
 import Draggable from 'react-draggable';
 import { useState, useRef } from 'react';
 import FormSection from '@ui/FormSection';

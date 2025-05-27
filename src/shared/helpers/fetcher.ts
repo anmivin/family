@@ -1,8 +1,8 @@
-import { axiosInstance } from '@api/axiosInstance';
-import { KeyType, KinoKeyType, DataType, ParamType } from '@swr/SwrContext';
-import { components } from '@api/Api';
+import { axiosInstance } from '@shared/api/axiosInstance';
+import { KeyType, DataType, ParamType } from '@shared/swr/SwrContext';
+import { components } from '@shared/api/Api';
 
-export type DefaultFetcherProps<T extends KeyType | KinoKeyType> = { url: T } & ParamType<T>;
+export type DefaultFetcherProps<T extends KeyType> = { url: T } & ParamType<T>;
 
 export const defaultSwrFetcher = async <Key extends KeyType>(
   props: DefaultFetcherProps<Key>

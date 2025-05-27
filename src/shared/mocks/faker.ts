@@ -1,4 +1,4 @@
-import { components, Difficulty, TaskStatus, TaskType } from '@api/Api';
+import { components, Difficulty, TaskStatus, TaskType } from '@shared/api/Api';
 import { faker } from '@faker-js/faker';
 
 const userTask: () => components['schemas']['OutputTaskDto'] & { id: string } = () => {

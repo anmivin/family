@@ -1,4 +1,4 @@
-import { calcXpPerLevel, calcLevel } from '@helpers/calcLavel';
+import { calcXpPerLevel, calcLevel } from '@shared/helpers/calcLavel';
 import { Box, Typography } from '@mui/material';
 import CharacterProgress from '@ui/CharacterProgress';
 import { StyledCard } from './CharacterCard.styled';

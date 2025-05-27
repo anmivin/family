@@ -1,11 +1,11 @@
 import DefaultDrawer from '@ui/Drawer';
 import PercentageField from '@ui/PercentageField/PercentageField';
-import { useAppSelector, useAppDispatch } from '@stores/global.store';
-import { setIsTaskFormOpen } from '@stores/modals/modals.store';
-import { setSelectedTask } from '@stores/tasks/tasks.store';
+import { useAppSelector, useAppDispatch } from '@shared/stores/global.store';
+import { setIsTaskFormOpen } from '@shared/stores/modals/modals.store';
+import { setSelectedTask } from '@shared/stores/tasks/tasks.store';
 import FormSection from '@ui/FormSection';
-import { Abilities, DayOfWeek, Difficulty, RepeatPeriod, TaskType } from '@api/Api';
-import { pluralizeString, getErrorMessage } from '@helpers/utils';
+import { Abilities, DayOfWeek, Difficulty, RepeatPeriod, TaskType } from '@shared/api/Api';
+import { pluralizeString, getErrorMessage } from '@shared/helpers/utils';
 import { useToast } from '@ui/Toast/ToastProvider';
 import {
   TextField,
@@ -23,16 +23,16 @@ import {
   Dialog,
   Tooltip,
 } from '@mui/material';
-import { Can, useCan } from '../../shared/ability/helpers';
-import { createTask } from '@helpers/fetcher';
-import { TaskDifficultyXP } from '@helpers/calcLavel';
+import { Can, useCan } from '@shared/ability/helpers';
+import { createTask } from '@shared/helpers/fetcher';
+import { TaskDifficultyXP } from '@shared/helpers/calcLavel';
 import { TaskFormProps, TaskFormValues, TaskFormSchema, XPTarget, PeriodLabels, DayLabels } from './TaskForm.types';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { useEffect, useMemo, useCallback, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 
-import useSwr from '@swr/useSwr';
+import useSwr from '@shared/swr/useSwr';
 
 const TaskForm = () => {
   const dispatch = useAppDispatch();
@@ -85,7 +85,7 @@ const TaskForm = () => {
   } = formMethods;
 
   const formValues = watch();
-
+  useEffect(() => console.log(errors, formValues), [errors, formValues]);
   useEffect(() => {
     reset(defaultValues);
   }, [defaultValues]);

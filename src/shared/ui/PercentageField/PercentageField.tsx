@@ -4,7 +4,6 @@ import { PlusIcon, CrossIcon } from '@ui/Icons';
 import { useFieldArray, useFormContext, Controller } from 'react-hook-form';
 
 import { PercentageFieldProps, ItemProps, getLabelType } from './PercentageField.types';
-import { useEffect } from 'react';
 
 const PercentageField = ({ name, options, label, labelType, enableCreateOption }: PercentageFieldProps) => {
   const {

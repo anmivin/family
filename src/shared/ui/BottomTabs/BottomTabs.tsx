@@ -2,7 +2,7 @@ import { Box, Button, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-import { useAppSelector } from '@stores/global.store';
+import { useAppSelector } from '@shared/stores/global.store';
 const StyledMenu = styled(Box)`
   background-color: ${({ theme }) => theme.color.primaryMain};
   position: fixed;

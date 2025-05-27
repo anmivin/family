@@ -1,8 +1,8 @@
 import DefaultDrawer from '@ui/Drawer';
 import PercentageField from '@ui/PercentageField/PercentageField';
-import { useAppSelector, useAppDispatch } from '@stores/global.store';
-import { setIsSkillFormOpen } from '@stores/modals/modals.store';
-import { setSelectedTask } from '@stores/tasks/tasks.store';
+import { useAppSelector, useAppDispatch } from '@shared/stores/global.store';
+import { setIsSkillFormOpen } from '@shared/stores/modals/modals.store';
+import { setSelectedTask } from '@shared/stores/tasks/tasks.store';
 
 import { TextField, Button, Box } from '@mui/material';
 

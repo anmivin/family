@@ -1,5 +1,5 @@
 import { object, string, mixed, number, date, boolean, array } from 'yup';
-import { Difficulty, RepeatPeriod, DayOfWeek } from '@api/Api';
+import { Difficulty, RepeatPeriod, DayOfWeek } from '@shared/api/Api';
 
 export enum XPTarget {
   Skill = 'Skill',
@@ -51,8 +51,8 @@ export interface TaskFormValues {
   habit?: boolean;
   important?: boolean;
   simple?: boolean;
-  repeat?: { period: RepeatPeriod; count: number; days?: DayOfWeek };
-  asignee?: { id: string; name: string };
+  repeat?: { period?: RepeatPeriod; count?: number; days?: DayOfWeek };
+  asignee?: { id?: string; name?: string };
 }
 
 export interface TaskFormProps {
@@ -76,12 +76,12 @@ export const TaskFormSchema = object({
   simple: boolean(),
   important: boolean(),
   repeat: object({
-    period: mixed<RepeatPeriod>().oneOf(Object.values(RepeatPeriod)).required(),
-    count: number().required(),
+    period: mixed<RepeatPeriod>().oneOf(Object.values(RepeatPeriod)),
+    count: number(),
     days: mixed<DayOfWeek>().oneOf(Object.values(DayOfWeek)),
   }).optional(),
   asignee: object({
-    id: string().required(),
-    name: string().required(),
+    id: string(),
+    name: string(),
   }).optional(),
 });

@@ -1,6 +1,6 @@
 import { DateCalendar, PickersDayProps, PickerValidDate } from '@mui/x-date-pickers';
 import { Box, styled } from '@mui/material';
-import { getDay } from '@helpers/dates';
+import { getDay } from '@shared/helpers/dates';
 
 import { useState } from 'react';
 

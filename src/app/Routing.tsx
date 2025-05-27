@@ -2,10 +2,10 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 import Error from '@pages/error';
 import Layout from './Layout';
-import { menuRoutes, Paths } from '@constants/routes';
+import { menuRoutes, Paths } from '@shared/constants/routes';
 import Login from '@pages/login';
 import Settings from '@pages/settings';
-import { useAppSelector } from '@stores/global.store';
+import { useAppSelector } from '@shared/stores/global.store';
 
 const Routing = () => {
   const { userInfo } = useAppSelector((state) => state.userSlice);

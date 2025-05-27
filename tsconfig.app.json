@@ -28,13 +28,7 @@
       "@features/*": ["./src/features/*"],
       "@entities/*": ["./src/entities/*"],
 
-      "@api/*": ["./src/shared/api/*"],
-      "@constants/*": ["./src/shared/constants/*"],
-      "@helpers/*": ["./src/shared/helpers/*"],
-      "@stores/*": ["./src/shared/stores/*"],
-      "@swr/*": ["./src/shared/swr/*"],
-      "@theme/*": ["./src/shared/theme/*"],
-      "@types/*": ["./src/shared/types/*"],
+      "@shared/*": ["./src/shared/*"],
       "@ui/*": ["./src/shared/ui/*"]
     }
   },

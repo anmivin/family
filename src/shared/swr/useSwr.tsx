@@ -1,13 +1,12 @@
 import { useState, useEffect, useCallback, useContext } from 'react';
-import { getErrorMessage } from '@helpers/utils';
-import { SwrContext, KeyType, KinoKeyType, DataType, ParamTypeFetched } from './SwrContext';
-import { defaultSwrFetcher } from '@helpers/fetcher';
+import { getErrorMessage } from '@shared/helpers/utils';
+import { SwrContext, KeyType, DataType, ParamTypeFetched } from './SwrContext';
+import { defaultSwrFetcher } from '@shared/helpers/fetcher';
 import { isEqual } from 'lodash';
 
-type FetchType<T extends KeyType | KinoKeyType> = { kinoFetch: T extends KinoKeyType ? true : false };
-export type UseSwrProps<T extends KeyType | KinoKeyType> = { url: T } & ParamTypeFetched<T> & FetchType<T>;
+export type UseSwrProps<T extends KeyType> = { url: T } & ParamTypeFetched<T>;
 
-interface ReturnType<T extends KeyType | KinoKeyType> {
+interface ReturnType<T extends KeyType> {
   data: DataType<T> | null;
   loading: boolean;
   error: string | null;
@@ -17,8 +16,8 @@ interface ReturnType<T extends KeyType | KinoKeyType> {
 const RETRY_DELAY = 3000;
 const MAX_RETRIES = 2;
 
-export const useSwr = <T extends KeyType | KinoKeyType>(props: UseSwrProps<T>): ReturnType<T> => {
-  const { url, kinoFetch, ...rest } = props;
+export const useSwr = <T extends KeyType>(props: UseSwrProps<T>): ReturnType<T> => {
+  const { url, ...rest } = props;
   const context = useContext(SwrContext);
   const [data, setData] = useState<DataType<T> | null>(null);
   const [loading, setLoading] = useState(false);
@@ -32,13 +31,10 @@ export const useSwr = <T extends KeyType | KinoKeyType>(props: UseSwrProps<T>): 
     context.set(url, { prevParams: rest });
     while (retries <= MAX_RETRIES) {
       try {
-        if (kinoFetch) {
-        } else {
-          const newData = await defaultSwrFetcher(props);
-        }
-
+        const newData = await defaultSwrFetcher(props);
         context.set(url, { data: newData, prevParams: rest });
         setData(newData);
+
         break;
       } catch (e) {
         retries++;

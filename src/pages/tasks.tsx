@@ -1,4 +1,4 @@
-import Tabs from '../shared/ui/Tabs';
+import Tabs from '@ui/Tabs';
 
 import HabitTable from '@entities/HabitTable/HabitTable';
 import SimpleTasks from '@entities/SimpleTasks/SimpleTasks';

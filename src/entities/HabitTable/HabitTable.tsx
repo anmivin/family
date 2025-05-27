@@ -2,7 +2,7 @@ import { groupBy, keyBy } from 'lodash';
 import { addWeeks, eachDayOfInterval, endOfWeek, format, getDaysInMonth, isSameDay, startOfWeek } from 'date-fns';
 import { useMemo, useState, useCallback } from 'react';
 import { Box, Typography, IconButton, TableBody, TableRow, TableCell, TableHead, Table, Checkbox } from '@mui/material';
-import { getDayMonth, getDefaultDate } from '@helpers/dates';
+import { getDayMonth, getDefaultDate } from '@shared/helpers/dates';
 import { ChangeInterval } from '@ui/CalendarHeader';
 import { CoinIcon } from '@ui/Icons';
 const HabitTable = () => {

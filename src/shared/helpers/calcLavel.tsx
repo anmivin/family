@@ -1,7 +1,7 @@
 import { differenceInDays } from 'date-fns';
 import { ReactNode } from 'react';
 import { StarOneIcon, StarTwoIcon, StarThreeIcon, StarFourIcon, StarFiveIcon } from '@ui/Icons';
-import { Difficulty } from '@api/Api';
+import { Difficulty } from '@shared/api/Api';
 /* Easy (10 XP)
 
 Make a to-do list for the day

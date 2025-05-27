@@ -3,17 +3,17 @@ import TaskCard from '@ui/TaskCard/TaskCard';
 import PlusButton from '@ui/PlusButton';
 import { debounce } from 'lodash';
 
-import { TaskType, TaskStatus } from '@api/Api';
+import { TaskType, TaskStatus } from '@shared/api/Api';
 
-import { useIntersectionObserver } from '@helpers/useIntersectionObserver';
+import { useIntersectionObserver } from '@shared/helpers/useIntersectionObserver';
 import { useState, useCallback, useMemo } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@stores/global.store';
-import useSwr from '@swr/useSwr';
+import { useAppDispatch, useAppSelector } from '@shared/stores/global.store';
+import useSwr from '@shared/swr/useSwr';
 
-import { setTaskTypes, setTaskStatus } from '@stores/tasks/tasks.store';
+import { setTaskTypes, setTaskStatus } from '@shared/stores/tasks/tasks.store';
 
-import { setIsTaskFormOpen } from '@stores/modals/modals.store';
+import { setIsTaskFormOpen } from '@shared/stores/modals/modals.store';
 const TasksTab = () => {
   const [limit, setLimit] = useState(10);
   const [ref, setRef] = useState<HTMLDivElement | null>(null);

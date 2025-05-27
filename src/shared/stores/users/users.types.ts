@@ -1,6 +1,6 @@
-import type { components } from '@api/Api';
+import type { components } from '@shared/api/Api';
 
-import { RoutesProps } from '@constants/routes';
+import { RoutesProps } from '@shared/constants/routes';
 
 export interface UserSliceProps {
   userInfo: components['schemas']['OutputUserDto'] | null;

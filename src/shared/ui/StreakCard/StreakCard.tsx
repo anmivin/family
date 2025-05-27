@@ -1,7 +1,7 @@
 import { StreakCardProps } from './StreakCard.types';
 import { StyledLink } from './StreakCard.styled';
 import { Typography, Box } from '@mui/material';
-import { Link } from 'react-router-dom';
+
 const StreakCard = ({ icon, name, value, link }: StreakCardProps) => {
   return (
     <StyledLink to={link}>

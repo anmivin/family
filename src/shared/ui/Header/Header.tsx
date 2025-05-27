@@ -1,8 +1,8 @@
 import { Box, IconButton, styled, Typography } from '@mui/material';
-import { useAppDispatch } from '@stores/global.store';
-import { setIsMenuDrawerOpen } from '@stores/modals/modals.store';
+import { useAppDispatch } from '@shared/stores/global.store';
+import { setIsMenuDrawerOpen } from '@shared/stores/modals/modals.store';
 
-import { menuRoutes } from '@constants/routes';
+import { menuRoutes } from '@shared/constants/routes';
 
 import { useLocation } from 'react-router-dom';
 import { BurgerIcon } from '@ui/Icons';

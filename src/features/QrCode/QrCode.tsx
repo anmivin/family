@@ -1,6 +1,6 @@
 import DefaultDrawer from '@ui/Drawer';
-import { useAppSelector, useAppDispatch } from '@stores/global.store';
-import { setIsQrCodeOpen } from '@stores/modals/modals.store';
+import { useAppSelector, useAppDispatch } from '@shared/stores/global.store';
+import { setIsQrCodeOpen } from '@shared/stores/modals/modals.store';
 import QRCode from 'react-qr-code';
 import { Button, useTheme } from '@mui/material';
 

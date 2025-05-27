@@ -1,4 +1,4 @@
-import { TaskType, TaskStatus } from '@api/Api';
+import { TaskType, TaskStatus } from '@shared/api/Api';
 export interface TasksSliceProps {
   selectedTaskId: string | null;
   taskStatus?: TaskStatus;
