@@ -175,13 +175,32 @@ export const defaultRouting = [
     key: Paths.calendar,
     order: 5,
   },
+  {
+    key: Paths.budget,
+    order: 6,
+  },
+  {
+    key: Paths.family,
+    order: 7,
+  },
+  {
+    key: Paths.menu,
+    order: 8,
+  },
+  {
+    key: Paths.household,
+    order: 9,
+  },
+  {
+    key: Paths.notes,
+    order: 10,
+  },
+  {
+    key: Paths.shopping,
+    order: 11,
+  },
+  {
+    key: Paths.settings,
+    order: 12,
+  },
 ];
-export const getRoutes = () => {
-  const storage = localStorage.getItem('routes');
-  const initialState: { key: string; order: number }[] = storage ? JSON.parse(storage) : defaultRouting;
-  return initialState
-    .sort((a, b) => (a.order > b.order ? 1 : -1))
-    .map((route) => menuRoutes.find((item) => item.link === route.key));
-};
-
-export const otherRoots = menuRoutes.filter((route) => !getRoutes().find((item) => item?.link === route.link));

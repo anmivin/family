@@ -1,5 +1,5 @@
 import { useMemo, useEffect } from 'react';
-
+import { IconMap } from '@features/FeaturesTab/FeaturesTab.constants';
 import CharacterCard from '@entities/CharacterTab/CharacterCard';
 import StreakSection from '@entities/CharacterTab/StreakSection/StreakSection';
 
@@ -16,7 +16,7 @@ const CharacterTab = () => {
     const arrayForSort = [...userFeatures];
     const feature = arrayForSort.sort((a, b) => (a.userXp < b.userXp ? 1 : -1))[0];
 
-    return { xp: feature.userXp, name: feature.name, color: feature.color };
+    return { xp: feature.userXp, name: feature.name, color: IconMap[feature.id].color };
   }, [userFeatures]);
 
   const bestSkill = useMemo(() => {

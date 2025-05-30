@@ -12,7 +12,7 @@ const MenuDrawer = () => {
   return (
     <DefaultDrawer anchor="right" open={isMenuDrawerOpen} onClose={onClose} width="260px">
       {otherPages.map((route) => (
-        <Link to={route.link} key={route.link} onClick={onClose} style={{ textDecoration: 'none' }}>
+        <Link to={route.link} key={route.link} onClick={onClose} style={{ textDecoration: 'none', color: 'black' }}>
           <Box display="flex" gap={2} alignItems="center">
             {route.icon}
             <Typography> {route.name}</Typography>

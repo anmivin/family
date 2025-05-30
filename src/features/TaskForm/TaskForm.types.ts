@@ -13,10 +13,6 @@ export const PeriodLabels: Record<
     labels: { zero?: string; one?: string; two?: string; few?: string; many?: string; other: string };
   }
 > = {
-  [RepeatPeriod.HOURLY]: {
-    textfieldLabel: 'Ежечасно',
-    labels: { one: 'час', two: 'часа', few: 'часа', other: 'часов' },
-  },
   [RepeatPeriod.DAILY]: { textfieldLabel: 'Ежедневно', labels: { one: 'день', two: 'дня', few: 'дня', other: 'дней' } },
   [RepeatPeriod.WEEKLY]: {
     textfieldLabel: 'Еженедельно',

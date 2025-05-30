@@ -1,95 +1,52 @@
-import { Box, Typography, Button } from '@mui/material';
-import { menuRoutes } from '@shared/constants/routes';
-import Draggable from 'react-draggable';
-import { useState, useRef } from 'react';
-import FormSection from '@ui/FormSection';
-
-// Styles
-const styles = {
-  item: {
-    padding: '10px',
-    border: '1px solid #ddd',
-    borderRadius: '4px',
-    cursor: 'move',
-    width: '100%',
-    textAlign: 'center',
-    boxSizing: 'border-box',
-  },
-};
-const ITEM_HEIGHT = 46;
+import { Box, Typography, Button, IconButton } from '@mui/material';
+import { useCallback, useState } from 'react';
+import { useLocalStorage } from '@shared/helpers/useLocalstorage';
+import { defaultRouting, menuRoutes, RoutesProps } from '@shared/constants/routes';
+import { ChevronDownIcon, ChevronUpIcon } from '@shared/ui/Icons';
+import { useAppSelector, useAppDispatch } from '@shared/stores/global.store';
+import { setMainPages, setOtherPages } from '@shared/stores/users/users.store';
 const ChangeRoutes = () => {
-  const [items, setItems] = useState(menuRoutes);
-
-  const draggedItemIndex = useRef(-1);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
-  const swapItems = (fromIndex, toIndex) => {
-    const newItems = [...items];
-    const [movedItem] = newItems.splice(fromIndex, 1);
-    newItems.splice(toIndex, 0, movedItem);
-    setItems(newItems);
+  const [value, setValue] = useLocalStorage<{ key: string; order: number }[]>('routes', defaultRouting);
+  const dispatch = useAppDispatch();
+  const { mainPages, otherPages } = useAppSelector((state) => state.userSlice);
+  const [items, setItems] = useState([...mainPages, ...otherPages]);
+  const changeRoutes = (item: RoutesProps, up?: boolean) => {
+    setItems((prev) => {
+      const copy = prev.slice(0);
+      const changedItemId = copy.indexOf(item);
+      const temp = copy[changedItemId];
+      copy[changedItemId] = copy[changedItemId + (up ? -1 : 1)];
+      copy[changedItemId + (up ? -1 : 1)] = temp;
+      return copy;
+    });
   };
-
-  const handleDragStart = (index: number) => {
-    draggedItemIndex.current = index;
-  };
-
-  const handleDrag = (e, data, itemId: number) => {
-    const draggedIndex = draggedItemIndex.current;
-    if (draggedIndex === -1 || !containerRef.current) return;
-    const containerRect = containerRef.current.getBoundingClientRect();
-    const mouseY = e.clientY - containerRect.top;
-    let targetIndex = draggedIndex;
-
-    // Calculate midpoints for next and previous items
-    const nextMidpoint = (draggedIndex + 1) * ITEM_HEIGHT + ITEM_HEIGHT / 2;
-    const prevMidpoint = draggedIndex * ITEM_HEIGHT + ITEM_HEIGHT / 2;
-    /*     console.log(nextMidpoint, prevMidpoint, mouseY); */
-    if (mouseY >= nextMidpoint) {
-      targetIndex = draggedIndex + 1;
-    } else if (mouseY <= prevMidpoint) {
-      targetIndex = draggedIndex - 1;
-    }
-
-    // Ensure targetIndex stays within bounds
-    targetIndex = Math.max(0, Math.min(targetIndex, items.length - 1));
-
-    if (targetIndex !== draggedIndex) {
-      console.log('swap', targetIndex, draggedIndex);
-      swapItems(draggedIndex, targetIndex);
-      draggedItemIndex.current = targetIndex;
-    }
-  };
-
+  const saveRoutes = useCallback(() => {
+    const newOrder = items.map((item, index) => ({ order: index + 1, key: item.link }));
+    setValue(newOrder);
+    dispatch(setMainPages(items.slice(0, 5)));
+    dispatch(setOtherPages(items.slice(5)));
+  }, [items]);
   return (
-    <FormSection title="настроить разделы">
-      <Box display="flex" flexDirection="column" gap={2} ref={containerRef}>
-        {items.map((route, index) => (
-          <Draggable
-            axis="y"
-            /*  bounds="parent" */
-            /*             onStart={() => handleDragStart(index)}
-            onDrag={handleDrag} 
-            onStop={handleDragStop}*/
-            key={index}
-            onStart={() => handleDragStart(index)}
-            onDrag={(e, data) => handleDrag(e, data, index)}
-            /* position={{ x: 0, y: index * ITEM_HEIGHT }} */
+    <Box display="flex" flexDirection="column" gap={2}>
+      {items.map((route, index) => (
+        <Box display="flex" gap={2}>
+          {route.icon}
 
-            /*     scale={1} */
-          >
-            <Box
-              display="flex"
-              gap={2}
-              sx={{ ...styles.item, backgroundColor: draggedItemIndex.current === index ? '#f0f0f0' : '#fff' }}
-            >
-              {route.icon}
-              <Typography>{route.name}</Typography>
-            </Box>
-          </Draggable>
-        ))}
-      </Box>
-    </FormSection>
+          <Typography>{route.name}</Typography>
+          {index !== items.length - 1 && (
+            <IconButton onClick={() => changeRoutes(route)}>
+              <ChevronDownIcon />
+            </IconButton>
+          )}
+          {index > 0 && (
+            <IconButton onClick={() => changeRoutes(route, true)}>
+              <ChevronUpIcon />
+            </IconButton>
+          )}
+        </Box>
+      ))}
+      <Button onClick={saveRoutes}>сохранить</Button>
+    </Box>
   );
 };
 

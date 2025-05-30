@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import ProgressBar from '@ui/ProgressBar';
 import AccordionState from '@ui/AccordionState';
 import { calcLevel, calcXpPerLevel } from '@shared/helpers/calcLavel';
-
+import { useEffect } from 'react';
 import { IconMap } from './FeaturesTab.constants';
 import useSwr from '@shared/swr/useSwr';
 const FeaturesTab = () => {
@@ -20,6 +20,7 @@ const FeaturesTab = () => {
     };
   };
 
+  useEffect(() => console.log(userFeatures), [userFeatures]);
   return (
     <Box>
       {userFeatures?.map((feature) => {
@@ -28,7 +29,7 @@ const FeaturesTab = () => {
           <AccordionState
             key={feature.id}
             collapsedNode={
-              <Box width="100%">
+              <Box width="100%" display="flex" flexDirection="column" gap={2}>
                 <Box display="flex" gap={2} alignItems="center">
                   {IconMap[feature.id].icon}
 
@@ -38,7 +39,7 @@ const FeaturesTab = () => {
                 <ProgressBar
                   value={featInfo.currentPercent}
                   subtitle={`${feature.userXp}/${featInfo.nextLevelXp}`}
-                  color={feature.color}
+                  color={IconMap[feature.id].color}
                 />
               </Box>
             }
@@ -58,7 +59,7 @@ const FeaturesTab = () => {
                     </Box>
                   }
                   subtitle={`${info.nextLevelXp}`}
-                  color={feature.color}
+                  color={IconMap[feature.id].color}
                 />
               );
             })}

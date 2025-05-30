@@ -1,10 +1,12 @@
-import { Accordion, AccordionDetails, Box, AccordionSummary } from '@mui/material';
+import { Accordion, AccordionDetails, Box, AccordionSummary, Typography } from '@mui/material';
 import { useState } from 'react';
 import { AccordionStateProps } from './AccordionState.types';
 import { ChevronDownIcon } from '@ui/Icons';
-import { StyledAccordionSummary } from './AccordionState.styled';
+import { StyledAccordionSummary, StyledAccordionDetails } from './AccordionState.styled';
 const AccordionState = ({ children, expandedNode, collapsedNode }: AccordionStateProps) => {
   const [expanded, setExpanded] = useState(false);
+  const collapsed =
+    typeof collapsedNode === 'string' ? <Typography variant="h6">{collapsedNode}</Typography> : collapsedNode;
   return (
     <Accordion expanded={expanded} onChange={() => setExpanded((prev) => !prev)}>
       <StyledAccordionSummary
@@ -14,9 +16,9 @@ const AccordionState = ({ children, expandedNode, collapsedNode }: AccordionStat
           </Box>
         }
       >
-        {expanded ? expandedNode : collapsedNode}
+        {expanded && expandedNode ? expandedNode : collapsed}
       </StyledAccordionSummary>
-      <AccordionDetails>{children}</AccordionDetails>
+      <StyledAccordionDetails>{children}</StyledAccordionDetails>
     </Accordion>
   );
 };

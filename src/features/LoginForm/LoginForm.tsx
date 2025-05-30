@@ -1,4 +1,4 @@
-import { TextField, Button, Box, Tooltip, InputAdornment, IconButton } from '@mui/material';
+import { TextField, Button, Box, Tooltip, InputAdornment, IconButton, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { LoginFormSchema, LoginFormValues } from './LoginForm.types';
 import { signIn, signUp } from '@shared/helpers/fetcher';
@@ -6,11 +6,15 @@ import { useCallback, useMemo } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 import { useState } from 'react';
-
+import { useAppDispatch } from '@shared/stores/global.store';
+import { fetchUserInfo } from '@shared/stores/users/users.fetchers';
+import { getErrorMessage } from '@shared/helpers/utils';
 const LoginForm = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const path = useLocation();
+  const dispatch = useAppDispatch();
   const defaultVals = useMemo(() => {
     const splittedPath = path.pathname.split('/');
     return {
@@ -34,10 +38,16 @@ const LoginForm = () => {
 
   const onSubmit = useCallback(
     async (data: LoginFormValues) => {
-      if (isSignUp) {
-        await signUp(data);
-      } else {
-        await signIn(data);
+      try {
+        if (isSignUp) {
+          await signUp(data);
+        } else {
+          await signIn(data);
+        }
+        dispatch(fetchUserInfo());
+      } catch (e) {
+        console.log(e);
+        setError(getErrorMessage(e));
       }
     },
     [isSignUp]
@@ -92,6 +102,7 @@ const LoginForm = () => {
           render={({ field }) => <TextField {...field} variant="standard" label="айди семьи" />}
         />
       )}
+      {!!error && <Typography variant="caption">{error}</Typography>}
       <Box alignSelf="center">
         <Button onClick={() => setIsSignUp((prev) => !prev)}>{isSignUp ? 'вход' : 'регистрация'}</Button>
         <Button onClick={handleSubmit(onSubmit)}>{isSignUp ? 'зарегистрироваться' : 'войти'}</Button>

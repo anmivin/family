@@ -125,12 +125,11 @@ const TaskForm = () => {
   }, [formValues]);
 
   const getTooltipTitle = useCallback(
-    (item: Difficulty) => {
-      const examples = TaskDifficultyXP[item].examples.join(', ');
+    (label: string, examples: string[]) => {
       return (
         <Box>
-          <Typography>{TaskDifficultyXP[item].label}</Typography>
-          <Typography>Например: {examples}</Typography>
+          <Typography>{label}</Typography>
+          <Typography>Например: {examples.join(', ')}</Typography>
         </Box>
       );
     },
@@ -335,10 +334,10 @@ const TaskForm = () => {
                 disabled={formValues.habit}
                 onChange={(_e, value) => setValue('difficulty', value)}
               >
-                {Object.values(Difficulty).map((item, index) => (
-                  <Tooltip title={getTooltipTitle(item)}>
+                {Object.entries(TaskDifficultyXP).map(([item, value], index) => (
+                  <Tooltip title={getTooltipTitle(value.label, value.examples)}>
                     <ToggleButton key={index} value={item}>
-                      {TaskDifficultyXP[item].icon}
+                      {value.icon}
                     </ToggleButton>
                   </Tooltip>
                 ))}

@@ -52,7 +52,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/users/{id}": {
+    "/users": {
         parameters: {
             query?: never;
             header?: never;
@@ -66,6 +66,22 @@ export interface paths {
         options?: never;
         head?: never;
         patch: operations["UsersController_update"];
+        trace?: never;
+    };
+    "/users/clearInfo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["UsersController_clearData"];
         trace?: never;
     };
     "/auth/me": {
@@ -152,6 +168,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/lists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ListsController_getUserLists"];
+        put?: never;
+        post: operations["ListsController_createList"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["ListsController_editList"];
+        trace?: never;
+    };
     "/lists/{type}": {
         parameters: {
             query?: never;
@@ -166,22 +198,6 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
-        trace?: never;
-    };
-    "/lists": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["ListsController_createList"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch: operations["ListsController_editList"];
         trace?: never;
     };
     "/characteristics/features/user": {
@@ -371,6 +387,13 @@ export interface components {
             update: components["schemas"]["Abilities"][];
             delete: components["schemas"]["Abilities"][];
         };
+        OutputListsDto: {
+            title: string;
+            description?: string;
+            /** Format: date-time */
+            deadline?: string;
+            id: string;
+        };
         ListItemDto: {
             id: string;
             title: string;
@@ -397,7 +420,7 @@ export interface components {
             /** Format: date-time */
             deadline?: string;
             listItems?: components["schemas"]["ListItemDto"][];
-            listId: string;
+            id: string;
         };
         FeatureBaseDto: {
             id: string;
@@ -412,7 +435,6 @@ export interface components {
             description: string;
             userXp: number;
             children: components["schemas"]["FeatureBaseDto"][];
-            color: string;
         };
         SkillXpDto: {
             id: string;
@@ -432,13 +454,11 @@ export interface components {
         CreateSkillDto: {
             name: string;
             description: string;
-            familyId: string;
             features: components["schemas"]["PercentDto"][];
         };
         EditSkillDto: {
             name?: string;
             description?: string;
-            familyId?: string;
             features?: components["schemas"]["PercentDto"][];
             id: string;
         };
@@ -454,6 +474,8 @@ export interface operations {
     TasksController_findTasksForUser: {
         parameters: {
             query: {
+                dateTo: string;
+                dateFrom: string;
                 offset: number;
                 limit: number;
                 type?: components["schemas"]["TaskType"];
@@ -584,9 +606,7 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                id: string;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -603,9 +623,7 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                id: string;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody: {
@@ -613,6 +631,23 @@ export interface operations {
                 "application/json": components["schemas"]["EditUserDto"];
             };
         };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UsersController_clearData: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
         responses: {
             200: {
                 headers: {
@@ -734,11 +769,7 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["LoginInputDto"];
-            };
-        };
+        requestBody?: never;
         responses: {
             /** @description Success */
             200: {
@@ -782,13 +813,11 @@ export interface operations {
             };
         };
     };
-    ListsController_getListsByType: {
+    ListsController_getUserLists: {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                type: string;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -798,7 +827,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["OutputListDto"];
+                    "application/json": components["schemas"]["OutputListsDto"][];
                 };
             };
         };
@@ -842,6 +871,27 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    ListsController_getListsByType: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                type: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OutputListDto"];
+                };
             };
         };
     };
@@ -890,11 +940,7 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": string;
-            };
-        };
+        requestBody?: never;
         responses: {
             200: {
                 headers: {
@@ -973,7 +1019,6 @@ export interface operations {
 export enum TaskType {
     TODO = "TODO",
     HABIT = "HABIT",
-    DAILY = "DAILY",
     SMALL = "SMALL"
 }
 export enum TaskStatus {
@@ -984,6 +1029,7 @@ export enum TaskStatus {
     ABANDONED = "ABANDONED"
 }
 export enum Difficulty {
+    SMALL = "SMALL",
     EASY = "EASY",
     MEDIUM = "MEDIUM",
     HARD = "HARD",
@@ -991,7 +1037,6 @@ export enum Difficulty {
     LEGENDARY = "LEGENDARY"
 }
 export enum RepeatPeriod {
-    HOURLY = "HOURLY",
     DAILY = "DAILY",
     WEEKLY = "WEEKLY",
     MONTHLY = "MONTHLY",

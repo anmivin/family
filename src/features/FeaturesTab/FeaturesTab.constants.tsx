@@ -26,102 +26,102 @@ import {
 } from '@ui/Icons';
 
 export const IconMap = {
-  art: {
+  feature_art: {
     color: 'green',
     icon: <StarRainbowIcon />,
   },
-  fine_arts: {
+  feature_fine_arts: {
     color: 'green',
     icon: <PaletteIcon />,
   },
-  applied_arts: {
+  feature_applied_arts: {
     color: 'green',
     icon: <PaletteCardsIcon />,
   },
-  performing_arts: {
+  feature_performing_arts: {
     color: 'green',
     icon: <MusicNoteIcon />,
   },
-  culture: {
+  feature_culture: {
     color: 'green',
     icon: <NotebookIcon />,
   },
 
-  social: {
+  feature_social: {
     color: 'orange',
     icon: <ShakehandIcon />,
   },
-  fun: {
+  feature_fun: {
     color: 'orange',
     icon: <ConfettiIcon />,
   },
-  networking: {
+  feature_networking: {
     color: 'orange',
     icon: <ShareCircleIcon />,
   },
-  communication: {
+  feature_communication: {
     color: 'orange',
     icon: <DialogBulbIcon />,
   },
-  health: {
+  feature_health: {
     color: 'red',
     icon: <ThermometrIcon />,
   },
-  physical_health: {
+  feature_physical_health: {
     color: 'red',
     icon: <NotebookIcon />,
   },
-  mental_health: {
+  feature_mental_health: {
     color: 'red',
     icon: <MeditationIcon />,
   },
-  beauty: {
+  feature_beauty: {
     color: 'violet',
     icon: <MirrorIcon />,
   },
-  body: {
+  feature_body: {
     color: 'violet',
     icon: <DumbbellIcon />,
   },
-  aethetic: {
+  feature_aethetic: {
     color: 'violet',
     icon: <PerfumeIcon />,
   },
 
-  science: {
+  feature_science: {
     color: 'blue',
     icon: <AcademicCapIcon />,
   },
-  human_science: {
+  feature_human_science: {
     color: 'blue',
     icon: <MasksIcon />,
   },
-  technical_science: {
+  feature_technical_science: {
     color: 'blue',
     icon: <CodeIcon />,
   },
-  languages: {
+  feature_languages: {
     color: 'blue',
     icon: <GlobusIcon />,
   },
-  erudition: {
+  feature_erudition: {
     color: 'blue',
     icon: <RulePencilIcon />,
   },
 
-  household: {
+  feature_household: {
     color: 'yellow',
     icon: <GarageIcon />,
   },
-  foraging: {
+  feature_foraging: {
     color: 'yellow',
     icon: <LeafIcon />,
   },
-  culinary: {
+  feature_culinary: {
     color: 'yellow',
     icon: <ChiefHatIcon />,
   },
-  homekeeping: {
+  feature_homekeeping: {
     color: 'yellow',
     icon: <HammerIcon />,
   },

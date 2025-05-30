@@ -29,3 +29,8 @@ export const editTask = async (data: components['schemas']['InputEditTaskDto']) 
   const response = await axiosInstance.patch('/tasks/{id}', data, { params: { id: data.id } });
   return response;
 };
+
+export const createSkill = async (data: components['schemas']['CreateSkillDto']) => {
+  const response = await axiosInstance.post('/characteristics/skills', data);
+  return response;
+};

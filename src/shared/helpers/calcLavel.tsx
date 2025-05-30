@@ -83,9 +83,9 @@ Create a comprehensive and widely acclaimed documentary or film
 
 */
 
-export const TaskDifficultyXP: Record<
-  Difficulty,
-  { xp: number; label: string; time: number; examples: string[]; icon: ReactNode }
+export const TaskDifficultyXP: Omit<
+  Record<Difficulty, { xp: number; label: string; time: number; examples: string[]; icon: ReactNode }>,
+  Difficulty.SMALL
 > = {
   [Difficulty.EASY]: {
     xp: 10,
@@ -158,9 +158,10 @@ const XP_BASE = 100;
 
 export const calcXpPerLevel = (level: number) => XP_BASE * Math.pow(level, 2);
 export const calcLevel = (xp: number) => Math.floor(Math.sqrt(xp / 100));
-export const calcEarnedXp = (difficulty: Difficulty, prevEarnedXP: Date) => {
+/* export const calcEarnedXp = (difficulty: Difficulty, prevEarnedXP: Date) => {
   const XP_RATE_BASE = TaskDifficultyXP[difficulty].xp;
   const TIME_PASSED = differenceInDays(new Date(), prevEarnedXP) / 10;
   const XP_MULTIPLIER = 1 - TIME_PASSED;
   return XP_RATE_BASE * (XP_MULTIPLIER < 0.25 ? 0.25 : XP_MULTIPLIER);
 };
+ */

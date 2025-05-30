@@ -3,24 +3,27 @@ import PercentageField from '@ui/PercentageField/PercentageField';
 import { useAppSelector, useAppDispatch } from '@shared/stores/global.store';
 import { setIsSkillFormOpen } from '@shared/stores/modals/modals.store';
 import { setSelectedTask } from '@shared/stores/tasks/tasks.store';
-
+import { useToast } from '@shared/ui/Toast/ToastProvider';
 import { TextField, Button, Box } from '@mui/material';
-
-import { TaskFormValues, TaskFormSchema } from './SkillForm.types';
+import { createSkill } from '@shared/helpers/fetcher';
+import { SkillFormValues, SkillFormSchema } from './SkillForm.types';
 
 import { useEffect, useMemo } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
-import useSwr from '../../shared/swr/useSwr';
+import useSwr from '@shared/swr/useSwr';
+import { getErrorMessage } from '@shared/helpers/utils';
 
 const SkillForm = () => {
   const { data: featureList } = useSwr({ url: '/characteristics/features/user' });
+  const { mutate } = useSwr({ url: '/characteristics/skills/user' });
   const dispatch = useAppDispatch();
   const onClose = () => {
     dispatch(setIsSkillFormOpen(false));
     dispatch(setSelectedTask(null));
   };
 
+  const { successToast, errorToast } = useToast();
   const { selectedSkill } = useAppSelector((state) => state.listSlice);
 
   const { isSkillFormOpen } = useAppSelector((state) => state.modalsSlice);
@@ -38,8 +41,8 @@ const SkillForm = () => {
     };
   }, [selectedSkill]);
 
-  const formMethods = useForm<TaskFormValues>({
-    resolver: yupResolver(TaskFormSchema),
+  const formMethods = useForm<SkillFormValues>({
+    resolver: yupResolver(SkillFormSchema),
     defaultValues,
   });
 
@@ -58,7 +61,20 @@ const SkillForm = () => {
     reset(defaultValues);
   }, [defaultValues]);
 
-  const onSubmit = handleSubmit((data) => {});
+  const onSubmit = handleSubmit((data) => {
+    try {
+      createSkill({
+        ...data,
+        description: data.description ?? '',
+        features: data.features.map((item) => ({ id: item.item.id, percent: item.percent })),
+      });
+      successToast('Навык создан');
+      onClose();
+      mutate();
+    } catch (e) {
+      errorToast(getErrorMessage(e));
+    }
+  });
 
   return (
     <DefaultDrawer
@@ -92,7 +108,12 @@ const SkillForm = () => {
         name="description"
         render={({ field }) => <TextField {...field} rows={4} variant="standard" label="Описание" />}
       />
-      <PercentageField name="features" options={featureList ?? []} label="Характеристика" labelType="feminine" />
+      <PercentageField
+        name="features"
+        options={(featureList ?? []).flatMap((item) => item.children)}
+        label="Характеристика"
+        labelType="feminine"
+      />
     </DefaultDrawer>
   );
 };

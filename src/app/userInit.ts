@@ -2,14 +2,12 @@ import { FC, ReactNode, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from '@shared/stores/global.store';
-import { setMainPages, setOtherPages } from '@shared/stores/users/users.store';
+
 import { fetchUserInfo } from '@shared/stores/users/users.fetchers';
-import { useLocalStorage } from '@shared/helpers/useLocalstorage';
-import { defaultRouting, menuRoutes } from '@shared/constants/routes';
 
 export const UserInit: FC<{ children: ReactNode }> = ({ children }) => {
   const { userInfo } = useAppSelector((state) => state.userSlice);
-  const [value, setValue] = useLocalStorage<{ key: string; order: number }[]>('routes', defaultRouting);
+
   const [isInit, setInit] = useState(false);
   const dispatch = useAppDispatch();
   const router = useNavigate();
@@ -32,20 +30,6 @@ export const UserInit: FC<{ children: ReactNode }> = ({ children }) => {
       }
     }
   }, [isInit, userInfo]);
-
-  useEffect(() => {
-    const mainPages = value
-      .sort((a, b) => (a.order > b.order ? 1 : -1))
-      .map((route) => menuRoutes.find((item) => item.link === route.key))
-      .filter((item) => !!item);
-
-    const otherPages = menuRoutes
-      .filter((route) => !mainPages.find((item) => item?.link === route.link))
-      .filter((item) => !!item);
-    dispatch(setMainPages(mainPages));
-    dispatch(setOtherPages(otherPages));
-    console.log(mainPages, otherPages);
-  }, [value]);
 
   return isInit ? children : null;
 };

@@ -1,12 +1,12 @@
 import { object, string, number, array } from 'yup';
 
-export interface TaskFormValues {
+export interface SkillFormValues {
   name: string;
   description?: string;
   features: { item: { id: string; name: string }; percent: number }[];
 }
 
-export const TaskFormSchema = object({
+export const SkillFormSchema = object({
   name: string().required('обязательно'),
   description: string(),
   features: array()
