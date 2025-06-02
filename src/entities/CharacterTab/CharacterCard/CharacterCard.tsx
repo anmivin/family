@@ -8,7 +8,16 @@ import { useMemo } from 'react';
 import ProgressBar from '@ui/ProgressBar';
 import { ColorType } from '@shared/ui/ProgressBar/ProgressBar.types';
 
-const CharacterCard = ({ name, xp, gold, bestFeature, bestSkill, level }: CharacterCardProps) => {
+const CharacterCard = ({
+  name,
+  xp,
+  gold,
+  bestFeature,
+  bestSkill,
+  level,
+  onFeatureClick,
+  onSkillClick,
+}: CharacterCardProps) => {
   const nextLevelXp = calcXpPerLevel((level?.level ?? 0) + 1);
 
   const bestFeatureInfo = useMemo(() => {
@@ -54,6 +63,7 @@ const CharacterCard = ({ name, xp, gold, bestFeature, bestSkill, level }: Charac
         <Typography>Сильнейшая черта:</Typography>
         {!!bestFeatureInfo && (
           <ProgressBar
+            onClick={onFeatureClick}
             value={bestFeatureInfo.currentPercent}
             subtitle={`${bestFeature?.name}: ${bestFeatureInfo.currentLevel}lvl.`}
             color={bestFeature?.color as ColorType}
@@ -63,6 +73,7 @@ const CharacterCard = ({ name, xp, gold, bestFeature, bestSkill, level }: Charac
         <Typography>Сильнейший навык:</Typography>
         {!!bestSkillInfo && (
           <ProgressBar
+            onClick={onSkillClick}
             value={bestSkillInfo.currentPercent}
             subtitle={`${bestSkill?.name}: ${bestSkillInfo.currentLevel}lvl.`}
           />

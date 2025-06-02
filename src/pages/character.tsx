@@ -30,7 +30,9 @@ const Character = () => {
         onChange={setSelectedTab}
       />
       <Box display="flex" flexDirection="column" gap={2} p={2}>
-        {selectedTab === 1 && <CharacterTab />}
+        {selectedTab === 1 && (
+          <CharacterTab onSkillClick={() => setSelectedTab(3)} onFeatureClick={() => setSelectedTab(2)} />
+        )}
         {selectedTab === 2 && <FeaturesTab />}
         {selectedTab === 3 && <SkillsChart />}
         <PlusButton onOpen={onOpen} />

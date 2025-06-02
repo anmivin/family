@@ -6,4 +6,5 @@ export interface ProgressBarProps {
   title?: ReactNode;
   subtitle?: string;
   color?: ColorType;
+  onClick?: () => void;
 }

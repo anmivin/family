@@ -6,7 +6,11 @@ import StreakSection from '@entities/CharacterTab/StreakSection/StreakSection';
 import { useAppSelector } from '@shared/stores/global.store';
 import useSwr from '@shared/swr/useSwr';
 
-const CharacterTab = () => {
+interface CharacterTabProps {
+  onSkillClick: () => void;
+  onFeatureClick: () => void;
+}
+const CharacterTab = ({ onSkillClick, onFeatureClick }: CharacterTabProps) => {
   const { userInfo } = useAppSelector((state) => state.userSlice);
   const { data: userFeatures } = useSwr({ url: '/characteristics/features/user' });
   const { data: userSkills } = useSwr({ url: '/characteristics/skills/user' });
@@ -28,7 +32,15 @@ const CharacterTab = () => {
   }, [userSkills]);
   return (
     <>
-      {userInfo && <CharacterCard {...userInfo} bestFeature={bestFeature} bestSkill={bestSkill} />}
+      {userInfo && (
+        <CharacterCard
+          {...userInfo}
+          bestFeature={bestFeature}
+          bestSkill={bestSkill}
+          onSkillClick={onSkillClick}
+          onFeatureClick={onFeatureClick}
+        />
+      )}
       <StreakSection />
     </>
   );
