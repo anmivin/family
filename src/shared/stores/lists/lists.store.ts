@@ -15,7 +15,6 @@ export const listSlice = createSlice({
       state.pendingMovieList = true;
     }),
       builder.addCase(fetchKino.fulfilled, (state, action: PayloadAction<any>) => {
-        console.log('reducer', action);
         state.pendingMovieList = false;
         state.errorMovieList = '';
         state.movieList = action.payload;

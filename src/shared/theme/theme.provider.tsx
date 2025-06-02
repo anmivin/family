@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useMemo } from 'react';
+import { ReactNode, createContext, useCallback, useMemo } from 'react';
 import { getTheme } from './themeVariants';
 import { GlobalStyles } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
@@ -9,24 +9,24 @@ import { Theme } from './theme.types';
 import '@shared/theme/fonts/font.css';
 
 export const ColorModeContext = createContext({
+  mode: ThemeName,
   changeColorMode: (_: ThemeName) => {},
 });
 
 const ThemeColorModeProvider = ({ children }: { children: ReactNode }) => {
-  const [mode, setMode] = useLocalStorage<ThemeName>('themeMode', ThemeName._2);
+  const [mode, setMode] = useLocalStorage<ThemeName>('themeMode', ThemeName.BabushkasHearth);
 
-  const colorMode = useMemo(
-    () => ({
-      changeColorMode: (newMode: ThemeName) => {
-        setMode(newMode);
-      },
-    }),
+  const changeColorMode = useCallback(
+    (newMode: ThemeName) => {
+      setMode(newMode);
+    },
+
     [mode, setMode]
   );
 
   const currentTheme: Theme = useMemo(() => getTheme(mode), [mode]);
   return (
-    <ColorModeContext.Provider value={colorMode}>
+    <ColorModeContext.Provider value={{ mode, changeColorMode }}>
       <ThemeProvider theme={currentTheme}>{children}</ThemeProvider>
       <GlobalStyles styles={globalStyles(currentTheme)} />
     </ColorModeContext.Provider>

@@ -98,7 +98,6 @@ const Achievements = () => {
       neutralLight: '#FFF3E0',
       neutralMid: '#F5E6DA',
       neutralDark: '#A17857',
-      textPrimary: '#1A1A1A',
       textSecondary: '#666666',
     },
     tsaristGold: {
@@ -108,7 +107,6 @@ const Achievements = () => {
       neutralLight: '#FFFFF0',
       neutralMid: '#F9F4E8',
       neutralDark: '#4A4A4A',
-      textPrimary: '#111111',
       textSecondary: '#666666',
     },
     sovietMinimal: {
@@ -118,7 +116,6 @@ const Achievements = () => {
       neutralLight: '#F2F2F2',
       neutralMid: '#D9D9D9',
       neutralDark: '#333333',
-      textPrimary: '#000000',
       textSecondary: '#777777',
     },
     forestSpirit: {
@@ -128,7 +125,6 @@ const Achievements = () => {
       neutralLight: '#F8F4E3',
       neutralMid: '#E8E2D9',
       neutralDark: '#5C4D3D',
-      textPrimary: '#1A1A1A',
       textSecondary: '#666666',
     },
     midnightCastle: {
@@ -138,7 +134,6 @@ const Achievements = () => {
       neutralLight: '#E6E6E6',
       neutralMid: '#CCCCCC',
       neutralDark: '#1A1A1A',
-      textPrimary: '#FFFFFF',
       textSecondary: '#AAAAAA',
     },
     sunriseMotivator: {
@@ -148,7 +143,6 @@ const Achievements = () => {
       neutralLight: '#FFFFFF',
       neutralMid: '#F9F9F9',
       neutralDark: '#333333',
-      textPrimary: '#000000',
       textSecondary: '#777777',
     },
     candyChaos: {
@@ -158,7 +152,6 @@ const Achievements = () => {
       neutralLight: '#FFFACD',
       neutralMid: '#FFE5F5',
       neutralDark: '#5A2A66',
-      textPrimary: '#2A0040',
       textSecondary: '#996699',
     },
     arcticChill: {
@@ -168,7 +161,6 @@ const Achievements = () => {
       neutralLight: '#F0F4F8',
       neutralMid: '#DDE6ED',
       neutralDark: '#333F48',
-      textPrimary: '#000000',
       textSecondary: '#777777',
     },
     autumnHarvest: {
@@ -178,7 +170,6 @@ const Achievements = () => {
       neutralLight: '#F5DEB3',
       neutralMid: '#EEDDBB',
       neutralDark: '#7B5B3E',
-      textPrimary: '#222222',
       textSecondary: '#666666',
     },
     pixelLegends: {
@@ -187,7 +178,6 @@ const Achievements = () => {
       accent: '#FF3333', // Pixel Red
       neutralLight: '#F0F0F0',
       neutralMid: '#CCCCCC',
-      neutralDark: '#111111',
       textPrimary: '#FFFFFF',
       textSecondary: '#999999',
     },
@@ -198,7 +188,6 @@ const Achievements = () => {
       neutralLight: '#1E1E1E',
       neutralMid: '#2D2D2D',
       neutralDark: '#111111',
-      textPrimary: '#FFFFFF',
       textSecondary: '#AAAAAA',
     },
     teaTidy: {
@@ -208,7 +197,6 @@ const Achievements = () => {
       neutralLight: '#FAF9F6',
       neutralMid: '#F5F1EC',
       neutralDark: '#5A3E36',
-      textPrimary: '#1A1A1A',
       textSecondary: '#666666',
     },
     theLostSock: {
@@ -218,7 +206,6 @@ const Achievements = () => {
       neutralLight: '#EAEAEA',
       neutralMid: '#D0D0D0',
       neutralDark: '#333333',
-      textPrimary: '#111111',
       textSecondary: '#777777',
     },
   };

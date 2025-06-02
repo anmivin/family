@@ -134,75 +134,31 @@ export const commonColors = {
   dark: 'rgba(0, 0, 0, 1)',
 
   //babushka
-  autumn: '#a52a2a',
-  tan: '#d2b48c',
   oldlace: '#fff3e0',
-  ochre: '#cc7722',
   //tsarist
-  royalblue: '#2c2a6e',
-  yellow: '#ffb700',
   ivory: 'fffff0',
-  madder: '#9e1b34',
   //soviet
-  jet: '#333333',
   cardinal: '#C91F37',
-  whitesmoke: '#F2F2F2',
-  gold: '#FFD700',
   //forest
-  forest: '#228B22',
-  cambridge: '#A8C3A1',
   cosmiclatte: '#F8F4E3',
-  amber: '#FFBF00',
   //midnight
-  purple: '#2E1B3B',
-  french: '#C0C6D4',
   jet1: '#2D2D2D',
-  oark: '#8B0000',
   //sunrise
-  orange: '#FFA500',
-  sky: '#87CEEB',
   white: '#FFFFFF',
-  hotpink: '#FF69B4',
   //candy
-  rosepink: '#FF66CC',
-  teal: '#008080',
   lemon: '#FFFACD',
-  chartreus: '#7FFF00',
   //arctic
-  phototblue: '#A8DADC',
-  gray: '#76787A',
   antiflash: '#F0F4F8',
-  red: '#E63946',
-
   //autumn
-  burntorange: '#B85B1E',
-  sunset: '#F2C47E',
   seashell: '#FDF6EE',
-  ferngreen: '#5A7F5A',
-
   //pixel
-  hookergreen: '#3B755F',
-  uclablue: '#4A789C',
   night: '#111111',
-  vermilion: '#FF3333',
-
   //frontier
-  night1: '#121212',
-  violet: '#7F00FF',
   eerieblack: '#1E1E1E',
-  bittersweet: '#FF6F61',
-
   //tea
-  teagreen: '#BCD2B0',
-  parchement: '#F8EED2',
   babypowder: '#FAF9F6',
-  claret: '#8E2541',
-
   //sock
-  daysgray: '#4D4D4D',
-  whitesmoke1: '#F2F2F2',
   platinum: '#EAEAEA',
-  arangepeel: '#FFA000',
 } as const;
 
 interface ThemeColor {
@@ -223,332 +179,230 @@ interface ThemeColor {
   accentLight: string;
 }
 export const themeColor: Record<ThemeName, ThemeColor> = {
-  [ThemeName._1]: {
-    primaryMain: commonColors.blue400,
-    primaryDark: commonColors.blue500,
-    primaryLight: commonColors.blue300,
-
-    secondaryMain: commonColors.blue200,
-    secondaryDark: commonColors.blue300,
-    secondaryLight: commonColors.blue100,
-
-    textMain: commonColors.dark900,
-    textDark: commonColors.pink900,
-    textLight: commonColors.dark900,
-
-    accentMain: commonColors.pink400,
-    accentDark: commonColors.pink500,
-    accentLight: commonColors.pink300,
-  },
-  [ThemeName._2]: {
-    primaryMain: commonColors.green400,
-    primaryDark: commonColors.green500,
-    primaryLight: commonColors.green300,
-
-    secondaryMain: commonColors.green200,
-    secondaryDark: commonColors.green300,
-    secondaryLight: commonColors.green100,
-
-    textMain: commonColors.dark900,
-    textDark: commonColors.violet900,
-    textLight: commonColors.dark600,
-
-    accentMain: commonColors.violet400,
-    accentDark: commonColors.violet600,
-    accentLight: commonColors.violet200,
-  },
-  [ThemeName._3]: {
-    primaryMain: commonColors.marine800,
-    primaryDark: commonColors.marine900,
-    primaryLight: commonColors.marine700,
-
-    secondaryMain: commonColors.dark800,
-    secondaryDark: commonColors.dark900,
-    secondaryLight: commonColors.dark500,
-
-    textMain: commonColors.light900,
-    textDark: commonColors.light900,
-    textLight: commonColors.light900,
-
-    accentMain: commonColors.marine600,
-    accentDark: commonColors.marine600,
-    accentLight: commonColors.marine200,
-  },
-  [ThemeName._4]: {
-    primaryMain: commonColors.blue100,
-    primaryDark: commonColors.blue100,
-    primaryLight: commonColors.blue100,
-
-    secondaryMain: commonColors.blue300,
-    secondaryDark: commonColors.blue300,
-    secondaryLight: commonColors.blue300,
-
-    textMain: commonColors.dark900,
-    textDark: commonColors.dark900,
-    textLight: commonColors.dark900,
-
-    accentMain: commonColors.blue700,
-    accentDark: commonColors.blue700,
-    accentLight: commonColors.blue700,
-  },
-  [ThemeName._5]: {
-    primaryMain: commonColors.blue300,
-    primaryDark: commonColors.blue300,
-    primaryLight: commonColors.blue300,
-
-    secondaryMain: commonColors.blue300,
-    secondaryDark: commonColors.blue300,
-    secondaryLight: commonColors.blue300,
-
-    textMain: commonColors.dark900,
-    textDark: commonColors.dark900,
-    textLight: commonColors.dark900,
-
-    accentMain: commonColors.blue700,
-    accentDark: commonColors.blue700,
-    accentLight: commonColors.blue700,
-  },
-  [ThemeName._6]: {
-    primaryMain: commonColors.blue300,
-    primaryDark: commonColors.blue300,
-    primaryLight: commonColors.blue300,
-
-    secondaryMain: commonColors.blue300,
-    secondaryDark: commonColors.blue300,
-    secondaryLight: commonColors.blue300,
-
-    textMain: commonColors.blue300,
-    textDark: commonColors.blue300,
-    textLight: commonColors.blue300,
-
-    accentMain: commonColors.blue300,
-    accentDark: commonColors.blue300,
-    accentLight: commonColors.blue300,
-  },
   [ThemeName.BabushkasHearth]: {
-    primaryMain: commonColors.autumn,
+    primaryMain: '#a52a2a',
     primaryDark: commonColors.blue300,
     primaryLight: commonColors.blue300,
 
-    secondaryMain: commonColors.tan,
+    secondaryMain: '#d2b48c',
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue300,
 
-    textMain: commonColors.blue300,
+    textMain: '#1A1A1A',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
-    accentMain: commonColors.ochre,
+    accentMain: '#cc7722',
     accentDark: commonColors.blue300,
     accentLight: commonColors.blue300,
   },
   [ThemeName.TsaristGold]: {
-    primaryMain: commonColors.royalblue,
+    primaryMain: '#2c2a6e',
     primaryDark: commonColors.blue300,
     primaryLight: commonColors.blue300,
 
-    secondaryMain: commonColors.yellow,
+    secondaryMain: '#ffb700',
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue300,
 
-    textMain: commonColors.blue300,
+    textMain: '#111111',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
-    accentMain: commonColors.madder,
+    accentMain: '#9e1b34',
     accentDark: commonColors.blue300,
     accentLight: commonColors.blue300,
   },
   [ThemeName.SovietMinimal]: {
-    primaryMain: commonColors.jet,
+    primaryMain: '#333333',
     primaryDark: commonColors.blue300,
     primaryLight: commonColors.blue300,
 
-    secondaryMain: commonColors.cardinal,
+    secondaryMain: '#C91F37',
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue300,
 
-    textMain: commonColors.blue300,
+    textMain: '#000000',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
-    accentMain: commonColors.gold,
+    accentMain: '#FFD700',
     accentDark: commonColors.blue300,
     accentLight: commonColors.blue300,
   },
   [ThemeName.ForestSpirit]: {
-    primaryMain: commonColors.forest,
+    primaryMain: '#228B22',
     primaryDark: commonColors.blue300,
     primaryLight: commonColors.blue300,
 
-    secondaryMain: commonColors.cambridge,
+    secondaryMain: '#A8C3A1',
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue300,
 
-    textMain: commonColors.blue300,
+    textMain: '#1A1A1A',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
-    accentMain: commonColors.amber,
+    accentMain: '#FFBF00',
     accentDark: commonColors.blue300,
     accentLight: commonColors.blue300,
   },
   [ThemeName.MidnightCastle]: {
-    primaryMain: commonColors.purple,
+    primaryMain: '#2E1B3B',
     primaryDark: commonColors.blue300,
     primaryLight: commonColors.blue300,
 
-    secondaryMain: commonColors.french,
+    secondaryMain: '#C0C6D4',
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue300,
 
-    textMain: commonColors.blue300,
+    textMain: '#FFFFFF',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
-    accentMain: commonColors.oark,
+    accentMain: '#8B0000',
     accentDark: commonColors.blue300,
     accentLight: commonColors.blue300,
   },
   [ThemeName.SunriseMotivator]: {
-    primaryMain: commonColors.orange,
+    primaryMain: '#FFA500',
     primaryDark: commonColors.blue300,
     primaryLight: commonColors.blue300,
 
-    secondaryMain: commonColors.sky,
+    secondaryMain: '#87CEEB',
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue300,
 
-    textMain: commonColors.blue300,
+    textMain: '#000000',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
-    accentMain: commonColors.hotpink,
+    accentMain: '#FF69B4',
     accentDark: commonColors.blue300,
     accentLight: commonColors.blue300,
   },
   [ThemeName.CandyChaos]: {
-    primaryMain: commonColors.rosepink,
+    primaryMain: '#FF66CC',
     primaryDark: commonColors.blue300,
     primaryLight: commonColors.blue300,
 
-    secondaryMain: commonColors.teal,
+    secondaryMain: '#008080',
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue300,
 
-    textMain: commonColors.blue300,
+    textMain: '#2A0040',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
-    accentMain: commonColors.chartreus,
+    accentMain: '#7FFF00',
     accentDark: commonColors.blue300,
     accentLight: commonColors.blue300,
   },
   [ThemeName.ArcticChill]: {
-    primaryMain: commonColors.phototblue,
+    primaryMain: '#A8DADC',
     primaryDark: commonColors.blue300,
     primaryLight: commonColors.blue300,
 
-    secondaryMain: commonColors.gray,
+    secondaryMain: '#76787A',
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue300,
 
-    textMain: commonColors.blue300,
+    textMain: '#000000',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
-    accentMain: commonColors.red,
+    accentMain: '#E63946',
     accentDark: commonColors.blue300,
     accentLight: commonColors.blue300,
   },
   [ThemeName.AutumnHarvest]: {
-    primaryMain: commonColors.burntorange,
+    primaryMain: '#B85B1E',
     primaryDark: commonColors.blue300,
     primaryLight: commonColors.blue300,
 
-    secondaryMain: commonColors.sunset,
+    secondaryMain: '#F2C47E',
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue300,
 
-    textMain: commonColors.blue300,
+    textMain: '#222222',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
-    accentMain: commonColors.ferngreen,
+    accentMain: '#5A7F5A',
     accentDark: commonColors.blue300,
     accentLight: commonColors.blue300,
   },
   [ThemeName.PixelLegends]: {
-    primaryMain: commonColors.hookergreen,
+    primaryMain: '#3B755F',
     primaryDark: commonColors.blue300,
     primaryLight: commonColors.blue300,
 
-    secondaryMain: commonColors.night,
+    secondaryMain: '#4A789C',
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue300,
 
-    textMain: commonColors.blue300,
+    textMain: '#111111',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
-    accentMain: commonColors.vermilion,
+    accentMain: '#FF3333',
     accentDark: commonColors.blue300,
     accentLight: commonColors.blue300,
   },
   [ThemeName.TheFinalFrontier]: {
-    primaryMain: commonColors.night1,
+    primaryMain: '#121212',
     primaryDark: commonColors.blue300,
     primaryLight: commonColors.blue300,
 
-    secondaryMain: commonColors.violet,
+    secondaryMain: '#7F00FF',
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue300,
 
-    textMain: commonColors.blue300,
+    textMain: '#FFFFFF',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
-    accentMain: commonColors.bittersweet,
+    accentMain: '#FF6F61',
     accentDark: commonColors.blue300,
     accentLight: commonColors.blue300,
   },
   [ThemeName.TeaAndTidy]: {
-    primaryMain: commonColors.teagreen,
+    primaryMain: '#BCD2B0',
     primaryDark: commonColors.blue300,
     primaryLight: commonColors.blue300,
 
-    secondaryMain: commonColors.parchement,
+    secondaryMain: '#F8EED2',
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue300,
 
-    textMain: commonColors.blue300,
+    textMain: '#1A1A1A',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
-    accentMain: commonColors.claret,
+    accentMain: '#8E2541',
     accentDark: commonColors.blue300,
     accentLight: commonColors.blue300,
   },
   [ThemeName.TheLostSock]: {
-    primaryMain: commonColors.daysgray,
+    primaryMain: '#4D4D4D',
     primaryDark: commonColors.blue300,
     primaryLight: commonColors.blue300,
 
-    secondaryMain: commonColors.whitesmoke1,
+    secondaryMain: '#F2F2F2',
     secondaryDark: commonColors.blue300,
     secondaryLight: commonColors.blue300,
 
-    textMain: commonColors.blue300,
+    textMain: '#111111',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
-    accentMain: commonColors.arangepeel,
+    accentMain: '#FFA000',
     accentDark: commonColors.blue300,
     accentLight: commonColors.blue300,
   },
 };
 
-export const color = { ...themeColor[ThemeName._1], ...commonColors } as const;
+export const color = { ...themeColor[ThemeName.BabushkasHearth], ...commonColors } as const;
 
 export type Color = keyof typeof color;
 export type ColorOptions = Record<Color, string>;

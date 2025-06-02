@@ -42,6 +42,7 @@ export type GetParamsType<T, K extends keyof T> = T[K] extends { get: infer Get 
     : never
   : never;
 
+type s = ParamTypeFetched<'/tasks/{id}'>;
 export type GetParamsTypeFetcher<T, K extends keyof T> = T[K] extends { get: infer Get }
   ? Get extends { parameters: any }
     ? CheckNever<Get['parameters']>

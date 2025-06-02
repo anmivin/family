@@ -34,3 +34,7 @@ export const createSkill = async (data: components['schemas']['CreateSkillDto'])
   const response = await axiosInstance.post('/characteristics/skills', data);
   return response;
 };
+
+export const clearInfo = async () => {
+  await axiosInstance.patch('/users/clearInfo');
+};

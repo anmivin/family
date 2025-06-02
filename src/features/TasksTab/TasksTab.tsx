@@ -62,7 +62,6 @@ const TasksTab = () => {
         <MenuItem onClick={() => setTaskFilters({ status: TaskStatus.PENDING })}>На согласовании</MenuItem>
         <MenuItem onClick={() => setTaskFilters({ status: TaskStatus.COMPLETED })}>Завершённые</MenuItem>
         <MenuItem onClick={() => setTaskFilters({ status: TaskStatus.REJECTED })}>Отклонённые</MenuItem>
-        <MenuItem onClick={() => setTaskFilters({ type: TaskType.DAILY })}>Периодические</MenuItem>
         <MenuItem onClick={() => setTaskFilters({ type: TaskType.SMALL })}>Простые</MenuItem>
       </Select>
 

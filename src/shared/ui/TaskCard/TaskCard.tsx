@@ -9,6 +9,8 @@ import { setIsTaskFormOpen } from '@shared/stores/modals/modals.store';
 import { setSelectedTask } from '@shared/stores/tasks/tasks.store';
 import { components, TaskStatus } from '@shared/api/Api';
 import { StyledCard } from './TaskCard.styled';
+import { editTask } from '@shared/helpers/fetcher';
+import { useCallback } from 'react';
 
 const TaskCard = (data: components['schemas']['OutputTaskDto']) => {
   const dispatch = useAppDispatch();
@@ -17,6 +19,11 @@ const TaskCard = (data: components['schemas']['OutputTaskDto']) => {
     dispatch(setIsTaskFormOpen(true));
   };
 
+  const completeTask = useCallback(async () => {
+    try {
+      await editTask({ id: data.id, status: TaskStatus.COMPLETED });
+    } catch (e) {}
+  }, [data]);
   return (
     <StyledCard
       onClick={() => onOpen(data.id)}
@@ -26,6 +33,7 @@ const TaskCard = (data: components['schemas']['OutputTaskDto']) => {
     >
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography variant="body2">{data.title}</Typography>
+
         <Box display="flex" flexDirection="column" alignItems="end" justifyContent="space-between">
           {data.creator && <Typography variant="caption">от {data.creator?.name}</Typography>}
           {data.status === TaskStatus.PENDING && <Typography variant="caption">на одобрении</Typography>}
@@ -44,7 +52,14 @@ const TaskCard = (data: components['schemas']['OutputTaskDto']) => {
 
       {data.status === TaskStatus.IN_PROGRESS && (
         <Box>
-          <Button>готово</Button>
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              completeTask();
+            }}
+          >
+            готово
+          </Button>
           <Button>отложить</Button>
         </Box>
       )}

@@ -20,7 +20,6 @@ const FeaturesTab = () => {
     };
   };
 
-  useEffect(() => console.log(userFeatures), [userFeatures]);
   return (
     <Box>
       {userFeatures?.map((feature) => {

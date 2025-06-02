@@ -66,7 +66,7 @@ const SkillForm = () => {
       createSkill({
         ...data,
         description: data.description ?? '',
-        features: data.features.map((item) => ({ id: item.item.id, percent: item.percent })),
+        features: data.features.map((item) => ({ id: item.item.id, percent: item.percent / 100 })),
       });
       successToast('Навык создан');
       onClose();

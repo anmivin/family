@@ -5,6 +5,7 @@ import QrCode from '@features/QrCode/QrCode';
 import { useAppDispatch } from '@shared/stores/global.store';
 import { setIsQrCodeOpen } from '@shared/stores/modals/modals.store';
 import AccordionState from '@shared/ui/AccordionState';
+import { clearInfo } from '@shared/helpers/fetcher';
 const Settings = () => {
   const dispatch = useAppDispatch();
   const onOpen = () => dispatch(setIsQrCodeOpen(true));
@@ -26,9 +27,9 @@ const Settings = () => {
         <></>
       </AccordionState>
       <AccordionState collapsedNode="Другое">
-        <> язык, сбросить</>
+        <> язык</>
       </AccordionState>
-
+      <Button onClick={clearInfo}>Сбросить данные</Button>
       <Button onClick={onOpen}>Пригласить в приложение</Button>
       <QrCode />
     </Box>

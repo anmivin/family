@@ -308,7 +308,7 @@ export interface components {
         /** @enum {string} */
         DayOfWeek: DayOfWeek;
         RepeatDto: {
-            period: components["schemas"]["RepeatPeriod"];
+            period?: components["schemas"]["RepeatPeriod"];
             interval?: number;
             day?: components["schemas"]["DayOfWeek"];
         };
@@ -447,13 +447,13 @@ export interface components {
         };
         OutputSkillDto: {
             name: string;
-            description: string;
+            description?: string;
             features: components["schemas"]["PercentDto"][];
             id: string;
         };
         CreateSkillDto: {
             name: string;
-            description: string;
+            description?: string;
             features: components["schemas"]["PercentDto"][];
         };
         EditSkillDto: {

@@ -43,7 +43,7 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
         toastId: timestamp,
       },
     ]);
-    /*  !toast.disableClose && setTimeout(() => handleClose(timestamp), toast.closeTime ?? 5000) */
+    !toast.disableClose && setTimeout(() => handleClose(timestamp), toast.closeTime ?? 5000);
   };
 
   const successToast = (title: string, options?: Omit<ToastItemProps, 'title'>) => {

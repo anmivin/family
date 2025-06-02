@@ -34,7 +34,6 @@ export const useSwr = <T extends KeyType>(props: UseSwrProps<T>): ReturnType<T> 
         const newData = await defaultSwrFetcher(props);
         context.set(url, { data: newData, prevParams: rest });
         setData(newData);
-
         break;
       } catch (e) {
         retries++;

@@ -85,7 +85,7 @@ const TaskForm = () => {
   } = formMethods;
 
   const formValues = watch();
-  useEffect(() => console.log(errors, formValues), [errors, formValues]);
+
   useEffect(() => {
     reset(defaultValues);
   }, [defaultValues]);
@@ -102,13 +102,13 @@ const TaskForm = () => {
       skills: data.skills
         .map((skill) => {
           if (!skill.item.id || !skill.percent) return;
-          return { id: skill.item.id, percent: skill.percent };
+          return { id: skill.item.id, percent: skill.percent /100 };
         })
         .filter((item) => !!item),
       features: data.characteristics
         .map((skill) => {
           if (!skill.item.id || !skill.percent) return;
-          return { id: skill.item.id, percent: skill.percent };
+          return { id: skill.item.id, percent: skill.percent / 100 };
         })
         .filter((item) => !!item),
     };
@@ -118,6 +118,7 @@ const TaskForm = () => {
     } catch (e) {
       errorToast(getErrorMessage(e));
     }
+    onClose();
   });
 
   const tooltipTitle = useMemo(() => {
@@ -234,7 +235,7 @@ const TaskForm = () => {
         {formValues.target === XPTarget.Characteristic ? (
           <PercentageField
             name="characteristics"
-            options={featureList ?? []}
+            options={(featureList ?? []).flatMap((feature) => feature.children)}
             label="Характеристика"
             labelType="feminine"
           />
