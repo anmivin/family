@@ -6,10 +6,10 @@ import { CharacterCardProps } from './CharacterCard.types';
 import { CoinIcon } from '@ui/Icons';
 import { useMemo } from 'react';
 import ProgressBar from '@ui/ProgressBar';
+import { ColorType } from '@shared/ui/ProgressBar/ProgressBar.types';
 
-const CharacterCard = ({ name, xp, gold, bestFeature, bestSkill }: CharacterCardProps) => {
-  const level = calcLevel(xp);
-  const nextLevelXp = calcXpPerLevel(level + 1);
+const CharacterCard = ({ name, xp, gold, bestFeature, bestSkill, level }: CharacterCardProps) => {
+  const nextLevelXp = calcXpPerLevel((level?.level ?? 0) + 1);
 
   const bestFeatureInfo = useMemo(() => {
     if (!bestFeature) return;
@@ -20,7 +20,7 @@ const CharacterCard = ({ name, xp, gold, bestFeature, bestSkill }: CharacterCard
       currentPercent: (bestFeature.xp * 100) / featureNextLevel,
       currentLevel: level,
     };
-  }, [bestFeature]);
+  }, [bestFeature, level]);
 
   const bestSkillInfo = useMemo(() => {
     if (!bestSkill) return;
@@ -48,13 +48,15 @@ const CharacterCard = ({ name, xp, gold, bestFeature, bestSkill }: CharacterCard
 
       <Box p={3} display="flex" flexDirection="column" width="100%">
         <Typography variant="body2">{name}</Typography>
-
+        <Typography>
+          {level?.name}: {level?.level} lvl.
+        </Typography>
         <Typography>Сильнейшая черта:</Typography>
         {!!bestFeatureInfo && (
           <ProgressBar
             value={bestFeatureInfo.currentPercent}
             subtitle={`${bestFeature?.name}: ${bestFeatureInfo.currentLevel}lvl.`}
-            color={bestFeature?.color}
+            color={bestFeature?.color as ColorType}
           />
         )}
 

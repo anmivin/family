@@ -4,7 +4,7 @@ import { SwrContext, KeyType, DataType, ParamTypeFetched } from './SwrContext';
 import { defaultSwrFetcher } from '@shared/helpers/fetcher';
 import { isEqual } from 'lodash';
 
-export type UseSwrProps<T extends KeyType> = { url: T } & ParamTypeFetched<T>;
+export type UseSwrProps<T extends KeyType> = { url: T | null } & ParamTypeFetched<T>;
 
 interface ReturnType<T extends KeyType> {
   data: DataType<T> | null;
@@ -24,6 +24,8 @@ export const useSwr = <T extends KeyType>(props: UseSwrProps<T>): ReturnType<T> 
   const [error, setError] = useState<string | null>(null);
 
   const fetch = useCallback(async () => {
+    if (!url) return;
+    const notNullProps = { ...props, url };
     setLoading(true);
     setError(null);
 
@@ -31,7 +33,7 @@ export const useSwr = <T extends KeyType>(props: UseSwrProps<T>): ReturnType<T> 
     context.set(url, { prevParams: rest });
     while (retries <= MAX_RETRIES) {
       try {
-        const newData = await defaultSwrFetcher(props);
+        const newData = await defaultSwrFetcher(notNullProps);
         context.set(url, { data: newData, prevParams: rest });
         setData(newData);
         break;
@@ -49,6 +51,7 @@ export const useSwr = <T extends KeyType>(props: UseSwrProps<T>): ReturnType<T> 
   }, [url, rest]);
 
   useEffect(() => {
+    if (!url) return;
     const currentState = context.get(url);
 
     if ((!!error && isEqual(currentState?.prevParams, rest)) || loading) return;

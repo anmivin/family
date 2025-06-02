@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useAppDispatch } from '@shared/stores/global.store';
 import { fetchUserInfo } from '@shared/stores/users/users.fetchers';
 import { getErrorMessage } from '@shared/helpers/utils';
+import { EyeIcon, EyeClosedIcon } from '@shared/ui/Icons';
 const LoginForm = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -54,7 +55,7 @@ const LoginForm = () => {
   );
 
   return (
-    <Box display="flex" flexDirection="column" gap={4} p={4} height="100vh" justifyContent="center">
+    <Box display="flex" flexDirection="column" gap={4} p={8} height="100vh" justifyContent="center">
       <Controller
         control={control}
         name="name"
@@ -86,7 +87,7 @@ const LoginForm = () => {
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton onClick={() => setShowPassword((prev) => !prev)} edge="end">
-                      {showPassword ? 'V' : 'X'}
+                      {showPassword ? <EyeIcon /> : <EyeClosedIcon />}
                     </IconButton>
                   </InputAdornment>
                 ),

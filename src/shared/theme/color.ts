@@ -181,71 +181,71 @@ interface ThemeColor {
 export const themeColor: Record<ThemeName, ThemeColor> = {
   [ThemeName.BabushkasHearth]: {
     primaryMain: '#a52a2a',
-    primaryDark: commonColors.blue300,
-    primaryLight: commonColors.blue300,
+    primaryDark: '#7C2020',
+    primaryLight: '#BB5F5F',
 
     secondaryMain: '#d2b48c',
-    secondaryDark: commonColors.blue300,
-    secondaryLight: commonColors.blue300,
+    secondaryDark: '#AE9573',
+    secondaryLight: '#E0CCB1',
 
     textMain: '#1A1A1A',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
     accentMain: '#cc7722',
-    accentDark: commonColors.blue300,
-    accentLight: commonColors.blue300,
+    accentDark: '#995919',
+    accentLight: '#DFAA76',
   },
   [ThemeName.TsaristGold]: {
     primaryMain: '#2c2a6e',
-    primaryDark: commonColors.blue300,
-    primaryLight: commonColors.blue300,
+    primaryDark: '#212053',
+    primaryLight: '#504F87',
 
     secondaryMain: '#ffb700',
-    secondaryDark: commonColors.blue300,
-    secondaryLight: commonColors.blue300,
+    secondaryDark: '#D39700',
+    secondaryLight: '#FFD260',
 
     textMain: '#111111',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
     accentMain: '#9e1b34',
-    accentDark: commonColors.blue300,
-    accentLight: commonColors.blue300,
+    accentDark: '#771527',
+    accentLight: '#AF4357',
   },
   [ThemeName.SovietMinimal]: {
     primaryMain: '#333333',
-    primaryDark: commonColors.blue300,
-    primaryLight: commonColors.blue300,
+    primaryDark: '#262626',
+    primaryLight: '#575757',
 
     secondaryMain: '#C91F37',
-    secondaryDark: commonColors.blue300,
-    secondaryLight: commonColors.blue300,
+    secondaryDark: '#971729',
+    secondaryLight: '#D2465A',
 
     textMain: '#000000',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
     accentMain: '#FFD700',
-    accentDark: commonColors.blue300,
-    accentLight: commonColors.blue300,
+    accentDark: '#D3B100',
+    accentLight: '#FFE13C',
   },
   [ThemeName.ForestSpirit]: {
     primaryMain: '#228B22',
-    primaryDark: commonColors.blue300,
-    primaryLight: commonColors.blue300,
+    primaryDark: '#1C731C',
+    primaryLight: '#48A048',
 
     secondaryMain: '#A8C3A1',
-    secondaryDark: commonColors.blue300,
-    secondaryLight: commonColors.blue300,
+    secondaryDark: '#8BA185',
+    secondaryLight: '#BED2B9',
 
     textMain: '#1A1A1A',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
     accentMain: '#FFBF00',
-    accentDark: commonColors.blue300,
-    accentLight: commonColors.blue300,
+    accentDark: '#D39E00',
+    accentLight: '#FFCF3F',
   },
   [ThemeName.MidnightCastle]: {
     primaryMain: '#2E1B3B',
@@ -253,16 +253,16 @@ export const themeColor: Record<ThemeName, ThemeColor> = {
     primaryLight: commonColors.blue300,
 
     secondaryMain: '#C0C6D4',
-    secondaryDark: commonColors.blue300,
-    secondaryLight: commonColors.blue300,
+    secondaryDark: '#261731',
+    secondaryLight: '#41304D',
 
     textMain: '#FFFFFF',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
     accentMain: '#8B0000',
-    accentDark: commonColors.blue300,
-    accentLight: commonColors.blue300,
+    accentDark: '#730000',
+    accentLight: '#A33434',
   },
   [ThemeName.SunriseMotivator]: {
     primaryMain: '#FFA500',
@@ -368,20 +368,20 @@ export const themeColor: Record<ThemeName, ThemeColor> = {
   },
   [ThemeName.TeaAndTidy]: {
     primaryMain: '#BCD2B0',
-    primaryDark: commonColors.blue300,
-    primaryLight: commonColors.blue300,
+    primaryDark: '#809078',
+    primaryLight: '#D2E0C9',
 
     secondaryMain: '#F8EED2',
-    secondaryDark: commonColors.blue300,
-    secondaryLight: commonColors.blue300,
+    secondaryDark: '#CDC4AE',
+    secondaryLight: '#FAF4E3',
 
     textMain: '#1A1A1A',
     textDark: commonColors.blue300,
     textLight: commonColors.blue300,
 
     accentMain: '#8E2541',
-    accentDark: commonColors.blue300,
-    accentLight: commonColors.blue300,
+    accentDark: '#60192D',
+    accentLight: '#B26A7D',
   },
   [ThemeName.TheLostSock]: {
     primaryMain: '#4D4D4D',

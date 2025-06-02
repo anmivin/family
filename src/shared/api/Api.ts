@@ -245,7 +245,7 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch: operations["CharacteristicsController_editSkill"];
+        patch?: never;
         trace?: never;
     };
     "/characteristics/skill/{id}": {
@@ -262,6 +262,22 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/characteristics/skills/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["CharacteristicsController_deleteSkill"];
+        options?: never;
+        head?: never;
+        patch: operations["CharacteristicsController_editSkill"];
         trace?: never;
     };
 }
@@ -360,6 +376,11 @@ export interface components {
             familyid?: string;
             role?: components["schemas"]["Role"];
         };
+        LevelDto: {
+            name: string;
+            level: number;
+            url?: string;
+        };
         OutputUserDto: {
             id: string;
             name: string;
@@ -367,6 +388,7 @@ export interface components {
             xp: number;
             gold: number;
             familyId: string;
+            level: components["schemas"]["LevelDto"];
         };
         LoginInputDto: {
             name: string;
@@ -460,7 +482,6 @@ export interface components {
             name?: string;
             description?: string;
             features?: components["schemas"]["PercentDto"][];
-            id: string;
         };
     };
     responses: never;
@@ -973,27 +994,6 @@ export interface operations {
             };
         };
     };
-    CharacteristicsController_editSkill: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["EditSkillDto"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
     CharacteristicsController_findSkill: {
         parameters: {
             query?: never;
@@ -1012,6 +1012,48 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["OutputSkillDto"];
                 };
+            };
+        };
+    };
+    CharacteristicsController_deleteSkill: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CharacteristicsController_editSkill: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EditSkillDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

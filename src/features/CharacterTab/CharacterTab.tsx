@@ -16,7 +16,7 @@ const CharacterTab = () => {
     const arrayForSort = [...userFeatures];
     const feature = arrayForSort.sort((a, b) => (a.userXp < b.userXp ? 1 : -1))[0];
 
-    return { xp: feature.userXp, name: feature.name, color: IconMap[feature.id].color };
+    return { xp: feature.userXp, name: feature.name, color: IconMap[feature.id as keyof typeof IconMap].color };
   }, [userFeatures]);
 
   const bestSkill = useMemo(() => {

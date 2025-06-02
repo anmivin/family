@@ -15,6 +15,8 @@ export { default as CrossIcon } from './CrossIcon';
 export { default as CrownIcon } from './CrownIcon';
 export { default as DialogBulbIcon } from './DialogBulbIcon';
 export { default as DumbbellIcon } from './DumbbellIcon';
+export { default as EyeClosedIcon } from './EyeClosedIcon';
+export { default as EyeIcon } from './EyeIcon';
 export { default as FireIcon } from './FireIcon';
 export { default as FridgeIcon } from './FridgeIcon';
 export { default as GarageIcon } from './GarageIcon';

@@ -44,7 +44,10 @@ const TaskForm = () => {
   const { successToast, errorToast } = useToast();
   const { isTaskFormOpen } = useAppSelector((state) => state.modalsSlice);
   const { selectedTaskId } = useAppSelector((state) => state.taskSlice);
-  const { data: selectedTask } = useSwr({ url: '/tasks/{id}', params: { id: selectedTaskId ?? '' } });
+  const { data: selectedTask } = useSwr({
+    url: selectedTaskId ? '/tasks/{id}' : null,
+    params: { id: selectedTaskId ?? '' },
+  });
   const { data: skillList } = useSwr({ url: '/characteristics/skills' });
   const { data: featureList } = useSwr({ url: '/characteristics/features/user' });
 
@@ -102,7 +105,7 @@ const TaskForm = () => {
       skills: data.skills
         .map((skill) => {
           if (!skill.item.id || !skill.percent) return;
-          return { id: skill.item.id, percent: skill.percent /100 };
+          return { id: skill.item.id, percent: skill.percent / 100 };
         })
         .filter((item) => !!item),
       features: data.characteristics

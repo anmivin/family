@@ -1,5 +1,15 @@
 import { Box, styled } from '@mui/material';
 
+export const ToastContainer = styled('div')`
+  position: fixed;
+  bottom: 60px;
+  left: calc(100vw / 2 - 180px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 2000;
+`;
+
 export const StyledToast = styled(Box)`
   width: 360px;
   padding: ${({ theme }) => theme.spacing(3)};

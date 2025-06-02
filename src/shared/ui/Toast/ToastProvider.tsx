@@ -1,7 +1,8 @@
 import { useState, createContext, useContext } from 'react';
 import { ToastProps, Toastlevel } from './Toast.types';
 import Toast from './Toast';
-
+import { Box } from '@mui/material';
+import { ToastContainer } from './Toast.styled';
 export interface ToastItemProps extends Omit<ToastProps, 'level'> {
   closeTime?: number;
   disableClose?: boolean;
@@ -43,7 +44,7 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
         toastId: timestamp,
       },
     ]);
-    !toast.disableClose && setTimeout(() => handleClose(timestamp), toast.closeTime ?? 5000);
+    /*  !toast.disableClose && setTimeout(() => handleClose(timestamp), toast.closeTime ?? 5000); */
   };
 
   const successToast = (title: string, options?: Omit<ToastItemProps, 'title'>) => {
@@ -61,22 +62,11 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ToastContext.Provider value={{ successToast, errorToast, infoToast, warningToast }}>
       {children}
-      <div
-        style={{
-          position: 'fixed',
-          bottom: 60,
-          right: 10,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-end',
-          gap: '8px',
-          zIndex: 200,
-        }}
-      >
+      <ToastContainer>
         {toasts.map((toast) => (
           <Toast {...toast} />
         ))}
-      </div>
+      </ToastContainer>
     </ToastContext.Provider>
   );
 };
