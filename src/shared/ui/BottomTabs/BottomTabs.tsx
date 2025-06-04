@@ -6,7 +6,7 @@ import { useAppSelector } from '@shared/stores/global.store';
 const StyledMenu = styled(Box)`
   background-color: ${({ theme }) => theme.color.primaryMain};
   position: fixed;
-  bottom: 8px;
+  bottom: 0px;
   display: flex;
   width: 100%;
 `;

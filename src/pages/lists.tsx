@@ -4,6 +4,7 @@ import Tabs from '@ui/Tabs';
 import { useState } from 'react';
 import useSwr from '@shared/swr/useSwr';
 import { Box } from '@mui/material';
+import BookSearchTab from '@features/BookSearchTab/BookSearchTab';
 const Lists = () => {
   const { data, loading } = useSwr({ url: '/lists' });
 
@@ -22,9 +23,11 @@ const Lists = () => {
         value={selectedTab}
         onChange={setSelectedTab}
       />
+
       <Box p={4}>
         {selectedTab === (data?.length ?? 0) + 1 && <CreateList />}
-        {/* <MovieSearchTab /> */}
+        <MovieSearchTab />
+        <BookSearchTab />
       </Box>
     </>
   );

@@ -1,4 +1,5 @@
 export enum ThemeName {
+  TheHearthfire = 'TheHearthfire',
   BabushkasHearth = 'BabushkasHearth',
   TsaristGold = 'TsaristGold',
   SovietMinimal = 'SovietMinimal',

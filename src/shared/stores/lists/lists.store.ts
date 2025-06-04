@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchKino } from './lists.fetchers';
+import { fetchBooks, fetchKino } from './lists.fetchers';
 import { ListSliceProps, initialState } from './lists.types';
+import { Root } from '@shared/types/booksTypes';
+
 export const listSlice = createSlice({
   name: 'lists',
   initialState,
@@ -22,6 +24,19 @@ export const listSlice = createSlice({
       builder.addCase(fetchKino.rejected, (state, action: PayloadAction<unknown>) => {
         state.pendingMovieList = false;
         state.errorMovieList = action.payload as string;
+      });
+
+    builder.addCase(fetchBooks.pending, (state) => {
+      state.pendingBookList = true;
+    }),
+      builder.addCase(fetchBooks.fulfilled, (state, action: PayloadAction<Root>) => {
+        state.pendingBookList = false;
+        state.errorBookList = '';
+        state.bookList = action.payload;
+      }),
+      builder.addCase(fetchBooks.rejected, (state, action: PayloadAction<unknown>) => {
+        state.pendingBookList = false;
+        state.errorBookList = action.payload as string;
       });
   },
 });

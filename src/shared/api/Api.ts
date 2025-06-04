@@ -52,6 +52,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tasks/habbits": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TasksController_getHabbits"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/users": {
         parameters: {
             query?: never;
@@ -319,6 +335,16 @@ export interface components {
             difficulty: components["schemas"]["Difficulty"];
             isImportant?: boolean;
         };
+        TaskInfoDto: {
+            id: string;
+            description?: string;
+            title: string;
+        };
+        OutputHabitsDto: {
+            /** Format: date-time */
+            completedAt: string;
+            task: components["schemas"]["TaskInfoDto"];
+        };
         /** @enum {string} */
         RepeatPeriod: RepeatPeriod;
         /** @enum {string} */
@@ -387,8 +413,13 @@ export interface components {
             email?: string;
             xp: number;
             gold: number;
+            /** Format: date-time */
+            lastEarnedXp?: string;
             familyId: string;
             level: components["schemas"]["LevelDto"];
+            streak: number;
+            productivity: number;
+            achievements: number;
         };
         LoginInputDto: {
             name: string;
@@ -495,8 +526,8 @@ export interface operations {
     TasksController_findTasksForUser: {
         parameters: {
             query: {
-                dateTo: string;
-                dateFrom: string;
+                dateTo?: string;
+                dateFrom?: string;
                 offset: number;
                 limit: number;
                 type?: components["schemas"]["TaskType"];
@@ -619,6 +650,28 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["OutputTaskDto"][];
+                };
+            };
+        };
+    };
+    TasksController_getHabbits: {
+        parameters: {
+            query?: {
+                dateTo?: string;
+                dateFrom?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OutputHabitsDto"][];
                 };
             };
         };
@@ -1099,5 +1152,7 @@ export enum Role {
 }
 export enum Abilities {
     ASSIGN_TASK = "ASSIGN_TASK",
-    CREATE_SKILL = "CREATE_SKILL"
+    CREATE_SKILL = "CREATE_SKILL",
+    ADD_ATTACHABLES = "ADD_ATTACHABLES",
+    CREATE_THEME = "CREATE_THEME"
 }

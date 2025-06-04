@@ -44,5 +44,10 @@ kinoAxios.interceptors.response.use(
   }
 );
 
+const booksUrl = import.meta.env.VITE_GOOGLEBOOKS_BASE_URL;
+export const booksInstance = Axios.create({
+  baseURL: booksUrl,
+});
+
 export const axiosInstance = new OpenApiAxios<paths, 'axios'>(axios, { validStatus: 'axios' });
 export const kinopoiskInstance = new OpenApiAxios<kinoPaths, 'axios'>(kinoAxios, { validStatus: 'axios' });

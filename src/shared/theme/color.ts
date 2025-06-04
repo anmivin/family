@@ -179,6 +179,23 @@ interface ThemeColor {
   accentLight: string;
 }
 export const themeColor: Record<ThemeName, ThemeColor> = {
+  [ThemeName.TheHearthfire]: {
+    primaryMain: '#F5E6DA',
+    primaryDark: '#7C2020',
+    primaryLight: '#BB5F5F',
+
+    secondaryMain: '#A17857',
+    secondaryDark: '#AE9573',
+    secondaryLight: '#E0CCB1',
+
+    textMain: '#222222',
+    textDark: commonColors.blue300,
+    textLight: commonColors.blue300,
+
+    accentMain: '#FFA500',
+    accentDark: '#995919',
+    accentLight: '#DFAA76',
+  },
   [ThemeName.BabushkasHearth]: {
     primaryMain: '#a52a2a',
     primaryDark: '#7C2020',
