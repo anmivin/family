@@ -1,12 +1,12 @@
 import { Box, Typography, Button, IconButton } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useLocalStorage } from '@shared/helpers/useLocalstorage';
-import { defaultRouting, menuRoutes, RoutesProps } from '@shared/constants/routes';
+import { defaultRouting, RoutesProps } from '@shared/constants/routes';
 import { ChevronDownIcon, ChevronUpIcon } from '@shared/ui/Icons';
 import { useAppSelector, useAppDispatch } from '@shared/stores/global.store';
 import { setMainPages, setOtherPages } from '@shared/stores/users/users.store';
 const ChangeRoutes = () => {
-  const [value, setValue] = useLocalStorage<{ key: string; order: number }[]>('routes', defaultRouting);
+  const [_value, setValue] = useLocalStorage<{ key: string; order: number }[]>('routes', defaultRouting);
   const dispatch = useAppDispatch();
   const { mainPages, otherPages } = useAppSelector((state) => state.userSlice);
   const [items, setItems] = useState([...mainPages, ...otherPages]);

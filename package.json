@@ -12,6 +12,7 @@
     "generate:kinopoisk": "npx openapi-typescript https://api.kinopoisk.dev/documentation-json --output src/shared/api/KinopoiskApi.ts"
   },
   "dependencies": {
+    "@capacitor/android": "^6.2.1",
     "@capacitor/cli": "^6.2.0",
     "@capacitor/core": "^6.2.0",
     "@capacitor/preferences": "^6.0.3",

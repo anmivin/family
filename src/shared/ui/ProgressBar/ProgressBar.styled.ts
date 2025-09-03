@@ -1,6 +1,6 @@
 import { styled, LinearProgress } from '@mui/material';
 import { ColorType } from './ProgressBar.types';
-import { Color } from '@theme/themeVariants';
+import { Color } from '@shared/theme/color';
 
 const ProgressbarColorValues: Record<ColorType, { main: Color; secondary: Color }> = {
   red: { main: 'red600', secondary: 'red200' },

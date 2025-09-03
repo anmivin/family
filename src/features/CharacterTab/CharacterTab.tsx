@@ -19,7 +19,7 @@ const CharacterTab = ({ onSkillClick, onFeatureClick }: CharacterTabProps) => {
     if (!userFeatures?.length) return;
     const arrayForSort = [...userFeatures];
     const feature = arrayForSort.sort((a, b) => (a.userXp < b.userXp ? 1 : -1))[0];
-
+    console.log(feature);
     return { xp: feature.userXp, name: feature.name, color: IconMap[feature.id as keyof typeof IconMap].color };
   }, [userFeatures]);
 
@@ -41,7 +41,7 @@ const CharacterTab = ({ onSkillClick, onFeatureClick }: CharacterTabProps) => {
           onFeatureClick={onFeatureClick}
         />
       )}
-      <StreakSection />
+      {/*  <StreakSection /> */}
     </>
   );
 };

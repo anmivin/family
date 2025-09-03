@@ -31,8 +31,9 @@ import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { useEffect, useMemo, useCallback, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
-
+import FileUpload from '@shared/ui/FileUpload';
 import useSwr from '@shared/swr/useSwr';
+import AutocompletePlus from '@shared/ui/AutocompletePlus';
 
 const TaskForm = () => {
   const dispatch = useAppDispatch();
@@ -160,6 +161,10 @@ const TaskForm = () => {
         </Box>
       }
     >
+      <AutocompletePlus
+        options={[{ id: 'raz' }, { id: 'dva' }, { id: 'tri' }]}
+        canCreate={/* ability({ crud: 'create', can: Abilities.CREATE_SKILL }) */ true}
+      />
       <FormSection title="Основная информация">
         <Controller
           control={control}
@@ -350,6 +355,7 @@ const TaskForm = () => {
           </FormSection>
         </>
       )}
+      <FileUpload />
     </DefaultDrawer>
   );
 };
